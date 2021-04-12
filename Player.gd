@@ -20,7 +20,7 @@ var vida = 300
 var defesa = 10
 var danoArma = 0
 var pulo_Max = 2
-
+var pulo_parede = false
 
 func _ready():
 	set_process(true)
@@ -59,9 +59,10 @@ func _process(delta):
 	
 	if is_on_floor() == false:
 		rapidez_y += GRAVIDADE * delta
-	if is_on_wall() == true:
-		pulo_Max = pulo_Max + 1
-		rapidez_y = (GRAVIDADE / 1.2) * delta 
+	if pulo_parede == true:
+		if is_on_wall() == true:
+			pulo_Max = pulo_Max + 1
+			rapidez_y = (GRAVIDADE / 1.2) * delta 
 	
 	velocidade.x = rapidez_x * delta * direcao
 	velocidade.y = rapidez_y * delta
