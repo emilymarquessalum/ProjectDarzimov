@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Mountain_Night.png-8aebedd375f80e36942ba152f7cb9ef5.stex"
+path="res://.import/teste.png-80e88854b3a28129a5b367712ed83311.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Mountain_Night.png"
-dest_files=[ "res://.import/Mountain_Night.png-8aebedd375f80e36942ba152f7cb9ef5.stex" ]
+source_file="res://teste.png"
+dest_files=[ "res://.import/teste.png-80e88854b3a28129a5b367712ed83311.stex" ]
 
 [params]
 
