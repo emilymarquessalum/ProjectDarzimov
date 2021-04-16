@@ -66,12 +66,14 @@ func _process(delta):
 	if Input.is_action_just_pressed("open_inventory"):
 		if inventory_opened:
 			$inventory_menu.hide()
+			get_tree().paused = false
 			if selected_item:
 				last_slot.modulate = Color.white
 				add_to_inventory(selected_item)
 				selected_item = null
 				emit_signal("item_selected", selected_item)
 		else:
+			get_tree().paused = true
 			$inventory_menu.show()
 		inventory_opened = !inventory_opened
 	pass

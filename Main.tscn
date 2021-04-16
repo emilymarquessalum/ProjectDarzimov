@@ -48,7 +48,11 @@ position = Vector2( 153.375, 169 )
 [node name="Piso" parent="pisos" instance=ExtResource( 5 )]
 position = Vector2( 31.5, 169.25 )
 
+[node name="Piso9" parent="pisos" instance=ExtResource( 5 )]
+position = Vector2( 121, 169 )
+
 [node name="Player" type="KinematicBody2D" parent="."]
+pause_mode = 1
 material = SubResource( 2 )
 position = Vector2( 21.7186, 142.654 )
 script = ExtResource( 2 )
@@ -66,6 +70,7 @@ texture = ExtResource( 1 )
 script = ExtResource( 6 )
 
 [node name="Inventory" parent="." instance=ExtResource( 7 )]
+pause_mode = 2
 position = Vector2( 62.909, 25.9166 )
 scale = Vector2( 0.973801, 0.923192 )
 
