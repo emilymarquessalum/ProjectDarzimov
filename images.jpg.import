@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spr_KingDeath_strip_no_bkg.png-033bed725c0c22d7c056cfeff577f65a.stex"
+path="res://.import/images.jpg-828aec76970545e387c8e5ec74aa0b53.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://NoBkgColor/spr_KingDeath_strip_no_bkg.png"
-dest_files=[ "res://.import/spr_KingDeath_strip_no_bkg.png-033bed725c0c22d7c056cfeff577f65a.stex" ]
+source_file="res://images.jpg"
+dest_files=[ "res://.import/images.jpg-828aec76970545e387c8e5ec74aa0b53.stex" ]
 
 [params]
 

@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Inventory/main_inventory/Inventory.gd" type="Script" id=1]
+[ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Inventory/Inventory_Game_Darzimov.png" type="Texture" id=3]
+[ext_resource path="res://Inventory/Weapon_HotBar.tscn" type="PackedScene" id=4]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0.572025, 131.059, 303.837, 68.9098 )
+margin_left = 5.94396
+margin_right = 18.9525
+
+[node name="Inventory" type="Node2D"]
+position = Vector2( -4.75684, -3.56762 )
+scale = Vector2( 0.639804, 0.512577 )
+script = ExtResource( 1 )
+
+[node name="weapon_hot_bar" parent="." instance=ExtResource( 4 )]
+margin_left = 52.9133
+margin_top = -17.3808
+margin_right = 60.9133
+margin_bottom = -9.38079
+
+[node name="inventory_menu" type="Node2D" parent="."]
+
+[node name="Panel" type="Panel" parent="inventory_menu"]
+margin_left = 19.0
+margin_top = 67.0
+margin_right = 165.0
+margin_bottom = 120.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="inv_background" type="ColorRect" parent="inventory_menu"]
+margin_left = 19.0
+margin_top = 3.27
+margin_right = 59.0
+margin_bottom = 43.27
+rect_scale = Vector2( 3.64, 1.6 )
+color = Color( 0.133333, 0.12549, 0.203922, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="inventory_menu"]
+margin_left = 26.0
+margin_top = 6.0
+margin_right = 100.0
+margin_bottom = 67.0
+mouse_filter = 0
+custom_constants/vseparation = 1
+custom_constants/hseparation = 1
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="description" parent="inventory_menu" instance=ExtResource( 2 )]

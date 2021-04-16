@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spr_King2Combo_strip_no_bkg.png-bcb0cef95b3763873f1a4bc7341c9344.stex"
+path="res://.import/Inventory_Game_Darzimov.png-4aa38a532fa14f33f249cd408042673e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://NoBkgColor/spr_King2Combo_strip_no_bkg.png"
-dest_files=[ "res://.import/spr_King2Combo_strip_no_bkg.png-bcb0cef95b3763873f1a4bc7341c9344.stex" ]
+source_file="res://Inventory/Inventory_Game_Darzimov.png"
+dest_files=[ "res://.import/Inventory_Game_Darzimov.png-4aa38a532fa14f33f249cd408042673e.stex" ]
 
 [params]
 

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://items/item_object.gd" type="Script" id=1]
+[ext_resource path="res://images.jpg" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+item_name = "Erbs"
+item_description = "Use for potions!
+Use for potions!
+Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!"
+type = 0
+data = [  ]
+Sprite = ExtResource( 2 )
+stackable = true
