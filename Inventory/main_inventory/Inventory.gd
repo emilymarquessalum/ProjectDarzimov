@@ -68,19 +68,11 @@ func slot_gui_input(event , slot):
 
 var inventory_opened = false
 func _process(delta):
-
 	if Input.is_action_just_pressed("open_inventory"):
-		print_debug("!")
 		if inventory_opened:
 			close_inventory()
 		else:
 			open_inventory()
-			#$inventory_menu.hide()
-			
-			
-		
-		
-
 	pass
 
 signal opened_inventory()
@@ -88,7 +80,7 @@ func open_inventory():
 	$inventory_menu.show()
 	inventory_opened = true
 	emit_signal("opened_inventory")
-	
+
 	
 signal closed_inventory()
 func close_inventory():
