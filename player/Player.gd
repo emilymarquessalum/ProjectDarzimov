@@ -1,57 +1,70 @@
 extends KinematicBody2D
 
-var direcao_tecla = 0
-var direcao = 0
+signal life_updated(life)
+signal killed()
 
-var rapidez_x = 0
-var rapidez_y = 0
-var velocidade = Vector2()
+const GRAVITY = 1000
+const SPEED = 5500
+const JUMP_FORCE = -12000
 
-const VEL_MAX = 7000
-const ACC = 6000 #aceleração
-const DEC = 10000 #desaceleração
-const FORCA_PULO = 6500
-const GRAVIDADE = 12000
+export (float) var max_life = 250
 
-var defesa = 10
-var dano = 30
+onready var life = max_life setget _set_life
+onready var invulnerability = $Invunerability
+onready var anim = $Anim
 
+var velocity = Vector2()
+var jump = 0
+var jump_max = 2
 
-func _ready():
-	set_process(true)
-	set_process_input(true)
+func _physics_process(delta):
+	if anim:
+		$Anim.play("Idle")
+		print_debug("!")
+	else:
+		anim = $Anim
+	velocity.y+= GRAVITY * delta
+	
+	velocity.x = (Input.get_action_strength("d") - Input.get_action_strength("a")) * SPEED * delta
+	
+	if is_on_floor():
+		jump = jump_max
+	if jump > 0:
+		if Input.is_action_just_pressed("space"):
+			velocity.y = JUMP_FORCE * delta
+			jump -= 1
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+func damage(amount):
+	if invulnerability.is_stopped():
+		invulnerability.start()
+		_set_life(life - amount)
+		#anim.play("blink")
 
-
-func _input(event):
-	if event.is_action_pressed("space"):
-		rapidez_y = -FORCA_PULO
+func kill():
 	pass
 	
-func _process(delta):
-	# INPUT
-	if direcao_tecla:
-		direcao = direcao_tecla
+func _set_life(value):
+	var prev_life = life
+	life = clamp(value, 0,max_life)
+	if life != prev_life:
+		emit_signal("life_updated", life)
+		if life == 0:
+			kill()
+			emit_signal("killed")
 	
-	if Input.is_action_pressed("a"):
-
-		direcao_tecla = -1
-	elif Input.is_action_pressed("d"):
-		direcao_tecla = 1
-	else:
-		direcao_tecla = 0
-	
-	# MOVEMENT
-	if direcao_tecla == - direcao:
-		rapidez_x /= 3
-	if direcao_tecla:
-		rapidez_x += ACC * delta
-	else:
-		rapidez_x -= DEC * delta
-	rapidez_x = clamp(rapidez_x, 0, VEL_MAX)
-	
-	rapidez_y += GRAVIDADE * delta
-	
-	velocidade.x = rapidez_x * delta * direcao
-	velocidade.y = rapidez_y * delta
-	move_and_slide(velocidade)
-
