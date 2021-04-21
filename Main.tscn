@@ -64,14 +64,16 @@ position = Vector2( 63, 26 )
 scale = Vector2( 0.973801, 0.923192 )
 
 [node name="Player_Interface" parent="." instance=ExtResource( 3 )]
-margin_left = 0.0
-margin_right = 0.0
+margin_left = 6.92957
+margin_right = 6.92957
 
 [node name="shopper" parent="." instance=ExtResource( 6 )]
 modulate = Color( 0.670588, 0.741176, 0.0509804, 1 )
 position = Vector2( 32.493, 139.394 )
 
 [node name="chest" parent="." instance=ExtResource( 2 )]
+pause_mode = 2
 position = Vector2( -42.8857, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 11.9055, 129.587 )

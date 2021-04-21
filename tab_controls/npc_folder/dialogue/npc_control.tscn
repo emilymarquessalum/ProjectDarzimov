@@ -5,6 +5,7 @@
 [sub_resource type="Theme" id=1]
 
 [node name="npc_control" type="Control"]
+pause_mode = 2
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )

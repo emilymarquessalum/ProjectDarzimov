@@ -54,14 +54,14 @@ func npc_interaction():
 		start_npc_dialogue()
 		var inv = get_tree().get_current_scene().get_node("Inventory")
 		inv.connect("opened_inventory", self, "cancel_click")
-		#get_tree().paused = true
+		get_tree().paused = true
 	elif opened and can_close: 
 		get_tree().get_current_scene().remove_child(npc_control)
 		npc_control = null
 		opened = false
 		var inv = get_tree().get_current_scene().get_node("Inventory")
 		inv.disconnect("opened_inventory", self, "cancel_click")
-		#get_tree().paused = false
+		get_tree().paused = false
 		
 	pass
 

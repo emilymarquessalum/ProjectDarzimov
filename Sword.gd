@@ -38,7 +38,7 @@ func _on_Sword_area_entered(area: Area2D) -> void:
 		if particles.emitting == false:
 			queue_free()
 	if area.is_in_group("Player"):
-		player.life -= 10
+		player.get_node("Health").take_damage(10)
 		particles.emitting = true
 		sprite.visible = false
 		if particles.emitting == false:

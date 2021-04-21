@@ -8,6 +8,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 [node name="Node2D" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 3 )
 
 [node name="shop_area" type="Node2D" parent="."]

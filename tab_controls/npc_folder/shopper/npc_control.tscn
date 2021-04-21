@@ -5,6 +5,7 @@
 [sub_resource type="Theme" id=1]
 
 [node name="npc_control" type="Control"]
+pause_mode = 2
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
@@ -16,7 +17,7 @@ __meta__ = {
 margin_left = 23.0
 margin_top = 38.0
 margin_right = 267.0
-margin_bottom = 139.0
+margin_bottom = 152.0
 rect_scale = Vector2( 0.681812, 0.747398 )
 theme = SubResource( 1 )
 __meta__ = {
@@ -24,6 +25,7 @@ __meta__ = {
 }
 
 [node name="container" type="GridContainer" parent="."]
+pause_mode = 2
 margin_left = 29.5284
 margin_top = 42.7362
 margin_right = 69.5284
