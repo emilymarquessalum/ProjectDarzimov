@@ -14,62 +14,14 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/item.gd"
 }, {
-"base": "Node2D",
-"class": "chest",
-"language": "GDScript",
-"path": "res://tab_controls/chest_folder/chest.gd"
-}, {
-"base": "Node",
-"class": "dialogue_piece",
-"language": "GDScript",
-"path": "res://tab_controls/npc_folder/dialogue/dialogue_piece.gd"
-}, {
-"base": "GridContainer",
-"class": "equipped_weapons",
-"language": "GDScript",
-"path": "res://Inventory/Weapon_HotBar.gd"
-}, {
-"base": "Node",
-"class": "health",
-"language": "GDScript",
-"path": "res://player/Health.gd"
-}, {
-"base": "Area2D",
-"class": "interactive_object",
-"language": "GDScript",
-"path": "res://tab_controls/interactive_object.gd"
-}, {
 "base": "Resource",
 "class": "item_type",
 "language": "GDScript",
 "path": "res://items/item_type.gd"
-}, {
-"base": "Node",
-"class": "shopper_control",
-"language": "GDScript",
-"path": "res://tab_controls/npc_folder/shopper/shopper_control.gd"
-}, {
-"base": "Node2D",
-"class": "tab_",
-"language": "GDScript",
-"path": "res://tab_controls/npc_folder/tab.gd"
-}, {
-"base": "Node2D",
-"class": "tab_control",
-"language": "GDScript",
-"path": "res://tab_controls/npc_folder/tab_control.gd"
 } ]
 _global_script_class_icons={
 "Item": "",
-"chest": "",
-"dialogue_piece": "",
-"equipped_weapons": "",
-"health": "",
-"interactive_object": "",
-"item_type": "",
-"shopper_control": "",
-"tab_": "",
-"tab_control": ""
+"item_type": ""
 }
 
 [application]
@@ -151,8 +103,7 @@ open_inventory={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"unicode":0,"echo":false,"script":null)
  ]
 }
-interact={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":79,"unicode":0,"echo":false,"script":null)
- ]
-}
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

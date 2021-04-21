@@ -12,4 +12,3 @@ type = 2
 data = [ ExtResource( 3 ) ]
 Sprite = ExtResource( 1 )
 stackable = false
-price = 5

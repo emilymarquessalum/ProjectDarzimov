@@ -1,36 +1,36 @@
 extends Node
 
-class_name health
-var max_health = 100
-var health
-signal health_altered(health)
+
+var vida_max = 100
+var vida
+signal vida_alterada(vida)
 
 func _ready():
-	health = max_health
-	emit_signal("health_altered", health)
+	vida = vida_max
+	emit_signal("vida_alterada", vida)
 
 	pass # Replace with function body.
 
-func take_damage(damage):
-	health -= damage
-	emit_signal("health_altered", health)
+func tomar_dano(dano):
+	vida -= dano
+	emit_signal("vida_alterada", vida)
 
-	if health <= 0:
+	if vida <= 0:
 		pass # morrer 
 		
 
-func heal_health(heal):
-	health += heal
-	emit_signal("health_altered", health)
+func regenerar_vida(heal):
+	vida += heal
+	emit_signal("vida_alterada", vida)
 
-	if health > max_health:
-		health = max_health
+	if vida > vida_max:
+		vida = vida_max
 	
 
 func _process(delta):
 	if Input.is_action_pressed("q"):
-		take_damage(1)
+		tomar_dano(1)
 		
 	if Input.is_action_pressed("e"):
-		heal_health(1)
+		regenerar_vida(1)
 #	pass
