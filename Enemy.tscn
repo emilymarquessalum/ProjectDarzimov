@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Enemy.gd" type="Script" id=1]
+[ext_resource path="res://images.jpg" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 104.043
+
+[sub_resource type="RectangleShape2D" id=3]
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 2147483653
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 3.8743e-06, -3.27826e-07 )
+scale = Vector2( 0.0746269, 0.106383 )
+texture = ExtResource( 2 )
+
+[node name="Colider" type="CollisionShape2D" parent="."]
+light_mask = 5
+shape = SubResource( 1 )
+
+[node name="GroundDetector" type="RayCast2D" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+light_mask = 6
+position = Vector2( -17, -10 )
+enabled = true
+cast_to = Vector2( 0, 30 )
+collision_mask = 2147483652
+collide_with_areas = true
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 2147483649
+
+[node name="Colider" type="CollisionShape2D" parent="PlayerDetector" groups=[
+"Enemy",
+]]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+modulate = Color( 0.00784314, 0, 1, 1 )
+shape = SubResource( 3 )
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_PlayerDetector_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

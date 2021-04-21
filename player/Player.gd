@@ -1,57 +1,60 @@
 extends KinematicBody2D
 
-var direcao_tecla = 0
-var direcao = 0
+signal life_updated(life)
+signal killed()
 
-var rapidez_x = 0
-var rapidez_y = 0
-var velocidade = Vector2()
+const GRAVITY = 1000
+const SPEED = 5500
+const JUMP_FORCE = -12000
 
-const VEL_MAX = 7000
-const ACC = 6000 #aceleração
-const DEC = 10000 #desaceleração
-const FORCA_PULO = 6500
-const GRAVIDADE = 12000
+onready var invulnerability = $Invunerability
+onready var anim = $Anim
+onready var sprite = $Sprite
 
-var defesa = 10
-var dano = 30
+export var def = 10
+export var damage = 0
+export var life = 300
+var velocity = Vector2()
+var jump = 0
+var jump_max = 2
 
-
-func _ready():
-	set_process(true)
-	set_process_input(true)
-
-
-func _input(event):
-	if event.is_action_pressed("space"):
-		rapidez_y = -FORCA_PULO
-	pass
+func _physics_process(delta):
 	
-func _process(delta):
-	# INPUT
-	if direcao_tecla:
-		direcao = direcao_tecla
+	_move(delta)
 	
-	if Input.is_action_pressed("a"):
+	_jump(delta)
+	
+	_flip()
+	
+	print(life)
 
-		direcao_tecla = -1
-	elif Input.is_action_pressed("d"):
-		direcao_tecla = 1
+func _die():
+	queue_free()
+
+func _move(delta):
+	velocity.y+= GRAVITY * delta
+	velocity.x = (Input.get_action_strength("d") - Input.get_action_strength("a")) * SPEED * delta
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+func _jump(delta):
+	if is_on_floor():
+		jump = jump_max
+	if jump > 0:
+		if Input.is_action_just_pressed("space"):
+			velocity.y = JUMP_FORCE * delta
+			jump -= 1
+
+func _flip():
+	
+	if velocity.y < 0:
+		anim.play("Jump")
+	elif velocity.x > 0:
+		anim.play("Walk")
+		sprite.flip_h = true
+	elif velocity.x < 0:
+		anim.play("Walk")
+		sprite.flip_h = false
 	else:
-		direcao_tecla = 0
+		anim.play("Idle")
 	
-	# MOVEMENT
-	if direcao_tecla == - direcao:
-		rapidez_x /= 3
-	if direcao_tecla:
-		rapidez_x += ACC * delta
-	else:
-		rapidez_x -= DEC * delta
-	rapidez_x = clamp(rapidez_x, 0, VEL_MAX)
-	
-	rapidez_y += GRAVIDADE * delta
-	
-	velocidade.x = rapidez_x * delta * direcao
-	velocidade.y = rapidez_y * delta
-	move_and_slide(velocidade)
 
