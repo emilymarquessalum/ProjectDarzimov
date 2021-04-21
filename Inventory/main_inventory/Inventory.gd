@@ -12,39 +12,45 @@ var last_slot = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(20):
-		var inv_slot = slotObject.instance()
-		inv_slot.init(self)
-		inventory_slots.add_child(inv_slot)
-		inv_slot.acceptable_type = item_type.types.any
+		var inv_slot = make_slot(inventory_slots)
 		if randi()%2 == 0:
 			inv_slot.put_item_into_slot(ItemClass.instance())
 	$inventory_menu.hide()
 
 
+func make_slot(container):
+	var inv_slot = slotObject.instance()
+	container.add_child(inv_slot)
+	inv_slot.acceptable_type = item_type.types.any
+	return inv_slot
+	
 func add_to_inventory(item):
 	for inv_slot in inventory_slots.get_children():
 		if inv_slot.can_stack_item(item):
 			inv_slot.item.quantity += item.quantity
 			inv_slot.item.update_quantity()
-			last_slot.remove_child(item)
-			return	
+			return	true
 	for inv_slot in inventory_slots.get_children():
 		if inv_slot.item == null and inv_slot.item_fits(item): 
-			last_slot.remove_child(item)
 			inv_slot.put_item_into_slot(item)
-			return
-		
+			return true
+	return false
 	
-	pass
 func item_added(slot):
 	selected_item = null
 	last_slot = slot
+	
+var cancel_slot_click = false
 func slot_gui_input(event , slot):
-	if not inventory_opened:
-		return
-		
+
+
+
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
+			slot.emit_signal("selected_slot",slot,self)
+			if cancel_slot_click:
+				cancel_slot_click = false
+				return
 			if selected_item != null:	
 				if slot.attempt_to_add_item(selected_item):
 					last_slot.modulate = Color.white
@@ -52,7 +58,6 @@ func slot_gui_input(event , slot):
 					
 			elif slot.item:
 				selected_item = slot.item
-				slot.take_item_from_slot()
 				last_slot = slot
 				last_slot.modulate = Color.aqua
 
@@ -60,18 +65,29 @@ func slot_gui_input(event , slot):
 	
 
 
+
 var inventory_opened = false
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("open_inventory"):
 		if inventory_opened:
-			$inventory_menu.hide()
-			if selected_item:
-				last_slot.modulate = Color.white
-				add_to_inventory(selected_item)
-				selected_item = null
-				emit_signal("item_selected", selected_item)
+			close_inventory()
 		else:
-			$inventory_menu.show()
-		inventory_opened = !inventory_opened
+			open_inventory()
 	pass
+
+signal opened_inventory()
+func open_inventory():
+	$inventory_menu.show()
+	inventory_opened = true
+	emit_signal("opened_inventory")
+
+	
+signal closed_inventory()
+func close_inventory():
+	emit_signal("closed_inventory")
+	$inventory_menu.hide()
+	inventory_opened = false
+	if selected_item:
+		last_slot.modulate = Color.white
+		selected_item = null
+		emit_signal("item_selected", selected_item)

@@ -5,8 +5,8 @@ extends TextureProgress
 # var a = 2
 # var b = "text"
 
-func alterate_interface(vida):
-	self.set_value(vida) 
+func alterate_interface(health):
+	self.set_value(health) 
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,7 +14,7 @@ func _ready():
 	var health = get_tree().get_current_scene().get_node("Player/Health")
 	
 	
-	health.connect("vida_alterada", self, "alterate_interface")
+	health.connect("health_altered", self, "alterate_interface")
 	pass # Replace with function body.
 
 
