@@ -1,14 +1,15 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://items/Axe_Test.png" type="Texture" id=1]
+[ext_resource path="res://tileset1.1.jpg" type="Texture" id=1]
 [ext_resource path="res://items/item_object.gd" type="Script" id=2]
+[ext_resource path="res://items/axe_attack.tres" type="Resource" id=3]
 
 [resource]
 script = ExtResource( 2 )
 item_name = "Axe"
 item_description = "Such a nice axe..."
 type = 2
-data = [ null ]
+data = [ ExtResource( 3 ) ]
 Sprite = ExtResource( 1 )
 stackable = false
 price = 5

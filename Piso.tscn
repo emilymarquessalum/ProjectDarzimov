@@ -8,14 +8,10 @@ extents = Vector2( 32.077, 8.09599 )
 [node name="Piso" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 7
-collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-light_mask = 4
 shape = SubResource( 1 )
 
 [node name="tileset11" type="Sprite" parent="StaticBody2D"]
-light_mask = -2147483644
 position = Vector2( 0.0447178, -0.00749016 )
 texture = ExtResource( 1 )
