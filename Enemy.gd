@@ -7,7 +7,6 @@ var flip = true
 var gravity = 100
 var velocity = Vector2(0,0)
 var speed = 20
-var direction = 30
 
 func _ready():
 	pass
@@ -15,7 +14,6 @@ func _ready():
 func _process(delta):
 	move_character()
 	detect_ground()
-
 
 func move_character():
 	velocity.x = (-speed if flip else speed)
@@ -41,7 +39,7 @@ func throw():
 	sw.position = get_global_position()
 	sw.player = player
 	get_parent().add_child(sw)
-	$Timer.set_wait_time(2.5)
+	$Timer.set_wait_time(2)
 	
 func _on_Timer_timeout():
 	if player != null:
