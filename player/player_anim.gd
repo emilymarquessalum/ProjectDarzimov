@@ -1,4 +1,4 @@
-extends Sprite
+extends AnimatedSprite
 
 
 # Declare member variables here. Examples:
@@ -17,10 +17,18 @@ func _ready():
 	
 
 func taken_damage():
-	modulate = Color.red
+	blink = true
 	
 func normal_state():
-	modulate = Color.white
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	blink = false
+	get_parent().visible = true
+
+var blink = false
+var blink_frames = 0
+func _process(delta):
+	if blink:
+		
+		blink_frames += 1
+		if blink_frames >= 5:
+			get_parent().visible = !get_parent().visible
+			blink_frames = 0
