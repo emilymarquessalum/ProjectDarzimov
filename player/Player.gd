@@ -8,32 +8,52 @@ const SPEED = 5500
 const JUMP_FORCE = -12000
 
 onready var invulnerability = $Invunerability
-onready var anim = $Anim
+onready var anim = $AnimatedSprite
 onready var sprite = $Sprite
 
-export var def = 10
-export var damage = 0
+export var damage = 1
 export var life = 300
 var velocity = Vector2()
 var jump = 0
 var jump_max = 2
+var isAttacking = false
+var flip = false
 
 func _physics_process(delta):
 	
 	_move(delta)
-	
 	_jump(delta)
-	
-	_flip()
-	
-
 
 func _die():
 	queue_free()
 
 func _move(delta):
 	velocity.y+= GRAVITY * delta
-	velocity.x = (Input.get_action_strength("d") - Input.get_action_strength("a")) * SPEED * delta
+	
+	if Input.is_action_pressed("a") && isAttacking == false:
+		velocity.x = -SPEED * delta
+		anim.play("Walk")
+		if flip == true:
+			scale.x = -scale.x
+			flip = false
+	elif Input.is_action_pressed("d") && isAttacking == false:
+		velocity.x = SPEED * delta
+		anim.play("Walk")
+		if flip == false:
+			scale.x = -scale.x
+			flip = true
+	else:
+		velocity.x = 0
+		if isAttacking == false:
+			anim.play("Idle")
+	
+	if Input.is_action_just_pressed("attack"):
+		anim.play("Attack")
+		$AttackArea/AttackColider.disabled = false
+		isAttacking = true
+	
+	
+	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func _jump(delta):
@@ -42,19 +62,9 @@ func _jump(delta):
 	if jump > 0:
 		if Input.is_action_just_pressed("space"):
 			velocity.y = JUMP_FORCE * delta
-			jump -= 1
+			jump -= 1	
 
-func _flip():
-	
-	if velocity.y < 0:
-		anim.play("Jump")
-	elif velocity.x > 0:
-		anim.play("Walk")
-		sprite.flip_h = true
-	elif velocity.x < 0:
-		anim.play("Walk")
-		sprite.flip_h = false
-	else:
-		anim.play("Idle")
-	
-
+func _on_AnimatedSprite_animation_finished():
+	if anim.animation == ("Attack"):
+		$AttackArea/AttackColider.disabled = true
+		isAttacking = false

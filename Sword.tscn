@@ -76,7 +76,6 @@ scale = Vector2( 0.8, 0.8 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-rotation = 6.097
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
 flip_h = true

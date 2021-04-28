@@ -8,6 +8,7 @@ var gravity = 100
 var velocity = Vector2(0,0)
 var speed = 20
 var direction = 30
+var health = 3
 
 func _ready():
 	pass
@@ -46,3 +47,7 @@ func throw():
 func _on_Timer_timeout():
 	if player != null:
 		throw()
+
+
+func _on_HitBox_area_entered(area):
+	health -= 1

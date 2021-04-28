@@ -26,21 +26,12 @@ func _physics_process(delta):
 		$Animation.play("RotationL")
 
 func _on_Timer_timeout():
-		particles.emitting = true
-		sprite.visible = false
-		if particles.emitting == false:
 			queue_free()
 
 func _on_Sword_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Ground"):
-		particles.emitting = true
-		sprite.visible = false
-		if particles.emitting == false:
 			queue_free()
 	if area.is_in_group("Player"):
 		player.get_node("Health").take_damage(1)
-		particles.emitting = true
-		sprite.visible = false
-		if particles.emitting == false:
-			queue_free()
+		queue_free()
 		

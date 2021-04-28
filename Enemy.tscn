@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://images.jpg" type="Texture" id=2]
+[ext_resource path="res://HitBox.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -48,6 +49,7 @@ autostart = true
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 2
+script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 modulate = Color( 0.00784314, 0, 1, 1 )
@@ -55,3 +57,4 @@ shape = SubResource( 3 )
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_PlayerDetector_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
