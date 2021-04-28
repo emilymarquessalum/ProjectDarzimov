@@ -12,7 +12,6 @@ onready var anim = $AnimatedSprite
 onready var sprite = $Sprite
 
 export var damage = 1
-export var life = 300
 var velocity = Vector2()
 var jump = 0
 var jump_max = 2
