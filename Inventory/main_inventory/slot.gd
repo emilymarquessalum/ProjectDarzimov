@@ -6,9 +6,18 @@ var item = null
 signal item_added(item)
 var acceptable_type
 signal selected_slot(slot,inventory)
-func _ready():
-	self.connect("gui_input", get_tree().get_current_scene().get_node("Inventory"), "slot_gui_input", [self])
 
+func connect_to_inventory():
+	var inv = get_tree().get_current_scene().find_node("Inventory")
+	self.connect("gui_input", inv, "slot_gui_input", [self])
+	self.connect("mouse_entered", inv, "slot_mouse_over", [self])
+	self.connect("mouse_exited", inv, "mouse_out_slot", [self])
+
+func disconnect_from_inventory_mouse_over():
+	self.disconnect("mouse_entered", get_tree().get_current_scene().get_node("Inventory"), "slot_mouse_over")
+	self.disconnect("mouse_exited", get_tree().get_current_scene().get_node("Inventory"), "mouse_out_slot")
+
+signal double_clicked(slot)
 func move_attempt():
 	emit_signal("attempt_to_move_item", self, item)
 	var b = move_item
@@ -17,11 +26,19 @@ func move_attempt():
 	
 	return b
 
+func remove_one():
+	item.quantity -= 1
+	if item.quantity == 0:
+		take_item_from_slot()
+	else:
+		item.update_quantity()
 func take_item_from_slot():
 	
 	move_attempt()
 	remove_child(item)
+	var it = item
 	item = null
+	return it
 
 func item_fits(attempt_item):
 	return attempt_item.data.type == acceptable_type or acceptable_type == item_type.types.any
@@ -39,7 +56,7 @@ func attempt_to_add_item(attempt_item):
 	if not item_fits(attempt_item):
 		return false
 		
-	var slot = get_tree().get_current_scene().get_node("Inventory").last_slot
+	var slot = get_tree().get_current_scene().find_node("Inventory").last_slot
 	
 	if not move_attempt():
 		modulate = Color.white
@@ -82,8 +99,12 @@ func attempt_to_add_item(attempt_item):
 	
 func put_item_into_slot(newItem):
 	item = newItem
-	add_child(item)
+	
 	emit_signal("item_added", item)
+	if not item:
+		return
+	add_child(item)
+	
 	item.position = Vector2(0,0)
 	
 

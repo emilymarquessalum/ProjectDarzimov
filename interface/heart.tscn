@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="heart" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 0.839216, 0.0509804, 0.0588235, 1 )
+margin_left = 1.08581
+margin_top = 0.68502
+margin_right = 22.0858
+margin_bottom = 20.685

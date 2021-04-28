@@ -24,11 +24,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://tab_controls/npc_folder/dialogue/dialogue_piece.gd"
 }, {
-"base": "GridContainer",
-"class": "equipped_weapons",
-"language": "GDScript",
-"path": "res://Inventory/Weapon_HotBar.gd"
-}, {
 "base": "Area2D",
 "class": "interactive_object",
 "language": "GDScript",
@@ -38,11 +33,6 @@ _global_script_classes=[ {
 "class": "item_type",
 "language": "GDScript",
 "path": "res://items/item_type.gd"
-}, {
-"base": "Node",
-"class": "shopper_control",
-"language": "GDScript",
-"path": "res://tab_controls/npc_folder/shopper/shopper_control.gd"
 }, {
 "base": "Node2D",
 "class": "tab_",
@@ -58,10 +48,8 @@ _global_script_class_icons={
 "Item": "",
 "chest": "",
 "dialogue_piece": "",
-"equipped_weapons": "",
 "interactive_object": "",
 "item_type": "",
-"shopper_control": "",
 "tab_": "",
 "tab_control": ""
 }
@@ -69,7 +57,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ProjetoDarzimov"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://menu/menu.tscn"
 config/icon="res://player/icon.png"
 
 [display]

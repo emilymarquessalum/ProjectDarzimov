@@ -12,6 +12,7 @@ func _ready():
 
 var lines = []
 var current_line
+var char_index = 0
 var end_call
 signal end_dialogue
 func make_dialogue(dialogue_lines, dialogue_control,end_calling, par = null):
@@ -19,13 +20,11 @@ func make_dialogue(dialogue_lines, dialogue_control,end_calling, par = null):
 	lines = dialogue_lines
 	current_line = 0
 	$text.text = lines[0]
+	$text.percent_visible = 0
 	if par:
 		connect("end_dialogue", dialogue_control, end_calling, [par])
 	else:
 		connect("end_dialogue", dialogue_control, end_calling)
-
-	#connect("_input", $TextureRect, "click_gui_event")
-	
 	pass
 
 func _gui_input(event):
@@ -35,6 +34,7 @@ func _gui_input(event):
 		return
 		
 	current_line += 1
+	char_index = 0
 	if current_line >= lines.size():
 		emit_signal("end_dialogue")
 		get_tree().get_current_scene().remove_child(self)
@@ -42,7 +42,12 @@ func _gui_input(event):
 		
 
 	$text.text = lines[current_line]
+	$text.percent_visible = 0
 	pass
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func _process(delta):
+	if $text.percent_visible < 1:
+		$text.percent_visible += delta
+		if $text.percent_visible > 1:
+			$text.percent_visible = 1
+	pass

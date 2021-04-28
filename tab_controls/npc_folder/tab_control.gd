@@ -24,6 +24,7 @@ func inicialize_tab(itens	: Array = items, controller = control):
 	remove_tab()
 	tab =  load(tab_path).instance()
 	get_tree().get_current_scene().add_child(tab)
+	
 	tab.hide()
 	
 	items = itens
@@ -31,7 +32,17 @@ func inicialize_tab(itens	: Array = items, controller = control):
 	
 	pass
 
-
+func add_to_tab_items(slot):
+	var item = slot.take_item_from_slot()
+	add_item_to_tab_items(item)
+	
+func add_item_to_tab_items(item):
+	for slot in tab.slots:
+		if slot.item == null:
+			slot.put_item_into_slot(item)
+			return
+	
+	
 var tab
 signal tab_opened()
 # opens tab, has a default value of itself
@@ -41,8 +52,9 @@ func open_tab(itens	: Array = items, controller = control):
 	opened = true
 	inicialize_tab()
 	tab.show()
-	# replace: 
-	tab.open_tab(itens,  controller)
+	var inv = get_tree().get_current_scene().find_node("Inventory")
+	inv.interface_opened()
+	tab.open_tab(self,itens,  controller)
 
 
 signal tab_closed(items)
@@ -51,7 +63,8 @@ func close_tab():
 	items = tab.get_items()
 	remove_tab()
 	emit_signal("tab_closed", items)
-	
+	var inv = get_tree().get_current_scene().find_node("Inventory")
+	inv.interface_closed()
 	
 
 	

@@ -11,8 +11,9 @@ var last_slot = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(20):
+	for i in range(12):
 		var inv_slot = make_slot(inventory_slots)
+		inv_slot.connect_to_inventory()
 		if randi()%2 == 0:
 			inv_slot.put_item_into_slot(ItemClass.instance())
 	$inventory_menu.hide()
@@ -24,7 +25,17 @@ func make_slot(container):
 	inv_slot.acceptable_type = item_type.types.any
 	return inv_slot
 	
+func get_slot_with_item_of_type(type):
+	
+	for slot in inventory_slots.get_children():
+		if not slot.item:
+			continue
+		if slot.item.data.type == type:
+			return slot
+	return null
+	
 func add_to_inventory(item):
+	
 	for inv_slot in inventory_slots.get_children():
 		if inv_slot.can_stack_item(item):
 			inv_slot.item.quantity += item.quantity
@@ -39,20 +50,47 @@ func add_to_inventory(item):
 func item_added(slot):
 	selected_item = null
 	last_slot = slot
-	
+signal mouse_over_slot(slot)
 var cancel_slot_click = false
+
+signal mouse_out_slot(slot)
+func mouse_out_slot(slot):
+	emit_signal("mouse_out_slot", slot)
+	
+signal interface_opened()
+func interface_opened():
+	emit_signal("interface_opened")
+
+signal interface_closed()
+func interface_closed():
+	emit_signal("interface_closed")
+	
+func slot_mouse_over(slot):
+	emit_signal("mouse_over_slot", slot)
+		
+func unselect_slot():
+	last_slot.modulate = Color.white
+	slot_mouse_over(null)
+	last_slot = null
+	selected_item = null
+
 func slot_gui_input(event , slot):
 	if event is InputEventMouseButton:
+	
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			slot.emit_signal("selected_slot",slot,self)
+		
 			if cancel_slot_click:
 				cancel_slot_click = false
 				return
 			if selected_item != null:	
+				if slot == last_slot:
+					last_slot.emit_signal("double_clicked",last_slot)					
+					return
 				if slot.attempt_to_add_item(selected_item):
 					last_slot.modulate = Color.white
+					last_slot = slot
 					item_added(slot)
-					
 			elif slot.item:
 				selected_item = slot.item
 				last_slot = slot

@@ -26,7 +26,7 @@ func _physics_process(delta):
 	
 	_flip()
 	
-	print(life)
+
 
 func _die():
 	queue_free()

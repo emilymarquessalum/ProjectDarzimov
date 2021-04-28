@@ -10,10 +10,8 @@ var data = random_item()
 var quantity = 1
 # Called when the node enters the scene tree for the first time.
 func random_item():
-	if randi() % 2 == 0:
-		return load("res://items/erbs.tres");
-	else:
-		return load("res://items/axe_item.tres");
+	return load("res://items/erbs.tres");
+	
 	
 func _ready():
 	if not data:

@@ -5,9 +5,9 @@
 [ext_resource path="res://interface/Interface.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mountain_Night.png" type="Texture" id=4]
 [ext_resource path="res://Piso.tscn" type="PackedScene" id=5]
-[ext_resource path="res://tab_controls/npc_folder/shopper/shopper.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Inventory/main_inventory/Inventory.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=9]
 
 [node name="Main" type="Node2D"]
 
@@ -60,16 +60,21 @@ position = Vector2( 212, 133 )
 
 [node name="Inventory" parent="." instance=ExtResource( 7 )]
 pause_mode = 2
-position = Vector2( 63, 26 )
+position = Vector2( 195.614, 19.3929 )
 scale = Vector2( 0.973801, 0.923192 )
 
-[node name="Player_Interface" parent="." instance=ExtResource( 3 )]
-margin_left = 6.92957
-margin_right = 6.92957
+[node name="description_panel" parent="." instance=ExtResource( 9 )]
+visible = false
+margin_left = 1.56729
+margin_top = 1.35143
+margin_right = 29.5673
+margin_bottom = 36.3514
 
-[node name="shopper" parent="." instance=ExtResource( 6 )]
-modulate = Color( 0.670588, 0.741176, 0.0509804, 1 )
-position = Vector2( 32.493, 139.394 )
+[node name="Player_Interface" parent="." instance=ExtResource( 3 )]
+margin_left = 5.66964
+margin_top = 1.25992
+margin_right = 5.66964
+margin_bottom = 1.25992
 
 [node name="chest" parent="." instance=ExtResource( 2 )]
 pause_mode = 2

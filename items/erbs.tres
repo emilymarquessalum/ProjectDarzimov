@@ -6,9 +6,7 @@
 [resource]
 script = ExtResource( 1 )
 item_name = "Erbs"
-item_description = "Use for potions!
-Use for potions!
-Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!Use for potions!"
+item_description = "Use for potions!"
 type = 0
 data = [  ]
 Sprite = ExtResource( 2 )

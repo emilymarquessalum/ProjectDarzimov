@@ -1,48 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://interface/HealthBar.gd" type="Script" id=1]
-[ext_resource path="res://Health.png" type="Texture" id=2]
 
-[sub_resource type="StreamTexture" id=2]
-load_path = "res://.import/Life_Test.png-c82d09eba89be209d1cf4142afedb051.stex"
-
-[node name="NinePatchRect" type="NinePatchRect"]
-margin_left = 30.2599
-margin_top = 8.31498
-margin_right = 195.26
-margin_bottom = 36.315
-rect_scale = Vector2( 0.227151, 0.698784 )
-draw_center = false
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureProgress" type="TextureProgress" parent="."]
-anchor_left = -0.802
-anchor_top = -0.421
-anchor_right = -0.802
-anchor_bottom = -0.421
-margin_left = 179.33
-margin_top = 18.788
-margin_right = 499.33
-margin_bottom = 31.788
-rect_clip_content = true
-value = 100.0
-texture_progress = ExtResource( 2 )
-tint_under = Color( 0.898039, 0, 0, 0 )
-tint_over = Color( 0.027451, 0.54902, 0.615686, 0 )
-tint_progress = Color( 0.129412, 0.0117647, 0.239216, 1 )
-nine_patch_stretch = true
+[node name="GridContainer" type="GridContainer"]
+margin_right = 319.0
+margin_bottom = 50.0
+custom_constants/hseparation = 30
+columns = 5
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 146.473, 14.7514 )
-scale = Vector2( 4.69342, 1.03542 )
-texture = SubResource( 2 )

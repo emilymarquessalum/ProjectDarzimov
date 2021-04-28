@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://player/icon.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://player/Roberto walk 3.png" type="Texture" id=7]
 [ext_resource path="res://player/Roberto_Jump.png" type="Texture" id=8]
 [ext_resource path="res://interface/Money.gd" type="Script" id=9]
+[ext_resource path="res://player/player_sprite.gd" type="Script" id=10]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
@@ -93,6 +94,7 @@ script = ExtResource( 2 )
 position = Vector2( 0.0398316, -0.0327873 )
 scale = Vector2( 0.309388, 0.30863 )
 texture = ExtResource( 8 )
+script = ExtResource( 10 )
 
 [node name="Colider" type="CollisionShape2D" parent="."]
 visible = false
@@ -106,7 +108,8 @@ script = ExtResource( 3 )
 script = ExtResource( 9 )
 
 [node name="Invunerability" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 5.0
+one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "Walk"
