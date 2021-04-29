@@ -15,7 +15,7 @@ export var damage = 1
 var velocity = Vector2()
 var jump = 0
 var jump_max = 2
-var isAttacking = false
+var actionTime = false
 var flip = false
 
 func _physics_process(delta):
@@ -29,13 +29,13 @@ func _die():
 func _move(delta):
 	velocity.y+= GRAVITY * delta
 	
-	if Input.is_action_pressed("a") && isAttacking == false:
+	if Input.is_action_pressed("a") && actionTime == false:
 		velocity.x = -SPEED * delta
 		anim.play("Walk")
 		if flip == true:
 			scale.x = -scale.x
 			flip = false
-	elif Input.is_action_pressed("d") && isAttacking == false:
+	elif Input.is_action_pressed("d") && actionTime == false:
 		velocity.x = SPEED * delta
 		anim.play("Walk")
 		if flip == false:
@@ -43,15 +43,17 @@ func _move(delta):
 			flip = true
 	else:
 		velocity.x = 0
-		if isAttacking == false:
+		if actionTime == false:
 			anim.play("Idle")
 	
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and actionTime == false:
 		anim.play("Attack")
 		$AttackArea/AttackColider.disabled = false
-		isAttacking = true
-	
-	
+		actionTime = true
+	if Input.is_action_just_pressed("parry") and actionTime == false:
+		anim.play("Parry")
+		$Parry/ParryColider.disabled = false
+		actionTime = true
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -66,4 +68,8 @@ func _jump(delta):
 func _on_AnimatedSprite_animation_finished():
 	if anim.animation == ("Attack"):
 		$AttackArea/AttackColider.disabled = true
-		isAttacking = false
+		actionTime = false
+	if anim.animation == ("Parry"):
+		$Parry/ParryColider.disabled = true
+		actionTime = false
+

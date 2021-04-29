@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://player/Roberto_Death.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://player/Roberto_Jump.png" type="Texture" id=8]
 [ext_resource path="res://interface/Money.gd" type="Script" id=9]
 [ext_resource path="res://player/player_anim.gd" type="Script" id=10]
+[ext_resource path="res://player/ParryPoint.gd" type="Script" id=11]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
@@ -25,17 +26,22 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
+"name": "Parry",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
 "name": "Jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "Attack",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "Walk",
 "speed": 5.0
 } ]
 
@@ -62,6 +68,9 @@ loop = true
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 11, 2 )
 
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 3.72452
+
 [node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
@@ -74,7 +83,7 @@ script = ExtResource( 2 )
 position = Vector2( 5.72205e-06, 1.5 )
 scale = Vector2( 0.304687, 0.265625 )
 frames = SubResource( 3 )
-animation = "Idle"
+animation = "Parry"
 playing = true
 script = ExtResource( 10 )
 
@@ -88,6 +97,9 @@ script = ExtResource( 3 )
 
 [node name="Money" type="Node" parent="."]
 script = ExtResource( 9 )
+
+[node name="ParryPoint" type="Node" parent="."]
+script = ExtResource( 11 )
 
 [node name="Invunerability" type="Timer" parent="."]
 wait_time = 2.0
@@ -121,6 +133,19 @@ shape = SubResource( 11 )
 disabled = true
 
 [node name="AttackTimer" type="Timer" parent="AttackArea"]
+
+[node name="Parry" type="Area2D" parent="." groups=[
+"Parry",
+]]
+
+[node name="ParryColider" type="CollisionShape2D" parent="Parry"]
+position = Vector2( -13, -2 )
+rotation = 0.698132
+shape = SubResource( 12 )
+disabled = true
+
+[node name="ParryTimer" type="Timer" parent="Parry"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_entered" from="Parry" to="." method="_on_Parry_area_entered"]

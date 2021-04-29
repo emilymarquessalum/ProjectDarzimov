@@ -81,4 +81,4 @@ pause_mode = 2
 position = Vector2( -42.8857, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 11.9055, 129.587 )
+position = Vector2( 12, 130 )
