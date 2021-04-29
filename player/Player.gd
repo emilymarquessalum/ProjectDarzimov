@@ -9,8 +9,8 @@ const JUMP_FORCE = -12000
 
 onready var invulnerability = $Invunerability
 onready var anim = $AnimatedSprite
-onready var sprite = $Sprite
 
+export var direction = 0
 export var damage = 1
 var velocity = Vector2()
 var jump = 0
@@ -21,15 +21,20 @@ var flip = false
 func _physics_process(delta):
 	
 	_move(delta)
-	_jump(delta)
-
+	_direction()
+	
+	if actionTime == false:
+		_jump(delta)
+	
 func _die():
 	queue_free()
 
 func _move(delta):
 	velocity.y+= GRAVITY * delta
 	
-	if Input.is_action_pressed("a") && actionTime == false:
+	if velocity.y < 0 && actionTime == false:
+		anim.play("Jump")
+	elif Input.is_action_pressed("a") && actionTime == false:
 		velocity.x = -SPEED * delta
 		anim.play("Walk")
 		if flip == true:
@@ -62,6 +67,7 @@ func _jump(delta):
 		jump = jump_max
 	if jump > 0:
 		if Input.is_action_just_pressed("space"):
+			anim.play("Jump")
 			velocity.y = JUMP_FORCE * delta
 			jump -= 1	
 
@@ -73,3 +79,5 @@ func _on_AnimatedSprite_animation_finished():
 		$Parry/ParryColider.disabled = true
 		actionTime = false
 
+func _direction():
+	direction = (1 if flip else -1)
