@@ -16,14 +16,14 @@ func _ready():
 
 func remove_tab():
 	if tab:
-		get_tree().get_current_scene().remove_child(tab)
+		get_parent().remove_child(tab)
 		tab = null
 		
 
 func inicialize_tab(itens	: Array = items, controller = control):
 	remove_tab()
 	tab =  load(tab_path).instance()
-	get_tree().get_current_scene().add_child(tab)
+	get_parent().add_child(tab)
 	
 	tab.hide()
 	

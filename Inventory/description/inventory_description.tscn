@@ -52,7 +52,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ScrollContainer"]
+[node name="description_text" type="Label" parent="ScrollContainer"]
 process_priority = 2
 margin_right = 48.0
 margin_bottom = 9.0

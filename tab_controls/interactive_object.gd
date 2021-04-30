@@ -15,7 +15,6 @@ func interacting():
 	if Input.is_action_just_pressed("interact"):
 		var player = get_tree().get_current_scene().get_node("Player")
 		if overlaps_body(player):
-			print_debug("AQW")
 			emit_signal("interacted_object")
 			return true
 			

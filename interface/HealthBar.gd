@@ -19,7 +19,7 @@ func alterate_interface(health):
 func _ready():
 	var health = get_tree().get_current_scene().get_node("Player/Health")
 	health.connect("life_altered", self, "alterate_interface")
-	
+	alterate_interface(health.health)
 	pass
 
 

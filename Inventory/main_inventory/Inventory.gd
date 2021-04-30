@@ -3,7 +3,7 @@ extends Node2D
 const SlotClass = preload("res://Inventory/main_inventory/slot.gd")
 var slotObject = load("res://Inventory/main_inventory/slot.tscn")
 var ItemClass = load("res://items/item.tscn")
-onready var inventory_slots = $inventory_menu/GridContainer
+onready var inventory_slots = $inventory_menu/Grid/GridContainer
 	
 var selected_item = null
 signal item_selected(item)
@@ -11,7 +11,7 @@ var last_slot = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(12):
+	for i in range(50):
 		var inv_slot = make_slot(inventory_slots)
 		inv_slot.connect_to_inventory()
 		if randi()%2 == 0:
@@ -102,20 +102,15 @@ func slot_gui_input(event , slot):
 
 
 var inventory_opened = false
-func _process(delta):
-	if Input.is_action_just_pressed("open_inventory"):
-		if inventory_opened:
-			close_inventory()
-		else:
-			open_inventory()
-	pass
 
 signal opened_inventory()
 func open_inventory():
+	var descript = get_tree().get_current_scene().find_node("description_text")
+	descript._connect_to_inventory()
 	$inventory_menu.show()
 	inventory_opened = true
 	emit_signal("opened_inventory")
-	get_tree().paused = true
+
 	
 signal closed_inventory()
 func close_inventory():
@@ -126,4 +121,4 @@ func close_inventory():
 		last_slot.modulate = Color.white
 		selected_item = null
 		emit_signal("item_selected", selected_item)
-	get_tree().paused = false
+

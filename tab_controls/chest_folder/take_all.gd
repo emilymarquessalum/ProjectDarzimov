@@ -18,7 +18,7 @@ func _ready():
 
 
 func _on_self_pressed():
-	var inv = get_tree().get_current_scene().get_node("Inventory")
+	var inv = get_tree().get_current_scene().find_node("Inventory")
 	var rest_items = []
 	for item in get_parent().get_items():
 		if not inv.add_to_inventory(item):

@@ -1,9 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Inventory/main_inventory/Inventory.gd" type="Script" id=1]
 [ext_resource path="res://Inventory/main_inventory/Inventory.tres" type="StyleBox" id=3]
-
-[sub_resource type="Theme" id=1]
 
 [node name="Inventory" type="Node2D"]
 position = Vector2( 202.945, 12.4094 )
@@ -16,23 +14,25 @@ margin_left = 19.8425
 margin_top = 2.3811
 margin_right = 59.8425
 margin_bottom = 42.3811
-rect_scale = Vector2( 1.96858, 1.62054 )
+rect_scale = Vector2( 2.12858, 1.62054 )
 custom_styles/panel = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GridContainer" type="GridContainer" parent="inventory_menu"]
-margin_left = 25.6727
-margin_top = 15.5772
-margin_right = 96.6727
-margin_bottom = 73.5772
-rect_scale = Vector2( 0.928334, 0.72314 )
-mouse_filter = 0
-theme = SubResource( 1 )
-custom_constants/vseparation = 1
-custom_constants/hseparation = 1
-columns = 6
+[node name="Grid" type="ScrollContainer" parent="inventory_menu"]
+margin_left = 26.2357
+margin_top = 6.58931
+margin_right = 92.8647
+margin_bottom = 64.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="inventory_menu/Grid"]
+rect_clip_content = true
+columns = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }

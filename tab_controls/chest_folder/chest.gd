@@ -17,16 +17,17 @@ func _ready():
 	
 	
 	
-	add_child(chest_control)
+	get_tree().get_current_scene().find_node("Inventory").add_child(chest_control)
 
 	chest_control.tab_path = "res://tab_controls/chest_folder/chest_interface.tscn"
-	var inv = get_tree().get_current_scene().find_node("Inventory")
-	chest_control.connect("tab_opened", inv, "open_inventory")
+	var inv_control = get_tree().get_current_scene().find_node("interface_control")
+	chest_control.connect("tab_opened", inv_control, "open_interface")
 	
 	interact.connect("interacted_object", chest_control, 
 	"change_tab_state")
-	
+	inv_control.connect("closed_interface", chest_control, "close_tab")
 	chest_control.connect("tab_closed", self, "update_items")
+	chest_control.connect("tab_closed", inv_control, "close_interface")
 	chest_control.connect("tab_opened",self, "enable_double_click")
 	chest_control.inicialize_tab(items, self)
 	pass # Replace with function body.
@@ -60,8 +61,7 @@ func update_items(new_items):
 	items = new_items
 	chest_control.inicialize_tab(items, self)
 	disable_double_click()
-	var inv = get_tree().get_current_scene().find_node("Inventory")
-	inv.close_inventory()
+
 	
 func enable_double_click():
 	var inv =  get_tree().get_current_scene().find_node("Inventory")
@@ -71,7 +71,7 @@ func enable_double_click():
 func disable_double_click():
 	var inv =  get_tree().get_current_scene().find_node("Inventory")
 	for slot in inv.inventory_slots.get_children():
-		slot.disconnect("double_clicked", self, "add_item_to_chest")
+		pass#slot.disconnect("double_clicked", self, "add_item_to_chest")
 	
 
 func add_item_to_chest(slot):

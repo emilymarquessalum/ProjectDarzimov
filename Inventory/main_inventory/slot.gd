@@ -17,6 +17,12 @@ func disconnect_from_inventory_mouse_over():
 	self.disconnect("mouse_entered", get_tree().get_current_scene().get_node("Inventory"), "slot_mouse_over")
 	self.disconnect("mouse_exited", get_tree().get_current_scene().get_node("Inventory"), "mouse_out_slot")
 
+func get_description():
+	if not item:
+		return null
+	
+	return item.data.item_name + ":\n" +item.data.item_description
+
 signal double_clicked(slot)
 func move_attempt():
 	emit_signal("attempt_to_move_item", self, item)
