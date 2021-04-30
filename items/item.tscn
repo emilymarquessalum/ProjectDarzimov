@@ -1,14 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://items/item.gd" type="Script" id=1]
-[ext_resource path="res://Seagram tfb.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://SmallFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://images.jpg" type="Texture" id=3]
-
-[sub_resource type="DynamicFont" id=1]
-size = 3
-outline_size = 1
-outline_color = Color( 0.0509804, 0.0313726, 0.0313726, 1 )
-font_data = ExtResource( 2 )
 
 [node name="Item" type="Node2D"]
 script = ExtResource( 1 )
@@ -31,7 +25,7 @@ margin_left = 0.753863
 margin_top = 3.57672
 margin_right = 40.7539
 margin_bottom = 17.5767
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -1,19 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Seagram tfb.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://tab_controls/npc_folder/tab.gd" type="Script" id=2]
 [ext_resource path="res://player/icon.png" type="Texture" id=3]
 [ext_resource path="res://tab_controls/chest_folder/take_all.gd" type="Script" id=4]
-
-[sub_resource type="DynamicFont" id=1]
-outline_size = 1
-outline_color = Color( 0.054902, 0.372549, 0.545098, 1 )
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=2]
-outline_size = 1
-outline_color = Color( 0.0705882, 0.0196078, 0.262745, 1 )
-font_data = ExtResource( 1 )
 
 [node name="chest" type="Node2D"]
 pause_mode = 2
@@ -35,11 +25,11 @@ __meta__ = {
 }
 
 [node name="name" type="Label" parent="."]
-margin_left = 45.3846
-margin_top = 4.00452
-margin_right = 85.3846
-margin_bottom = 25.0045
-custom_fonts/font = SubResource( 1 )
+margin_left = 45.1394
+margin_top = 4.00755
+margin_right = 85.1394
+margin_bottom = 25.0075
+custom_fonts/font = ExtResource( 1 )
 text = "chest"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,7 +51,7 @@ margin_left = 7.87524
 margin_top = 94.577
 margin_right = 70.8752
 margin_bottom = 121.577
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 1 )
 text = "take all"
 script = ExtResource( 4 )
 __meta__ = {
