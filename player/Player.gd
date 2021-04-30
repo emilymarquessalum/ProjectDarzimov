@@ -50,16 +50,6 @@ func _move(delta):
 		velocity.x = 0
 		if actionTime == false:
 			anim.play("Idle")
-	
-	if Input.is_action_just_pressed("attack") and actionTime == false:
-		anim.play("Attack")
-		$AttackArea/AttackColider.disabled = false
-		actionTime = true
-	if Input.is_action_just_pressed("parry") and actionTime == false:
-		anim.play("Parry")
-		$Parry/ParryColider.disabled = false
-		actionTime = true
-	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 func _jump(delta):
@@ -71,13 +61,20 @@ func _jump(delta):
 			velocity.y = JUMP_FORCE * delta
 			jump -= 1	
 
+func do_action(action):
+	var act = !actionTime
+	if not actionTime:
+		anim.play(action)
+		actionTime = true
+	return act
+
+signal finished_animation()
 func _on_AnimatedSprite_animation_finished():
-	if anim.animation == ("Attack"):
-		$AttackArea/AttackColider.disabled = true
-		actionTime = false
-	if anim.animation == ("Parry"):
-		$Parry/ParryColider.disabled = true
-		actionTime = false
+	emit_signal("finished_animation")
+
+
+func end_action():
+	actionTime = false
 
 func _direction():
 	direction = (1 if flip else -1)
