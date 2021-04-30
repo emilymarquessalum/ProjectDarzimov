@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tab_controls/chest_folder/chest.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=9]
 [ext_resource path="res://follow_player.gd" type="Script" id=10]
+[ext_resource path="res://Camera2D.gd" type="Script" id=11]
 
 [node name="Main" type="Node2D"]
 
@@ -60,24 +61,6 @@ position = Vector2( 121, 169 )
 [node name="Enemy" parent="pisos" instance=ExtResource( 8 )]
 position = Vector2( 212, 133 )
 
-[node name="Inventory" parent="." instance=ExtResource( 7 )]
-pause_mode = 2
-position = Vector2( 195.614, 19.3929 )
-scale = Vector2( 0.973801, 0.923192 )
-
-[node name="description_panel" parent="." instance=ExtResource( 9 )]
-visible = false
-margin_left = 1.56729
-margin_top = 1.35143
-margin_right = 29.5673
-margin_bottom = 36.3514
-
-[node name="Player_Interface" parent="." instance=ExtResource( 3 )]
-margin_left = 5.66964
-margin_top = 1.25992
-margin_right = 5.66964
-margin_bottom = 1.25992
-
 [node name="chest" parent="." instance=ExtResource( 2 )]
 pause_mode = 2
 position = Vector2( -42.8857, 0 )
@@ -105,3 +88,26 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 160.362, 89.0899 )
+current = true
+script = ExtResource( 11 )
+
+[node name="Player_Interface" parent="Camera2D" instance=ExtResource( 3 )]
+margin_left = -154.692
+margin_top = -87.83
+margin_right = -154.692
+margin_bottom = -87.83
+
+[node name="Inventory" parent="Camera2D" instance=ExtResource( 7 )]
+pause_mode = 2
+position = Vector2( 35.2522, -69.697 )
+scale = Vector2( 0.973801, 0.923192 )
+
+[node name="description_panel" parent="Camera2D" instance=ExtResource( 9 )]
+visible = false
+margin_left = -158.794
+margin_top = -87.7384
+margin_right = -130.794
+margin_bottom = -52.7385
