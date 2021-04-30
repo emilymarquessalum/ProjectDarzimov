@@ -12,13 +12,14 @@ func _ready():
 
 var sprite = load("res://tileset1.1.jpg")
 var empty = load("res://Health.png")
-var attempted = false
+
+onready var parry = get_tree().get_current_scene().find_node("Parry")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if timer:
-		$Panel.value = (100 - timer.time_left * 100 / timer.wait_time) 
+		$Panel.value = (100 - timer.time_left * 100 / parry.parry_timer) 
 		
-	visible =  $Panel.value != 100 or attempted
+	
 	
 	
 	
