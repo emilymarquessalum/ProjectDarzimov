@@ -3,21 +3,38 @@ extends Node2D
 const SlotClass = preload("res://Inventory/main_inventory/slot.gd")
 var slotObject = load("res://Inventory/main_inventory/slot.tscn")
 var ItemClass = load("res://items/item.tscn")
-onready var inventory_slots = $inventory_menu/Grid/GridContainer
-	
+
 var selected_item = null
 signal item_selected(item)
 var last_slot = null
 
+var inventory_slot_holders = []
+var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
+var types = [item_type.types.ingredient, item_type.types.any,
+		item_type.types.equipment]
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(50):
-		var inv_slot = make_slot(inventory_slots)
-		inv_slot.connect_to_inventory()
-		if randi()%2 == 0:
-			inv_slot.put_item_into_slot(ItemClass.instance())
+	for type in types:
+		var holder = holder_class.instance()
+		holder.type = type
+		inventory_slot_holders.append(holder)
+		var button = Button.new()
+		$button_holder.add_child(button)
+		button.text = item_type.types.keys()[type]
+		button.theme = Theme.new()
+		button.theme.default_font = load("res://interface_text.tres")
+		button.connect("pressed", self, "open_holder", [holder])
+		add_child(holder)
+		holder.visible = false
+		holder.rect_position.y += 10
+	inventory_slot_holders[0].visible = true
 	$inventory_menu.hide()
 
+
+func open_holder(holder):
+	for holder in inventory_slot_holders:
+		holder.visible = false
+	holder.visible = true
 
 func make_slot(container):
 	var inv_slot = slotObject.instance()
@@ -25,33 +42,59 @@ func make_slot(container):
 	inv_slot.acceptable_type = item_type.types.any
 	return inv_slot
 	
+func get_holder_of_type(type):
+	for holder in inventory_slot_holders:
+		if holder.type == type:
+			return holder
+
+	return null
+	
 func get_slot_with_item_of_type(type):
+	var inventory_slots = get_holder_of_type(type)
+	
+	if not inventory_slots:
+		return null
 	
 	for slot in inventory_slots.get_children():
 		if not slot.item:
 			continue
-		if slot.item.data.type == type:
 			return slot
 	return null
 	
 func add_to_inventory(item):
+	var inventory_slots = get_holder_of_type(item.data.type)
+	
+	open_holder(inventory_slots)
+	
+	inventory_slots = inventory_slots.get_child(0)
 	
 	for inv_slot in inventory_slots.get_children():
 		if inv_slot.can_stack_item(item):
 			inv_slot.item.quantity += item.quantity
 			inv_slot.item.update_quantity()
+			inv_slot.modulate = Color.yellow
 			return	true
 	for inv_slot in inventory_slots.get_children():
-		if inv_slot.item == null and inv_slot.item_fits(item): 
+		if inv_slot.item == null: 
 			inv_slot.put_item_into_slot(item)
+			inv_slot.modulate = Color.yellow
 			return true
 	return false
+	
+
 	
 func item_added(slot):
 	selected_item = null
 	last_slot = slot
-signal mouse_over_slot(slot)
+
+
 var cancel_slot_click = false
+
+signal mouse_over_slot(slot)
+func slot_mouse_over(slot):
+	emit_signal("mouse_over_slot", slot)
+	if slot.modulate == Color.yellow:
+		slot.modulate = Color.white
 
 signal mouse_out_slot(slot)
 func mouse_out_slot(slot):
@@ -65,8 +108,7 @@ signal interface_closed()
 func interface_closed():
 	emit_signal("interface_closed")
 	
-func slot_mouse_over(slot):
-	emit_signal("mouse_over_slot", slot)
+
 		
 func unselect_slot():
 	last_slot.modulate = Color.white

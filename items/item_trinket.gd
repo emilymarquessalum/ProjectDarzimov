@@ -39,7 +39,6 @@ func _process(delta):
 		move(delta)
 	else:
 		if animate:
-			print_debug("Hey")
 			position.y -= 1
 			anim_frames += 1
 			if anim_frames > 30:

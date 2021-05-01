@@ -4,7 +4,7 @@ class_name item_type
 enum types{
 	any,
 	ingredient,
-	weapon
+	equipment
 	}
 
 # var a = 2

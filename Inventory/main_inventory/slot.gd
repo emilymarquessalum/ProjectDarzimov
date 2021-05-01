@@ -105,10 +105,12 @@ func attempt_to_add_item(attempt_item):
 	
 func put_item_into_slot(newItem):
 	item = newItem
-	
 	emit_signal("item_added", item)
 	if not item:
 		return
+	#var it_par = item.get_parent()
+	#if it_par:
+	#	it_par.remove_child(item)
 	add_child(item)
 	
 	item.position = Vector2(0,0)

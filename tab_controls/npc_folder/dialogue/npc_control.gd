@@ -15,7 +15,7 @@ func make_options(options, option_control):
 		var new_option = Button.new()
 		new_option.text = option.option_name
 		
-		new_option.connect("pressed", option_control, option["call"], [option])
+		new_option.connect("pressed", option_control, option.call, [option])
 		
 		$container.add_child(new_option)
 

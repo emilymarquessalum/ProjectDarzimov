@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Inventory/main_inventory/inventory_slots.gd" type="Script" id=1]
+
+[node name="Grid" type="ScrollContainer"]
+margin_left = 26.2357
+margin_top = 6.58931
+margin_right = 92.8647
+margin_bottom = 64.0
+scroll_horizontal_enabled = false
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="."]
+rect_clip_content = true
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}

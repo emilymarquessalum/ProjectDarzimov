@@ -38,12 +38,12 @@ func _on_exit_button_pressed():
 
 var opened = false
 signal closed_interface()
-
+signal opened_interface()
 func open_interface():
 	opened = true
 	visible = true
 	get_tree().paused = true
-	
+	emit_signal("opened_interface")
 	inventory.open_inventory()
 		
 func close_interface(d=null):
