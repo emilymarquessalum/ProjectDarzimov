@@ -9,7 +9,6 @@ var selected_item = null
 signal item_selected(item)
 var last_slot = null
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(50):
 		var inv_slot = make_slot(inventory_slots)
@@ -17,7 +16,6 @@ func _ready():
 		if randi()%2 == 0:
 			inv_slot.put_item_into_slot(ItemClass.instance())
 	$inventory_menu.hide()
-
 
 func make_slot(container):
 	var inv_slot = slotObject.instance()
@@ -97,9 +95,6 @@ func slot_gui_input(event , slot):
 				last_slot.modulate = Color.aqua
 
 			emit_signal("item_selected", selected_item)
-	
-
-
 
 var inventory_opened = false
 
@@ -111,7 +106,6 @@ func open_inventory():
 	inventory_opened = true
 	emit_signal("opened_inventory")
 
-	
 signal closed_inventory()
 func close_inventory():
 	emit_signal("closed_inventory")
@@ -121,4 +115,3 @@ func close_inventory():
 		last_slot.modulate = Color.white
 		selected_item = null
 		emit_signal("item_selected", selected_item)
-

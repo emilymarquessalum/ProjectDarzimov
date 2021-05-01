@@ -1,18 +1,15 @@
 extends Node2D
 
 class_name Item
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 var itemClass = load("res://items/item_object.gd")
 var itemScene = load("res://items/item.tscn")
 var data = random_item()
 var quantity = 1
-# Called when the node enters the scene tree for the first time.
+
 func random_item():
 	return load("res://items/erbs.tres");
-	
-	
+
 func _ready():
 	if not data:
 		data = random_item()
@@ -32,7 +29,3 @@ func copy():
 func update_quantity():
 	if data.stackable:
 		$quantity.text =  str(quantity)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

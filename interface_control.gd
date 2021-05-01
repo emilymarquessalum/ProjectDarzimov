@@ -1,21 +1,14 @@
 extends Control
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-onready var inventory = $Inventory
 
+onready var inventory = $Inventory
 onready var cards = $Cards
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	visible = false
-	pass # Replace with function body.
+	pass 
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func close_all():
 	inventory.close_inventory()
 	cards.visible = false
@@ -27,7 +20,6 @@ func _on_equipment_button_pressed():
 func _on_cards_button_pressed():
 	close_all()
 	cards.visible = true
-
 
 func _on_configurations_button_pressed():
 	close_all()
@@ -45,7 +37,7 @@ func open_interface():
 	get_tree().paused = true
 	
 	inventory.open_inventory()
-		
+
 func close_interface(d=null):
 	if not opened:
 		return
