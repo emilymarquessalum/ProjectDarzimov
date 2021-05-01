@@ -17,12 +17,12 @@ func _ready():
 #func _process(delta):
 #	pass
 func close_all():
-	inventory.close_inventory()
+	inventory.visible = false
 	cards.visible = false
 
 func _on_equipment_button_pressed():
 	close_all()	
-	inventory.open_inventory()
+	inventory.visible = true
 	
 func _on_cards_button_pressed():
 	close_all()
