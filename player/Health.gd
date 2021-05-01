@@ -10,7 +10,7 @@ signal player_healed()
 func _ready():
 	health = max_health
 	emit_signal("life_altered", health)
-	pass 
+	pass # Replace with function body.
 
 func take_damage(damage):
 	
@@ -26,11 +26,23 @@ func take_damage(damage):
 	
 	if health <= 0:
 		health = 0
-		pass
+		pass # morrer 
+		
 
+	
 func heal_health(heal):
 	health += heal
 	if health >= max_health:
 		health = max_health
 	emit_signal("life_altered", health)
 	emit_signal("player_healed")
+
+	
+
+func _process(delta):
+	if Input.is_action_just_released("q"):
+		take_damage(1)
+		
+	if Input.is_action_just_released("e"):
+		heal_health(1)
+#	pass

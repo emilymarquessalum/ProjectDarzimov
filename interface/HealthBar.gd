@@ -14,9 +14,14 @@ func alterate_interface(health):
 		last_health += 1
 		var heart = heart_tscn.instance()
 		add_child(heart)
-
+	
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	var health = get_tree().get_current_scene().get_node("Player/Health")
 	health.connect("life_altered", self, "alterate_interface")
 	alterate_interface(health.health)
 	pass
+
+
+
+

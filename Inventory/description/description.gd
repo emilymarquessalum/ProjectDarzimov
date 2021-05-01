@@ -1,5 +1,10 @@
 extends Label
 
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
 func close_description():
 	var descript = get_tree().get_current_scene().find_node("description_panel")
 	descript.hide()
@@ -42,6 +47,9 @@ func fix_position(descript):
 	if m.x + 80>  get_viewport().get_visible_rect().size.x :
 		descript.rect_position.x = m.x - 240
 
+
+		
+
 func _connect_to_cards():
 	pass
 		
@@ -53,10 +61,11 @@ func _connect_to_inventory():
 	inv.connect("closed_inventory", self, "close_description")
 	inv.connect("interface_closed", self, "close_description")
 	inv.connect("interface_opened", get_parent(), "update_tree")
-	pass 
+	pass # Replace with function body.
 
 func _process(delta):
 	if update:
 		fix_position(descript)
 		var panel = descript.get_node("Panel")
 		panel.rect_size.y = self.margin_bottom /5
+

@@ -11,7 +11,8 @@ var itemClass = load("res://items/item.tscn")
 func _ready():
 	#items.append(itemClass.instance())
 	#items.append(itemClass.instance())
-	pass 
+	pass # Replace with function body.
+
 
 func remove_tab():
 	if tab:
@@ -40,10 +41,11 @@ func add_item_to_tab_items(item):
 		if slot.item == null:
 			slot.put_item_into_slot(item)
 			return
-
+	
+	
 var tab
 signal tab_opened()
-
+# opens tab, has a default value of itself
 func open_tab(itens	: Array = items, controller = control):
 	emit_signal("tab_opened")
 
@@ -54,6 +56,7 @@ func open_tab(itens	: Array = items, controller = control):
 	inv.interface_opened()
 	tab.open_tab(self,itens,  controller)
 
+
 signal tab_closed(items)
 func close_tab():
 	opened = false
@@ -62,9 +65,14 @@ func close_tab():
 	emit_signal("tab_closed", items)
 	var inv = get_tree().get_current_scene().find_node("Inventory")
 	inv.interface_closed()
+	
 
+	
+	
 func change_tab_state():
 	if opened:
 		close_tab()
 	else:
 		open_tab()
+
+

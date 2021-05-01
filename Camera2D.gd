@@ -1,9 +1,18 @@
 extends Camera2D
 
-onready var player = get_tree().get_current_scene().get_node("Player") 
-func _ready():
-	pass 
 
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+onready var player = get_tree().get_current_scene().get_node("Player") 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position.x = player.position.x
-	position.y = player.position.y - 60
+	if position.x <= 150:
+		position.x = 150

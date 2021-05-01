@@ -1,7 +1,12 @@
 extends GridContainer
 
-onready var parry = get_tree().get_current_scene().find_node("Player").find_node("Parry")
 
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+onready var parry = get_tree().get_current_scene().find_node("Player").find_node("Parry")
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	for p in parry.parry_clocks:
 		var ic = load("res://player/parry_icon.tscn").instance()
@@ -9,5 +14,5 @@ func _ready():
 		ic.timer = p
 		parry.connect("loaded", self, "hide")
 		parry.connect("used_parry", self, "show")
-	pass
+	pass # Replace with function body.
 

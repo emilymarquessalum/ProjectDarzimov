@@ -17,7 +17,8 @@ func _ready():
 
 func _continue_button_pressed():
 	get_tree().change_scene("res://Main.tscn")
-	pass
+	pass # Replace with function body.
+
 
 func exit_game_pressed():
 	get_tree().quit()

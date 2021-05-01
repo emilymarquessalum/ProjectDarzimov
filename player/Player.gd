@@ -72,6 +72,7 @@ signal finished_animation()
 func _on_AnimatedSprite_animation_finished():
 	emit_signal("finished_animation")
 
+
 func end_action():
 	actionTime = false
 
