@@ -1,9 +1,6 @@
 extends Node2D
 
 class_name chest
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 var item = load("res://items/item.tscn")
 
@@ -15,13 +12,10 @@ func _ready():
 	items.append(item.instance())
 	items.append(item.instance())
 	
-	
-	
 	var inv_control = get_tree().get_current_scene().find_node("interface_control")
 	
 	interact.connect("interacted_object", self, 
 	"_drop_items")
-
 
 var trinket_class = load("res://items/item_trinket.tscn")
 func _drop_items():

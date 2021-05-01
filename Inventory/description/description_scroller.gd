@@ -5,7 +5,7 @@ extends ScrollContainer
 func _ready():
 	get_tree().get_current_scene().connect("child_added_to_main",self, "update_tree")
 	
-	pass # Replace with function body.
+	pass 
 
 func update_tree():
 	var s =get_tree().get_current_scene().get_children().size()
