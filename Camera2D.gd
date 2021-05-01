@@ -14,5 +14,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	position.x = player.position.x
-	if position.x <= 150:
-		position.x = 150
+	position.y = player.position.y - 60
+	
