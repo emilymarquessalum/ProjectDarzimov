@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tab_controls/chest_folder/chest.tscn" type="PackedScene" id=2]
 [ext_resource path="res://interface/Interface.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mountain_Night.png" type="Texture" id=4]
 [ext_resource path="res://Piso.tscn" type="PackedScene" id=5]
@@ -59,6 +60,9 @@ position = Vector2( 121, 169 )
 
 [node name="Enemy" parent="pisos" instance=ExtResource( 8 )]
 position = Vector2( 212, 133 )
+
+[node name="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 39.6976, 141.804 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 12, 130 )

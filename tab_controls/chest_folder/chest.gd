@@ -6,7 +6,7 @@ class_name chest
 # var b = "text"
 
 var item = load("res://items/item.tscn")
-var chest_control = tab_control.new()
+
 onready var interact = $chest
 var items = []
 
@@ -17,77 +17,32 @@ func _ready():
 	
 	
 	
-	get_tree().get_current_scene().find_node("Inventory").add_child(chest_control)
-
-	chest_control.tab_path = "res://tab_controls/chest_folder/chest_interface.tscn"
 	var inv_control = get_tree().get_current_scene().find_node("interface_control")
-	chest_control.connect("tab_opened", inv_control, "open_interface")
 	
-	interact.connect("interacted_object", chest_control, 
-	"change_tab_state")
-	inv_control.connect("closed_interface", chest_control, "close_tab")
-	chest_control.connect("tab_closed", self, "update_items")
-	chest_control.connect("tab_closed", inv_control, "close_interface")
-	chest_control.connect("tab_opened",self, "enable_double_click")
-	chest_control.inicialize_tab(items, self)
-	pass # Replace with function body.
+	interact.connect("interacted_object", self, 
+	"drop_items")
 
-var inventory_linked = true
-var last_slot
-func click_call(event, slot):
-	if not event is InputEventMouseButton:
+
+var trinket_class = load("res://items/item_trinket.tscn")
+func drop_items():
+	for item in items:
+		var item_trink = trinket_class.instance()
+		item_trink.position.x = rand_range(0, 15)
+		item_trink.inic(item)
+		add_child(item_trink)
+		item_trink.connect("collided", self, "collision")
+
+func collision(trinket, obj):
+	if obj.is_in_group("Ground") and trinket.moving:
+		trinket.moving = false
+		trinket.position.y -= 5
 		return
-	if not (event.button_index == BUTTON_LEFT and event.pressed):
-		return
-	
-	if slot == last_slot:
+	if obj.is_in_group("Player") and not trinket.moving and not trinket.animate:
+		trinket.animate = true
+		trinket.connect("finished_animation", self, "trinket_finished_animation")
 		
-		var inv = get_tree().get_current_scene().find_node("Inventory")
-		var item = slot.item
-		slot.take_item_from_slot()
-		if inv.add_to_inventory(item):
-			inv.unselect_slot()
-		else:
-			slot.put_item_into_slot(item)
-
-	else:
-		last_slot = slot
-		
-		
-func add_call(slot,item):
-	last_slot = null
-		
-func update_items(new_items):
-	items = new_items
-	chest_control.inicialize_tab(items, self)
-	disable_double_click()
-
-	
-func enable_double_click():
-	var inv =  get_tree().get_current_scene().find_node("Inventory")
-	for slot in inv.inventory_slots.get_children():
-		slot.connect("double_clicked", self, "add_item_to_chest")
-		
-func disable_double_click():
-	var inv =  get_tree().get_current_scene().find_node("Inventory")
-	for slot in inv.inventory_slots.get_children():
-		pass#slot.disconnect("double_clicked", self, "add_item_to_chest")
-	
-
-func add_item_to_chest(slot):
-	chest_control.add_to_tab_items(slot)
-	
+func trinket_finished_animation(trinket):
 	var inv = get_tree().get_current_scene().find_node("Inventory")
-		
-	inv.unselect_slot()
-	pass
-
-func get_tab(n_tab):
-	pass
-
-
-
-
-
-
-		
+	if inv.add_to_inventory(trinket.item):
+		remove_child(trinket)
+			
