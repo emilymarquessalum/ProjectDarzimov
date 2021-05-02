@@ -5,13 +5,17 @@
 [ext_resource path="res://interface/Interface.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Mountain_Night.png" type="Texture" id=4]
 [ext_resource path="res://Piso.tscn" type="PackedScene" id=5]
-[ext_resource path="res://player/parries.gd" type="Script" id=6]
+[ext_resource path="res://player/Scripts/parries.gd" type="Script" id=6]
 [ext_resource path="res://npcs/npc.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Enemies/Rogue/Rogue.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=9]
 [ext_resource path="res://follow_player.gd" type="Script" id=10]
 [ext_resource path="res://Camera2D.gd" type="Script" id=11]
 [ext_resource path="res://interface_control.tscn" type="PackedScene" id=12]
+
+
+
+
 
 [node name="Main" type="Node2D"]
 

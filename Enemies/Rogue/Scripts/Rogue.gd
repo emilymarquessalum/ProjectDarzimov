@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-onready var sword = preload("res://Sword.tscn")
+onready var sword = preload("res://Projectiles/Sword/Sword.tscn")
 onready var p = preload("res://player/Player.tscn")
 
 var player = null

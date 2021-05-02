@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Roberto_Jump.png-6f424f7fb50083a24a4820dab7f78585.stex"
+path="res://.import/GreenBrick.jpg-17b65075927bf3bab26c0849e4a3766e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/Roberto_Jump.png"
-dest_files=[ "res://.import/Roberto_Jump.png-6f424f7fb50083a24a4820dab7f78585.stex" ]
+source_file="res://Map/Tiles/Assets/GreenBrick.jpg"
+dest_files=[ "res://.import/GreenBrick.jpg-17b65075927bf3bab26c0849e4a3766e.stex" ]
 
 [params]
 

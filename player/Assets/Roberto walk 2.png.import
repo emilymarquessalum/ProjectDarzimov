@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Roberto_Death.png-d7badcd68df8f8558acf43732f2a1139.stex"
+path="res://.import/Roberto walk 2.png-4105913ce3e09c38cfc603934651e41c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/Roberto_Death.png"
-dest_files=[ "res://.import/Roberto_Death.png-d7badcd68df8f8558acf43732f2a1139.stex" ]
+source_file="res://player/Assets/Roberto walk 2.png"
+dest_files=[ "res://.import/Roberto walk 2.png-4105913ce3e09c38cfc603934651e41c.stex" ]
 
 [params]
 

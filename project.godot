@@ -58,7 +58,7 @@ _global_script_class_icons={
 
 config/name="ProjetoDarzimov"
 run/main_scene="res://menu/menu.tscn"
-config/icon="res://player/icon.png"
+config/icon="res://icon.png"
 
 [display]
 

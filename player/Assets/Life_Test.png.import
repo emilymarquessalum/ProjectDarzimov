@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Life_Test.png-c82d09eba89be209d1cf4142afedb051.stex"
+path="res://.import/Life_Test.png-bb1816ea89c87457cef26a09327d6e80.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/Life_Test.png"
-dest_files=[ "res://.import/Life_Test.png-c82d09eba89be209d1cf4142afedb051.stex" ]
+source_file="res://player/Assets/Life_Test.png"
+dest_files=[ "res://.import/Life_Test.png-bb1816ea89c87457cef26a09327d6e80.stex" ]
 
 [params]
 

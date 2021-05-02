@@ -1,7 +1,9 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://tileset1.1.jpg" type="Texture" id=1]
+[ext_resource path="res://Map/Tiles/Assets/GreenBrick.jpg" type="Texture" id=1]
 [ext_resource path="res://cards/card_item.gd" type="Script" id=2]
+
+
 
 [resource]
 script = ExtResource( 2 )

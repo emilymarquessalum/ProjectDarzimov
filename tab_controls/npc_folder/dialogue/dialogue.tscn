@@ -1,8 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Seagram tfb.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://tileset1.1.jpg" type="Texture" id=2]
+[ext_resource path="res://Map/Tiles/Assets/GreenBrick.jpg" type="Texture" id=2]
 [ext_resource path="res://tab_controls/npc_folder/dialogue/dialogue.gd" type="Script" id=3]
+
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 10

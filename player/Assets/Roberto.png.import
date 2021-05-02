@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Sword_Test.png-b6ae149b58f53a49c39db7fcc0fff39d.stex"
+path="res://.import/Roberto.png-a2cf67dd5e245c47ae65f82b925a7ccb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sword_Test.png"
-dest_files=[ "res://.import/Sword_Test.png-b6ae149b58f53a49c39db7fcc0fff39d.stex" ]
+source_file="res://player/Assets/Roberto.png"
+dest_files=[ "res://.import/Roberto.png-a2cf67dd5e245c47ae65f82b925a7ccb.stex" ]
 
 [params]
 

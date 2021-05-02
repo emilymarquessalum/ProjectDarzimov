@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Roberto.png-009350ddfae314f517836a3727b51a46.stex"
+path="res://.import/Roberto_Jump.png-0abcbb40bc274cc2a575d7b358308bd7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/Roberto.png"
-dest_files=[ "res://.import/Roberto.png-009350ddfae314f517836a3727b51a46.stex" ]
+source_file="res://player/Assets/Roberto_Jump.png"
+dest_files=[ "res://.import/Roberto_Jump.png-0abcbb40bc274cc2a575d7b358308bd7.stex" ]
 
 [params]
 
