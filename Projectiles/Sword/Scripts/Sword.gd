@@ -34,6 +34,6 @@ func _on_Sword_area_entered(area: Area2D) -> void:
 	elif area.is_in_group("Parry"):
 			queue_free()
 	elif area.is_in_group("Player"):
-		player.get_node("Health").take_damage(1)
+		player.get_node("Health")._take_damage(1)
 		queue_free()
 		

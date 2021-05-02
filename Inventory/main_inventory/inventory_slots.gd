@@ -7,13 +7,13 @@ onready var inv = find_parent("Inventory")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(50):
-		var inv_slot = inv.make_slot($GridContainer)
-		inv_slot.connect_to_inventory()
+		var inv_slot = inv._make_slot($GridContainer)
+		inv_slot._connect_to_inventory()
 		if randi()%2 == 0:
 			var item = ItemClass.instance()
-			item.data = item.random_item_of_type(type)
+			item.data = item._get_random_item_of_type(type)
 			if item.data:
-				inv_slot.put_item_into_slot(item)
+				inv_slot._put_item_into_slot(item)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

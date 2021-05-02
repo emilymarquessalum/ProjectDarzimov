@@ -13,10 +13,6 @@
 [ext_resource path="res://Camera2D.gd" type="Script" id=11]
 [ext_resource path="res://interface_control.tscn" type="PackedScene" id=12]
 
-
-
-
-
 [node name="Main" type="Node2D"]
 
 [node name="Mountain_Night" type="Sprite" parent="."]

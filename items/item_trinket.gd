@@ -1,17 +1,10 @@
 extends Area2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 var item
-func inic(it):
+func _inic(it):
 	$Sprite.texture = it.data.Sprite
 	item = it
 	inicial_pos_x = position.x
@@ -36,7 +29,7 @@ func _process(delta):
 	for col in cols:
 		emit_signal("collided", self, col)
 	if moving:
-		move(delta)
+		_move(delta)
 	else:
 		if animate:
 			position.y -= 1
@@ -45,7 +38,7 @@ func _process(delta):
 				emit_signal("finished_animation", self)
 		pass # probably do some animation here?
 	
-func move(delta):
+func _move(delta):
 
 	if stop:
 		position.y += 1
@@ -69,8 +62,5 @@ func move(delta):
 		stop = true
 		return
 	var baseY = inicial_pos_y + (_goal.y - inicial_pos_y) * (nextX - x0) / dist * dir
-	
 	var arc = arc_height * (nextX - x0) * (nextX - x1) / (-0.5 * dist * dist)
-	
-	
 	position = position.move_toward(Vector2(nextX, baseY - arc),delta*100)

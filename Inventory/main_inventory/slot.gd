@@ -3,118 +3,107 @@ extends Panel
 
 
 var item = null
-signal item_added(item)
+var move_item = true
 var acceptable_type
-signal selected_slot(slot,inventory)
 
-func connect_to_inventory():
+
+signal item_added(item) # Mudança de item 
+signal attempt_to_move_item(slot, item) # Tentativa de adicionar ou remover item
+signal selected_slot(slot,inventory) # Slot foi selecionado
+signal double_clicked(slot) # Slot foi clicado duas vezes
+
+func _connect_to_inventory():
 	var inv = get_tree().get_current_scene().find_node("Inventory")
-	self.connect("gui_input", inv, "slot_gui_input", [self])
-	self.connect("mouse_entered", inv, "slot_mouse_over", [self])
-	self.connect("mouse_exited", inv, "mouse_out_slot", [self])
+	self.connect("gui_input", inv, "_slot_gui_input", [self])
+	self.connect("mouse_entered", inv, "_slot_mouse_over", [self])
+	self.connect("mouse_exited", inv, "_mouse_out_slot", [self])
 
 func disconnect_from_inventory_mouse_over():
-	self.disconnect("mouse_entered", get_tree().get_current_scene().get_node("Inventory"), "slot_mouse_over")
-	self.disconnect("mouse_exited", get_tree().get_current_scene().get_node("Inventory"), "mouse_out_slot")
+	self.disconnect("mouse_entered", get_tree().get_current_scene().get_node("Inventory"), "_slot_mouse_over")
+	self.disconnect("mouse_exited", get_tree().get_current_scene().get_node("Inventory"), "_mouse_out_slot")
 
-func get_description():
+# Retorna o texto que será usado na descrição
+func _get_description():
 	if not item:
 		return null
-	
 	return item.data.item_name + ":\n" +item.data.item_description
 
-signal double_clicked(slot)
-func move_attempt():
+# Interceptar movimento individual de um slot
+#(se você conectasse ao "attempt_to_move_item" e mudasse
+# "move_item" para falso, ele não moveria o item. Simples assim)
+func _move_attempt():
 	emit_signal("attempt_to_move_item", self, item)
 	var b = move_item
 	if not move_item:
 		move_item = true
-	
 	return b
 
-func remove_one():
+# Chamado para removar 1 de um item stackable
+func _remove_one():
 	item.quantity -= 1
 	if item.quantity == 0:
-		take_item_from_slot()
+		_take_item_from_slot()
 	else:
-		item.update_quantity()
-func take_item_from_slot():
-	
-	move_attempt()
-	remove_child(item)
-	var it = item
-	item = null
-	return it
+		item._update_quantity()
 
-func item_fits(attempt_item):
+# Para potencial uso futuro, slots que possam 
+#filtrar itens, poderiamos usar isso num sistema de 
+#Criação de itens caso necessário. Provavelmente não,
+#Mas por enquanto deixa ai!
+func _item_fits(attempt_item):
 	return attempt_item.data.type == acceptable_type or acceptable_type == item_type.types.any
 
-func can_stack_item(attempt_item):
+# Testa se o slot pode receber ++ de algum item
+func _can_stack_item(attempt_item):
 	if item == null:
 		return false
 	if attempt_item == null:
 		return false
 	return item.data.stackable and item.data.item_name == attempt_item.data.item_name
 
-signal attempt_to_move_item(slot, item)
-var move_item = true
-func attempt_to_add_item(attempt_item):
-	if not item_fits(attempt_item):
-		return false
-		
-	var slot = get_tree().get_current_scene().find_node("Inventory").last_slot
-	
-	if not move_attempt():
-		modulate = Color.white
-		slot.modulate = Color.white
-		return false
-	
 
-	if not slot.move_attempt():
-		slot.modulate = Color.white
-		modulate = Color.white
-		return false
-	
+# Testa se possível adicionar um item no slot, retorna resultado true/false
+func _attempt_to_add_item(attempt_item):
 	if item == null:
-		slot.take_item_from_slot()
-		put_item_into_slot(attempt_item)
 		return true
 		
-	
-	if self == slot:
-		return
-	if can_stack_item(attempt_item):
-		item.quantity += attempt_item.quantity
-		item.update_quantity()
-		slot.take_item_from_slot()
+	if _can_stack_item(attempt_item):
 		return true
+
+	return false
 	
-	if not slot.item_fits(item):
+func _can_move_item_into_slot(attempt_item):
+	if not _item_fits(attempt_item):
 		return false
-	
-	
-	var i = item
-	take_item_from_slot()
-	slot.take_item_from_slot()
-	put_item_into_slot(attempt_item)
-	
-	slot.put_item_into_slot(i)
-	
+	if not _move_attempt():
+		modulate = Color.white
+		return false
 	
 	return true
 	
-func put_item_into_slot(newItem):
-	item = newItem
+func _put_item_into_slot(new_item):
+	
+	if _can_stack_item(new_item):
+		item.quantity += new_item.quantity
+		item._update_quantity()
+		return 
+	
+	item = new_item
 	emit_signal("item_added", item)
 	if not item:
 		return
-	#var it_par = item.get_parent()
-	#if it_par:
-	#	it_par.remove_child(item)
-	add_child(item)
 	
+	add_child(item)
 	item.position = Vector2(0,0)
 	
 
+# Chamado para remover o item do slot, retorna esse item
+func _take_item_from_slot():
+	
+	_move_attempt()
+	remove_child(item)
+	var it = item
+	item = null
+	return it
 
 

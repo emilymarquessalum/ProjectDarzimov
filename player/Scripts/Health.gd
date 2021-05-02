@@ -12,7 +12,7 @@ func _ready():
 	emit_signal("life_altered", health)
 	pass # Replace with function body.
 
-func take_damage(damage):
+func _take_damage(damage):
 	
 	var inv = get_parent().get_node("Invunerability")
 	
@@ -30,7 +30,7 @@ func take_damage(damage):
 		
 
 	
-func heal_health(heal):
+func _heal_health(heal):
 	health += heal
 	if health >= max_health:
 		health = max_health
@@ -41,8 +41,8 @@ func heal_health(heal):
 
 func _process(delta):
 	if Input.is_action_just_released("q"):
-		take_damage(1)
+		_take_damage(1)
 		
 	if Input.is_action_just_released("e"):
-		heal_health(1)
+		_heal_health(1)
 #	pass

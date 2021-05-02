@@ -16,21 +16,23 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func close_all():
+func _close_all():
 	inventory.visible = false
+	inventory._close_inventory()
 	cards.visible = false
 
 func _on_equipment_button_pressed():
-	close_all()	
+	_close_all()	
 	inventory.visible = true
+	inventory._open_inventory()
 	
 func _on_cards_button_pressed():
-	close_all()
+	_close_all()
 	cards.visible = true
 
 
 func _on_configurations_button_pressed():
-	close_all()
+	_close_all()
 
 func _on_exit_button_pressed():
 	get_tree().paused = false
@@ -39,25 +41,26 @@ func _on_exit_button_pressed():
 var opened = false
 signal closed_interface()
 signal opened_interface()
-func open_interface():
+func _open_interface():
 	opened = true
 	visible = true
 	get_tree().paused = true
 	emit_signal("opened_interface")
-	inventory.open_inventory()
+	inventory._open_inventory()
+	inventory.visible = true
 		
-func close_interface(d=null):
+func _close_interface(d=null):
 	if not opened:
 		return
 	opened = false
 	visible = false
 	get_tree().paused = false
 	emit_signal("closed_interface")
-	close_all()
+	_close_all()
 
 func _process(delta):
 	if Input.is_action_just_released("open_interface"):
 		if not opened:
-			open_interface()
+			_open_interface()
 		else:
-			close_interface()
+			_close_interface()

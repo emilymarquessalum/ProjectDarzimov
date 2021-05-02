@@ -6,7 +6,7 @@ var can_close = true
 var dial = preload("res://tab_controls/npc_folder/dialogue/dialogue.tscn")
 
 func _ready():
-	$Area2D.connect("interacted_object", self, "open")
+	$Area2D.connect("interacted_object", self, "_open_conversation")
 	
 
 	var main_dialogue = dialogue_piece.new()
@@ -25,45 +25,46 @@ func _ready():
 
 	options.append(main_dialogue)
 	
-func open():
+func _open_conversation():
 	if not npc_control:
-		npc_control = load("res://tab_controls/npc_folder/dialogue/npc_control.tscn").instance()
+		npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
 		get_tree().get_current_scene().add_child(npc_control)
-		start_npc_dialogue()
+		_start_dialogue_options()
 		get_tree().paused = true
 		var interface = get_tree().get_current_scene().find_node("interface_control")
-		interface.connect("opened_interface", self, "close_interface")
+		interface.connect("opened_interface", self, "_close_interface")
 	elif can_close:
 		get_tree().get_current_scene().remove_child(npc_control)
 		npc_control = null
 		get_tree().paused = false
 		var interface = get_tree().get_current_scene().find_node("interface_control")
-		interface.disconnect("opened_interface", self, "close_interface")
+		interface.disconnect("opened_interface", self, "_close_interface")
 		
-func close_interface():
+func _close_interface():
 	var interface = get_tree().get_current_scene().find_node("interface_control")
-	interface.close_interface()
+	interface._close_interface()
 	get_tree().paused = true
 		
-func dialogue(dialogue_lines):
+func _dialogue(dialogue_lines):
 	var dialogue = dial.instance()
 	can_close = false
 	var end_call = ""
 	if dialogue_lines.next_opts:
-		end_call = "continue_npc_dialogue"
+		end_call = "_continue_dialogue_options"
 	else:
-		end_call = "start_npc_dialogue"
-	dialogue.make_dialogue(dialogue_lines.lines, self,end_call,
-	dialogue_lines.next_opts)
+		end_call = "_start_dialogue_options"
+
+	dialogue._make_dialogue(dialogue_lines.lines, self,end_call,
+			dialogue_lines.next_opts)
 	npc_control.hide()
 	get_tree().get_current_scene().add_child(dialogue)
 	
-func start_npc_dialogue():
-	npc_control.make_options(options, self)
+func _start_dialogue_options():
+	npc_control._make_options(options, self)
 	npc_control.show()
 	can_close = true
 
-func continue_npc_dialogue(options):
-	npc_control.make_options(options, self)
+func _continue_dialogue_options(options):
+	npc_control._make_options(options, self)
 	npc_control.show()
 

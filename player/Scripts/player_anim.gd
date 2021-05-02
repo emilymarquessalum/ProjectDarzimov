@@ -1,25 +1,18 @@
 extends AnimatedSprite
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var player = get_parent()
 	
-	player.get_node("Health").connect("player_damaged", self, "taken_damage")
+	player.get_node("Health").connect("player_damaged", self, "_taken_damage")
 	
-	player.get_node("Invunerability").connect("timeout",self, "normal_state")
+	player.get_node("Invunerability").connect("timeout",self, "_normal_state")
 
 	
 
-func taken_damage():
+func _taken_damage():
 	blink = true
 	
-func normal_state():
+func _normal_state():
 	blink = false
 	get_parent().visible = true
 

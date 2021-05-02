@@ -1,24 +1,9 @@
-extends Button
+extends Control
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func _continue_button_pressed():
+func _continue_game_pressed():
 	get_tree().change_scene("res://Main.tscn")
-	pass # Replace with function body.
 
-
-func exit_game_pressed():
+func _on_exit_game_pressed():
 	get_tree().quit()

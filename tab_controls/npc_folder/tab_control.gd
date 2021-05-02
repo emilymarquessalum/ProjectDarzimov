@@ -14,14 +14,14 @@ func _ready():
 	pass # Replace with function body.
 
 
-func remove_tab():
+func _remove_tab():
 	if tab:
 		get_parent().remove_child(tab)
 		tab = null
 		
 
-func inicialize_tab(itens	: Array = items, controller = control):
-	remove_tab()
+func _inicialize_tab(itens	: Array = items, controller = control):
+	_remove_tab()
 	tab =  load(tab_path).instance()
 	get_parent().add_child(tab)
 	
@@ -32,47 +32,47 @@ func inicialize_tab(itens	: Array = items, controller = control):
 	
 	pass
 
-func add_to_tab_items(slot):
-	var item = slot.take_item_from_slot()
-	add_item_to_tab_items(item)
+func _add_to_tab_items(slot):
+	var item = slot._take_item_from_slot()
+	_add_item_to_tab_items(item)
 	
-func add_item_to_tab_items(item):
+func _add_item_to_tab_items(item):
 	for slot in tab.slots:
 		if slot.item == null:
-			slot.put_item_into_slot(item)
+			slot._put_item_into_slot(item)
 			return
 	
 	
 var tab
 signal tab_opened()
 # opens tab, has a default value of itself
-func open_tab(itens	: Array = items, controller = control):
+func _open_tab(itens	: Array = items, controller = control):
 	emit_signal("tab_opened")
 
 	opened = true
-	inicialize_tab()
+	_inicialize_tab()
 	tab.show()
 	var inv = get_tree().get_current_scene().find_node("Inventory")
-	inv.interface_opened()
+	inv._interface_opened()
 	tab.open_tab(self,itens,  controller)
 
 
 signal tab_closed(items)
-func close_tab():
+func _close_tab():
 	opened = false
 	items = tab.get_items()
-	remove_tab()
+	_remove_tab()
 	emit_signal("tab_closed", items)
 	var inv = get_tree().get_current_scene().find_node("Inventory")
-	inv.interface_closed()
+	inv._interface_closed()
 	
 
 	
 	
-func change_tab_state():
+func _change_tab_state():
 	if opened:
-		close_tab()
+		_close_tab()
 	else:
-		open_tab()
+		_open_tab()
 
 

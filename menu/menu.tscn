@@ -23,6 +23,7 @@ font_data = ExtResource( 1 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -70,7 +71,6 @@ margin_bottom = 25.0
 size_flags_stretch_ratio = 0.0
 custom_fonts/font = SubResource( 2 )
 text = "continue"
-script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -81,6 +81,5 @@ margin_right = 63.0
 margin_bottom = 67.0
 custom_fonts/font = SubResource( 3 )
 text = "exit"
-script = ExtResource( 2 )
-[connection signal="pressed" from="GridContainer/continue_game" to="GridContainer/continue_game" method="_continue_button_pressed"]
-[connection signal="pressed" from="GridContainer/exit_game" to="GridContainer/exit_game" method="exit_game_pressed"]
+[connection signal="pressed" from="GridContainer/continue_game" to="." method="_continue_game_pressed"]
+[connection signal="pressed" from="GridContainer/exit_game" to="." method="_on_exit_game_pressed"]

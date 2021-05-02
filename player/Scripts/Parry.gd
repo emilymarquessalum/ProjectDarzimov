@@ -27,28 +27,28 @@ func _process(delta):
 		current_parry['time_left'] -= delta
 		if current_parry['time_left'] <= 0:
 			current_parry['time_left'] = 0
-			current_parry = find_unloaded_parry()
+			current_parry = _find_unloaded_parry()
 			if not current_parry:
 				emit_signal("loaded")	
 
 	if Input.is_action_just_pressed("parry"):
 		emit_signal("attempted_parry")
-		if not can_parry():
+		if not _can_parry():
 			return
 		if player.do_action("Parry"):
-			expend_parry()
+			_expend_parry()
 			$ParryColider.disabled = false
-			player.connect("finished_animation", self, "finish_parry",[],CONNECT_ONESHOT)
+			player.connect("finished_animation", self, "_finish_parry",[],CONNECT_ONESHOT)
 			
 		
-func find_unloaded_parry():
+func _find_unloaded_parry():
 	var timers = parry_clocks.duplicate()
 
 	for timer in timers:
 		if timer["time_left"] != 0:
 			return timer
 
-func can_parry():
+func _can_parry():
 	var timers = parry_clocks.duplicate()
 	timers.invert()
 	for timer in timers:
@@ -58,7 +58,7 @@ func can_parry():
 	return false
 
 signal used_parry()
-func expend_parry():
+func _expend_parry():
 	var timers = parry_clocks.duplicate()
 	timers.invert()
 	
@@ -75,6 +75,6 @@ func expend_parry():
 			timer["time_left"] = parry_timer
 			
 
-func finish_parry():
+func _finish_parry():
 	$ParryColider.disabled = true
 	player.end_action()

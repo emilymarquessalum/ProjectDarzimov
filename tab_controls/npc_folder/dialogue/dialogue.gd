@@ -1,21 +1,11 @@
 extends Control
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 var lines = []
 var current_line
 var char_index = 0
 var end_call
 signal end_dialogue
-func make_dialogue(dialogue_lines, dialogue_control,end_calling, par = null):
+func _make_dialogue(dialogue_lines, dialogue_control,end_calling, par = null):
 	
 	lines = dialogue_lines
 	current_line = 0

@@ -28,7 +28,7 @@ func _drop_items():
 	for item in items:
 		var item_trink = trinket_class.instance()
 		item_trink.position.x = rand_range(0, 15)
-		item_trink.inic(item.copy())
+		item_trink._inic(item._copy())
 		add_child(item_trink)
 		item_trink.connect("collided", self, "_collision")
 
@@ -39,7 +39,7 @@ func _collision(trinket, obj):
 		return
 	var inv = get_tree().get_current_scene().find_node("Inventory")
 	if obj.is_in_group("Player") and not trinket.moving and not trinket.animate:
-		if inv.add_to_inventory(trinket.item):
+		if inv._add_to_inventory(trinket.item):
 			trinket.animate = true
 			trinket.connect("finished_animation", self, "_trinket_finished_animation")
 		
