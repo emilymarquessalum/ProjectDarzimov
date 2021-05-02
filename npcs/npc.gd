@@ -6,9 +6,13 @@ var can_close = true
 var dial = preload("res://tab_controls/npc_folder/dialogue/dialogue.tscn")
 
 func _ready():
+	_inic_behaviour()
+
+#  dando override nisso, uma classe pode definir as opções de dialogo
+# facilmente!
+func _inic_behaviour():
 	$Area2D.connect("interacted_object", self, "_open_conversation")
 	
-
 	var main_dialogue = dialogue_piece.new()
 	main_dialogue.option_name = "talk to"
 	main_dialogue.lines = ["hey there!", "do you agree?"]	
@@ -22,9 +26,10 @@ func _ready():
 	answer_no.lines = ["....leave!"]
 	
 	main_dialogue.next_opts = [answer_yes, answer_no]
-
 	options.append(main_dialogue)
-	
+
+# Chamado quando o jogador interage com o npc, abrindo ou 
+# fechando a tab quando possível
 func _open_conversation():
 	if not npc_control:
 		npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
@@ -45,6 +50,8 @@ func _close_interface():
 	interface._close_interface()
 	get_tree().paused = true
 		
+# Inicia novo diálogo (chamado por opções para abrir conversas de 
+# dialogo
 func _dialogue(dialogue_lines):
 	var dialogue = dial.instance()
 	can_close = false
@@ -59,6 +66,12 @@ func _dialogue(dialogue_lines):
 	npc_control.hide()
 	get_tree().get_current_scene().add_child(dialogue)
 	
+	
+
+# funções de diálogo options (chamar _start pode resetar 
+# as opções de diálogo a
+# qualquer momento, _continue vai ser chamado para caminhar
+# pelas "branches" de diálogo):	
 func _start_dialogue_options():
 	npc_control._make_options(options, self)
 	npc_control.show()

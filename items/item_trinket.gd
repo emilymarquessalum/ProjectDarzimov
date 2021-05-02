@@ -1,28 +1,30 @@
 extends Area2D
 
-func _ready():
-	pass # Replace with function body.
+var item 
+var movement
+var moving = true
+var animate = false 
 
-var item
+var anim_frames = 0
+# used to change the y position when the player collides 
+#with the trinket
+
+var touch_delay = 0
+var touch_frames = 0
+
+signal collided(proj, collision)
+signal finished_animation(trinket)
+
 func _inic(it):
 	$Sprite.texture = it.data.Sprite
 	item = it
-	inicial_pos_x = position.x
-	inicial_pos_y = position.y
-	
-	_goal = Vector2(position.x + rand_range(-10,10), position.y)
-	
-var stop = false
-var inicial_pos_x
-var inicial_pos_y
-var _goal
-var tspeed = 0.5
-var arc_height = 20
-var moving = true
-var animate = false
-var anim_frames =0
-signal collided(proj, collision)
-signal finished_animation(trinket)
+	movement = parabolic_movement.new()
+	movement._inic(self)
+	movement._goal = Vector2(position.x + rand_range(-10,10), position.y)
+	connect("collided", self, "_collision")
+
+
+
 func _process(delta):
 	var cols = get_overlapping_bodies()
 	
@@ -31,36 +33,31 @@ func _process(delta):
 	if moving:
 		_move(delta)
 	else:
+		touch_frames += 1
 		if animate:
 			position.y -= 1
 			anim_frames += 1
 			if anim_frames > 30:
 				emit_signal("finished_animation", self)
-		pass # probably do some animation here?
+		pass 
 	
 func _move(delta):
+	movement._update(delta)
 
-	if stop:
-		position.y += 1
-	var x0 = inicial_pos_x
-	var x1 = _goal.x
-	
-	var dist = abs(x1 - x0)
-	
-	if dist == 0:
-		get_parent().remove_child(self)
 
-	var nextX = 0
-	var dir = 1
-	if x0 > x1:
-		dir = -1
-		
-	if dist > tspeed:
-		nextX = position.x + (dist / abs(dist) * tspeed * dir)
-	else:
-		nextX = x1
-		stop = true
+func _collision(trinket, obj):
+	if obj.is_in_group("Ground") and trinket.moving:
+		trinket.moving = false
+		trinket.position.y -= 5
 		return
-	var baseY = inicial_pos_y + (_goal.y - inicial_pos_y) * (nextX - x0) / dist * dir
-	var arc = arc_height * (nextX - x0) * (nextX - x1) / (-0.5 * dist * dist)
-	position = position.move_toward(Vector2(nextX, baseY - arc),delta*100)
+	
+	if touch_frames < touch_delay:
+		return
+	var inv = get_tree().get_current_scene().find_node("Inventory")
+	if obj.is_in_group("Player") and not trinket.moving and not trinket.animate:
+		if inv._add_to_inventory(trinket.item):
+			trinket.animate = true
+			trinket.connect("finished_animation", self, "_trinket_finished_animation")
+		
+func _trinket_finished_animation(trinket):
+	trinket.get_parent().remove_child(trinket)

@@ -12,7 +12,7 @@ var inventory_slot_holders = []
 var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
 var types = [item_type.types.ingredient, item_type.types.any,
 		item_type.types.equipment]
-
+var trinket_class = load("res://items/item_trinket.tscn")
 #Criando as seções do inventário, e seus respectivos botões:
 func _ready():
 	for type in types:
@@ -121,9 +121,26 @@ func _interface_closed():
 func _slot_gui_input(event , slot):
 	if not event is InputEventMouseButton:
 		return
-	if not (event.button_index == BUTTON_LEFT and event.pressed):
+	if not event.pressed:
 		return
 
+	if event.button_index == BUTTON_RIGHT and slot.item:
+		var item_trink = trinket_class.instance()
+		get_tree().get_current_scene().add_child(item_trink)
+		get_tree().get_current_scene().move_child(self.find_parent("Camera2D"), 
+				get_tree().get_current_scene().get_children().size())
+		var player = get_tree().get_current_scene().find_node("Player")
+		item_trink.position.x = player.position.x
+		item_trink.position.y = player.position.y - 20
+		item_trink.position.x += rand_range(0, 15)
+		item_trink._inic(slot._take_item_from_slot()._copy())
+		item_trink.touch_delay = 60
+		_deselect_selected_item()
+		return
+		
+	if event.button_index != BUTTON_LEFT:
+		return
+		
 	slot.emit_signal("selected_slot",slot,self)
 	if cancel_slot_click:
 		cancel_slot_click = false

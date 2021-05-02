@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tab_controls/chest_folder/chest.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://follow_player.gd" type="Script" id=10]
 [ext_resource path="res://Camera2D.gd" type="Script" id=11]
 [ext_resource path="res://interface_control.tscn" type="PackedScene" id=12]
+[ext_resource path="res://items/erbs.tres" type="Resource" id=13]
 
 [node name="Main" type="Node2D"]
 
@@ -64,11 +65,16 @@ position = Vector2( 212, 133 )
 
 [node name="chest" parent="." instance=ExtResource( 2 )]
 position = Vector2( 95.5903, 142.993 )
+items_inside = [ ExtResource( 13 ) ]
+
+[node name="npc_basic" parent="." instance=ExtResource( 7 )]
+position = Vector2( 35.4639, 151.959 )
+scale = Vector2( 1.00575, 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 12, 130 )
 
-[node name="Control" type="Control" parent="."]
+[node name="parry_UI" type="Control" parent="."]
 margin_left = 3.31323
 margin_top = 62.0663
 margin_right = 85.3132
@@ -77,8 +83,10 @@ script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+offset_x = -10
+offset_y = -30
 
-[node name="GridContainer" type="GridContainer" parent="Control"]
+[node name="GridContainer" type="GridContainer" parent="parry_UI"]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
@@ -88,10 +96,6 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="npc_basic" parent="." instance=ExtResource( 7 )]
-position = Vector2( 35.4639, 151.959 )
-scale = Vector2( 1.00575, 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_priority = 1

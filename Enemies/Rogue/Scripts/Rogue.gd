@@ -25,7 +25,6 @@ func _process(delta):
 		_die()
 
 func _move_character():
-	
 	velocity.y = gravity
 	
 	if player == null:

@@ -4,7 +4,8 @@ extends ScrollContainer
 var ItemClass = load("res://items/item.tscn")
 var type 
 onready var inv = find_parent("Inventory")
-# Called when the node enters the scene tree for the first time.
+
+# Seções de slots do inventário
 func _ready():
 	for i in range(50):
 		var inv_slot = inv._make_slot($GridContainer)

@@ -72,6 +72,7 @@ func _attempt_to_add_item(attempt_item):
 
 	return false
 	
+# Testa se o item é aceitável para o slot
 func _can_move_item_into_slot(attempt_item):
 	if not _item_fits(attempt_item):
 		return false
@@ -80,22 +81,19 @@ func _can_move_item_into_slot(attempt_item):
 		return false
 	
 	return true
-	
+
 func _put_item_into_slot(new_item):
 	
 	if _can_stack_item(new_item):
 		item.quantity += new_item.quantity
 		item._update_quantity()
 		return 
-	
 	item = new_item
 	emit_signal("item_added", item)
 	if not item:
 		return
-	
 	add_child(item)
 	item.position = Vector2(0,0)
-	
 
 # Chamado para remover o item do slot, retorna esse item
 func _take_item_from_slot():
