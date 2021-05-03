@@ -12,3 +12,7 @@ var next_opts = null
 
 # Funções que vão ser chamadas depois que ela for escolhida!
 var calls = ["_dialogue"]
+
+var end_calls = []
+
+signal started()

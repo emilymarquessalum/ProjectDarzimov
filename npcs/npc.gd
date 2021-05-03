@@ -1,11 +1,15 @@
 extends Node2D
-
+class_name npc
 var npc_control
 var options = []
 var can_close = true
 var dial = preload("res://tab_controls/npc_folder/dialogue/dialogue.tscn")
 
+var opened = false
+
 func _ready():
+	npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
+	get_tree().get_current_scene().add_child(npc_control)
 	_inic_behaviour()
 
 #  dando override nisso, uma classe pode definir as opções de dialogo
@@ -25,36 +29,50 @@ func _inic_behaviour():
 	answer_no.option_name = "no"
 	answer_no.lines = ["....leave!"]
 	
+	
 	main_dialogue.next_opts = [answer_yes, answer_no]
 	options.append(main_dialogue)
 
 # Chamado quando o jogador interage com o npc, abrindo ou 
 # fechando a tab quando possível
 func _open_conversation():
-	if not npc_control:
-		npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
-		get_tree().get_current_scene().add_child(npc_control)
+	if not opened:
+		opened = true
+		_start_dialogue_behaviour()
 		_start_dialogue_options()
 		get_tree().paused = true
 		var interface = get_tree().get_current_scene().find_node("interface_control")
 		interface.connect("opened_interface", self, "_close_interface")
 	elif can_close:
-		get_tree().get_current_scene().remove_child(npc_control)
-		npc_control = null
-		get_tree().paused = false
-		var interface = get_tree().get_current_scene().find_node("interface_control")
-		interface.disconnect("opened_interface", self, "_close_interface")
+		_close_dialogue()
+		
+func _start_dialogue_behaviour():
+	for option in options:
+		for call in option.calls:
+			option.connect("started", self, call)
+		
+func _close_dialogue():
+	opened = false
+	get_tree().paused = false
+	var interface = get_tree().get_current_scene().find_node("interface_control")
+	interface.disconnect("opened_interface", self, "_close_interface")
 		
 func _close_interface():
 	var interface = get_tree().get_current_scene().find_node("interface_control")
 	interface._close_interface()
 	get_tree().paused = true
 		
+
 # Inicia novo diálogo (chamado por opções para abrir conversas de 
 # dialogo
+var dialogue
 func _dialogue(dialogue_lines):
-	var dialogue = dial.instance()
+	var interface = get_tree().get_current_scene().find_node("interface_control")
+	interface.connect("opened_interface", self, "_close_interface")
+	dialogue = dial.instance()
+	dialogue_lines.emit_signal("started")
 	can_close = false
+	get_tree().paused = true
 	var end_call = ""
 	if dialogue_lines.next_opts:
 		end_call = "_continue_dialogue_options"
@@ -63,7 +81,12 @@ func _dialogue(dialogue_lines):
 
 	dialogue._make_dialogue(dialogue_lines.lines, self,end_call,
 			dialogue_lines.next_opts)
-	npc_control.hide()
+	
+	for end in dialogue_lines.end_calls:
+		dialogue.connect("end_dialogue", self, end,[], CONNECT_ONESHOT)
+	
+	if npc_control:
+		npc_control.hide()
 	get_tree().get_current_scene().add_child(dialogue)
 	
 	

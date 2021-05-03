@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/item_type.gd"
 }, {
+"base": "Node2D",
+"class": "npc",
+"language": "GDScript",
+"path": "res://npcs/npc.gd"
+}, {
 "base": "Node",
 "class": "parabolic_movement",
 "language": "GDScript",
@@ -55,6 +60,7 @@ _global_script_class_icons={
 "dialogue_piece": "",
 "interactive_object": "",
 "item_type": "",
+"npc": "",
 "parabolic_movement": "",
 "tab_": "",
 "tab_control": ""
