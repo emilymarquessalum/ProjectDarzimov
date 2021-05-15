@@ -14,10 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://items/item.gd"
 }, {
+"base": "Node",
+"class": "character",
+"language": "GDScript",
+"path": "res://character.gd"
+}, {
 "base": "Node2D",
 "class": "chest",
 "language": "GDScript",
 "path": "res://tab_controls/chest_folder/chest.gd"
+}, {
+"base": "Node",
+"class": "dialogue_maker",
+"language": "GDScript",
+"path": "res://dialogue_piece_maker.gd"
 }, {
 "base": "Node",
 "class": "dialogue_piece",
@@ -56,7 +66,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Item": "",
+"character": "",
 "chest": "",
+"dialogue_maker": "",
 "dialogue_piece": "",
 "interactive_object": "",
 "item_type": "",

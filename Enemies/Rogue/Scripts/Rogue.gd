@@ -21,8 +21,6 @@ func _process(delta):
 	if not melee: 
 		_detect_ground()
 	
-	if health <= 0:
-		_die()
 
 func _move_character():
 	velocity.y = gravity
@@ -31,7 +29,7 @@ func _move_character():
 		velocity.x = (-speed if flip else speed)
 	else:
 		if melee == true:
-			if player.get_node("Health").health <= 1:
+			if player.get_node("Health").health <= 1 or health > 1:
 				if (player.position.x - position.x) > 0:
 					velocity.x =  (speed * 1.5)
 				else:
@@ -74,7 +72,11 @@ func _on_Timer_timeout():
 
 func _on_HitBox_area_entered(area: Area2D):
 	if area.is_in_group("Attack"):
+		var tile = $GroundDetector.get_collider()
+		tile._get_bloody()
 		health -= player.damage
+		if health <= 0:
+			_die()
 		knock = true
 
 func _on_HitBox_area_exited(area: Area2D):

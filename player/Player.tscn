@@ -24,14 +24,14 @@ animations = [ {
 "name": "Attack",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 8 ) ],
 "loop": true,
 "name": "Parry",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "Walk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ) ],
@@ -39,9 +39,9 @@ animations = [ {
 "name": "Jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ) ],
 "loop": true,
-"name": "Idle",
+"name": "Walk",
 "speed": 5.0
 } ]
 
@@ -81,6 +81,9 @@ pause_mode = 1
 material = SubResource( 2 )
 position = Vector2( 0, 128 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_vertical_guides_": [ -100.308 ]
+}
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 5.72205e-06, 1.5 )

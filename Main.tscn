@@ -33,54 +33,54 @@ position = Vector2( 122.415, 101.478 )
 light_mask = 4
 position = Vector2( 236.147, 64.4784 )
 
-[node name="Piso6" parent="pisos" instance=ExtResource( 5 )]
-light_mask = 4
-position = Vector2( 216.474, 153.017 )
-
 [node name="Piso5" parent="pisos" instance=ExtResource( 5 )]
 light_mask = 4
-position = Vector2( 345.222, 169.012 )
+position = Vector2( 344.555, 161.003 )
 
 [node name="Piso4" parent="pisos" instance=ExtResource( 5 )]
 light_mask = 4
-position = Vector2( 281.167, 169.001 )
+position = Vector2( 280.5, 160.992 )
 
 [node name="Piso3" parent="pisos" instance=ExtResource( 5 )]
 light_mask = 4
-position = Vector2( 217.094, 169.001 )
+position = Vector2( 216.427, 160.992 )
 
 [node name="Piso2" parent="pisos" instance=ExtResource( 5 )]
 light_mask = 4
-position = Vector2( 153.375, 169 )
+position = Vector2( 152.708, 161.187 )
+
+[node name="Piso10" parent="pisos" instance=ExtResource( 5 )]
+light_mask = 4
+position = Vector2( 125.025, 161.241 )
 
 [node name="Piso" parent="pisos" instance=ExtResource( 5 )]
 light_mask = 4
-position = Vector2( 31.5, 169.25 )
+position = Vector2( 30.8326, 161.241 )
 
 [node name="Piso9" parent="pisos" instance=ExtResource( 5 )]
 light_mask = 4
-position = Vector2( 121, 169 )
+position = Vector2( 78.07, 161.241 )
 
 [node name="Enemy" parent="pisos" instance=ExtResource( 8 )]
-position = Vector2( 227.732, 38.6066 )
+position = Vector2( 120.23, 141.714 )
 
 [node name="chest" parent="." instance=ExtResource( 2 )]
-position = Vector2( 95.5903, 142.993 )
+position = Vector2( 94.9229, 132.461 )
 items_inside = [ ExtResource( 13 ) ]
 
 [node name="npc_basic" parent="." instance=ExtResource( 7 )]
-position = Vector2( 135.531, 146.914 )
+position = Vector2( 157.642, 142.083 )
 scale = Vector2( 1.00575, 1 )
 script = ExtResource( 14 )
 
 [node name="focus_camera" type="Camera2D" parent="."]
-position = Vector2( 12, 130 )
+position = Vector2( 11.3326, 121.991 )
 scale = Vector2( 0.975391, -2.22168 )
 offset = Vector2( 30, 0 )
 zoom = Vector2( 0.3, 0.3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 12, 130 )
+position = Vector2( 19.3326, 127.491 )
 
 [node name="parry_UI" type="Control" parent="."]
 margin_left = 3.31323

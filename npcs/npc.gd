@@ -2,57 +2,33 @@ extends Node2D
 class_name npc
 var npc_control
 var options = []
-var can_close = true
+var dialogue_pointer = 0
+var can_open = true
 var dial = preload("res://tab_controls/npc_folder/dialogue/dialogue.tscn")
-
+var dialogue
+var dialogue_index = 0
 var opened = false
 
 func _ready():
 	npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
-	get_tree().get_current_scene().add_child(npc_control)
+	add_child(npc_control)
+	npc_control.hide()
 	_inic_behaviour()
 
-#  dando override nisso, uma classe pode definir as opções de dialogo
-# facilmente!
+# definir as opções de dialogo facilmente!
+# (you should be overriding this)
 func _inic_behaviour():
-	$Area2D.connect("interacted_object", self, "_open_conversation")
-	
-	var main_dialogue = dialogue_piece.new()
-	main_dialogue.option_name = "talk to"
-	main_dialogue.lines = ["hey there!", "do you agree?"]	
-	
-	var answer_yes = dialogue_piece.new()
-	answer_yes.option_name = "yes"
-	answer_yes.lines = ["I am glad we agree"]
-	
-	var answer_no = dialogue_piece.new()
-	answer_no.option_name = "no"
-	answer_no.lines = ["....leave!"]
-	
-	
-	main_dialogue.next_opts = [answer_yes, answer_no]
-	options.append(main_dialogue)
+	pass
 
-# Chamado quando o jogador interage com o npc, abrindo ou 
-# fechando a tab quando possível
-func _open_conversation():
-	if not opened:
-		opened = true
-		_start_dialogue_behaviour()
-		_start_dialogue_options()
-		get_tree().paused = true
-		var interface = get_tree().get_current_scene().find_node("interface_control")
-		interface.connect("opened_interface", self, "_close_interface")
-	elif can_close:
-		_close_dialogue()
-		
-func _start_dialogue_behaviour():
-	for option in options:
-		for call in option.calls:
-			option.connect("started", self, call)
-		
+# Muda o dialógo atual (main branch)
+func _change_dialogue_pointer(d = dialogue_pointer + 1):
+	dialogue_pointer = d
+
 func _close_dialogue():
 	opened = false
+	dialogue_index = 0
+	if npc_control:
+		npc_control.hide()
 	get_tree().paused = false
 	var interface = get_tree().get_current_scene().find_node("interface_control")
 	interface.disconnect("opened_interface", self, "_close_interface")
@@ -62,45 +38,72 @@ func _close_interface():
 	interface._close_interface()
 	get_tree().paused = true
 		
+func _close_options(d=null):
+	npc_control.hide()
+	
 
-# Inicia novo diálogo (chamado por opções para abrir conversas de 
-# dialogo
-var dialogue
+func _open_options():
+	npc_control._make_options(options[dialogue_pointer][dialogue_index - 1].next_opts, self)
+	npc_control.show()
+	var player = get_tree().get_current_scene().find_node("Player")
+	npc_control.rect_position.x = 0
+	npc_control.rect_position.y = -80
+
 func _dialogue(dialogue_lines):
+	
 	var interface = get_tree().get_current_scene().find_node("interface_control")
 	interface.connect("opened_interface", self, "_close_interface")
 	dialogue = dial.instance()
 	dialogue_lines.emit_signal("started")
-	can_close = false
 	get_tree().paused = true
-	var end_call = ""
-	if dialogue_lines.next_opts:
-		end_call = "_continue_dialogue_options"
-	else:
-		end_call = "_start_dialogue_options"
 
-	dialogue._make_dialogue(dialogue_lines.lines, self,end_call,
-			dialogue_lines.next_opts)
+
+	dialogue._make_dialogue(dialogue_lines.lines)
 	
-	for end in dialogue_lines.end_calls:
-		dialogue.connect("end_dialogue", self, end,[], CONNECT_ONESHOT)
+
+	dialogue.connect("end_dialogue", self, "_ended_dialogue",[dialogue_lines], CONNECT_ONESHOT)
 	
 	if npc_control:
 		npc_control.hide()
 	get_tree().get_current_scene().add_child(dialogue)
 	
 	
+func _call_start(piece):
+	piece.emit_signal("started")
+	
+func _ended_dialogue(dialogue):
+	print_debug("!")
+	dialogue.emit_signal("ended")
 
-# funções de diálogo options (chamar _start pode resetar 
-# as opções de diálogo a
-# qualquer momento, _continue vai ser chamado para caminhar
-# pelas "branches" de diálogo):	
-func _start_dialogue_options():
-	npc_control._make_options(options, self)
-	npc_control.show()
-	can_close = true
+func _change_camera():
+	var camera = get_tree().get_current_scene().find_node("focus_camera")
+	var player= get_tree().get_current_scene().find_node("Player")
+	camera.make_current()
+	camera.offset.x = player.position.x
+	camera.offset.y = player.position.y -130
+	
+	dialogue.rect_scale = Vector2(0.8, 0.6)
+	dialogue.rect_position.y += 40
+	dialogue.rect_position.x = player.position.x - 36
+	
+	
+func _change_camera_back():
+	var camera = get_tree().get_current_scene().find_node("Camera2D")
+	camera.make_current()
 
-func _continue_dialogue_options(options):
-	npc_control._make_options(options, self)
-	npc_control.show()
+# funções de diálogo options 
+func _start_dialogue(d=null):
+	if opened:
+		return
+	options[dialogue_pointer][0].emit_signal("started", options[dialogue_pointer][0])
+	dialogue_index = 1
+	opened = true
+
+
+func _continue_dialogue(d=null):
+	
+	options[dialogue_pointer][dialogue_index].emit_signal("started", options[dialogue_pointer][dialogue_index])
+	dialogue_index += 1
+	#npc_control._make_options(options, self)
+	#npc_control.show()
 
