@@ -17,6 +17,7 @@ script = ExtResource( 2 )
 light_mask = 4
 scale = Vector2( -1.00109, 0.863456 )
 shape = SubResource( 1 )
+one_way_collision = true
 
 [node name="sprite" type="Sprite" parent="CollisionShape2D"]
 light_mask = -2147483644

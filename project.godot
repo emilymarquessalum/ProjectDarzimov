@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Entity",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Enemy.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://Entity.gd"
+}, {
 "base": "Node2D",
 "class": "Item",
 "language": "GDScript",
@@ -65,6 +75,8 @@ _global_script_classes=[ {
 "path": "res://tab_controls/npc_folder/tab_control.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
+"Entity": "",
 "Item": "",
 "character": "",
 "chest": "",

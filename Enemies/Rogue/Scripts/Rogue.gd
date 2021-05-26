@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Enemy
 
 onready var sword = preload("res://Projectiles/Sword/Sword.tscn")
 onready var p = preload("res://player/Player.tscn")
