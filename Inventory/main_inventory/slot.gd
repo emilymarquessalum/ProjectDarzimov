@@ -6,7 +6,7 @@ var item = null
 var move_item = true
 var acceptable_type
 
-
+var can_change_color = true
 signal item_added(item) # Mudança de item 
 signal attempt_to_move_item(slot, item) # Tentativa de adicionar ou remover item
 signal selected_slot(slot,inventory) # Slot foi selecionado
@@ -89,19 +89,24 @@ func _put_item_into_slot(new_item):
 		item._update_quantity()
 		return 
 	item = new_item
+	
 	emit_signal("item_added", item)
 	if not item:
 		return
+	item.rect_position = Vector2(0,0)
+	item.slot_parent = self
 	add_child(item)
-	item.position = Vector2(0,0)
-
+	
+signal item_removed(item)
 # Chamado para remover o item do slot, retorna esse item
 func _take_item_from_slot():
 	
 	_move_attempt()
 	remove_child(item)
 	var it = item
+	emit_signal("item_removed", item)
 	item = null
+	
 	return it
 
 

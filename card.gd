@@ -6,10 +6,15 @@ func _ready():
 	texture = load("res://icon.png")
 
 func _change_card(new_card):
+	if card:
+		var c = card.behaviour.new()
+		c._end_behaviour(self)
 	card = new_card
 	if card:
 		texture = card.sprite
-
+		var c = card.behaviour.new()
+		c._start_behaviour(self)
+		
 func _on_mouse_entered():
 	var descript = get_tree().get_current_scene().find_node("description_text")
 	descript._change_description(self)

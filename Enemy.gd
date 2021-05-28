@@ -6,6 +6,16 @@ class_name Enemy
 # var b = "text"
 
 var ranking = 1
+var health = 3
+
+
+func _die():
+	queue_free()
+
+func take_damage(damage):
+	health -= damage
+	if health <= 0:
+		_die()
 
 func _ready():
 	pass # Replace with function body.

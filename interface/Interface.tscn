@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://interface/HealthBarInterface.tscn" type="PackedScene" id=1]
+[ext_resource path="res://interface/selected_equipment.gd" type="Script" id=2]
 
 [node name="INTERFACE" type="Control"]
 margin_left = 0.529732
@@ -14,3 +15,16 @@ margin_left = 22.1355
 margin_top = 5.33484
 margin_right = 187.136
 margin_bottom = 33.3349
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_right = 0.564
+margin_left = 159.0
+margin_top = 7.0
+margin_right = 316.0
+margin_bottom = 37.0
+custom_constants/hseparation = 40
+columns = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

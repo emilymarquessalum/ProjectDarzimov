@@ -106,6 +106,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="KinematicBody2D" parent="." instance=ExtResource( 15 )]
+
 [node name="Camera2D" type="Camera2D" parent="."]
 process_priority = 1
 position = Vector2( 160.362, 89.0899 )
@@ -132,5 +134,3 @@ margin_left = -158.794
 margin_top = -87.7384
 margin_right = -130.794
 margin_bottom = -52.7385
-
-[node name="KinematicBody2D" parent="." instance=ExtResource( 15 )]

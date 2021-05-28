@@ -10,3 +10,4 @@ func change_cards(new_cards):
 		
 func change_card(new_card, index=0):
 	cards[index]._change_card(new_card)
+	

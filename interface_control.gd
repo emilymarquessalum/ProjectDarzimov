@@ -14,7 +14,6 @@ func _ready():
 func _close_all():
 	inventory.visible = false
 	inventory._close_inventory()
-	cards.visible = false
 
 # Abrir inventário!
 func _on_equipment_button_pressed():
@@ -23,9 +22,6 @@ func _on_equipment_button_pressed():
 	inventory._open_inventory()
 
 # Abrir cartas!
-func _on_cards_button_pressed():
-	_close_all()
-	cards.visible = true
 
 # Vai abrir configurações eventualmente!
 func _on_configurations_button_pressed():

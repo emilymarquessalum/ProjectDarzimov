@@ -70,6 +70,7 @@ func _inic_behaviour():
 
 var text_hint
 func _wait_for_check():
+	print_debug("!!!!!!!!!!!!")
 	var interface = get_tree().get_current_scene().find_node("interface_control")
 	var cards_button = interface.find_node("cards_button")
 	cards_button.connect("pressed",self, "_change_dialogue_pointer", [2] , CONNECT_ONESHOT)
@@ -83,7 +84,7 @@ func _wait_for_check():
 	get_tree().get_current_scene().find_node("Camera2D").add_child(text_hint)
 
 func _remove_text_hint():
-	get_tree().get_current_scene().remove_child(text_hint)
+	get_tree().get_current_scene().find_node("Camera2D").remove_child(text_hint)
 	text_hint = null
 
 
@@ -98,7 +99,7 @@ func _open_card_display():
 	display._change_image(card.sprite)
 	
 var check_for_display_click = false
-var card = load("res://cards/lion.tres")
+var card = load("res://cards/justiça.tres")
 func _listen_to_continuation():
 	check_for_display_click = true
 	var cards = get_tree().get_current_scene().find_node("Cards")

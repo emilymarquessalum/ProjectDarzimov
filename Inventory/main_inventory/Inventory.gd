@@ -29,12 +29,14 @@ func _ready():
 		holder.visible = false
 		holder.rect_position.y += 10
 	inventory_slot_holders[0].visible = true
+	
+	
 	$inventory_menu.hide()
 
 # Abrindo uma seção do inventário:
 func _open_holder(holder):
-	for holder in inventory_slot_holders:
-		holder.visible = false
+	for holdr in inventory_slot_holders:
+		holdr.visible = false
 	holder.visible = true
 	selected_item = null
 	_deselect_selected_item()
@@ -73,12 +75,15 @@ func _add_to_inventory(item):
 		if inv_slot._can_stack_item(item):
 			inv_slot.item.quantity += item.quantity
 			inv_slot.item._update_quantity()
-			inv_slot.modulate = Color.yellow
+			
+			if inv_slot.can_change_color:
+				inv_slot.modulate = Color.yellow
 			return	true
 	for inv_slot in inventory_slots.get_children():
 		if inv_slot.item == null: 
 			inv_slot._put_item_into_slot(item)
-			inv_slot.modulate = Color.yellow
+			if inv_slot.can_change_color:
+				inv_slot.modulate = Color.yellow
 			return true
 	return false
 	
@@ -156,7 +161,9 @@ func _slot_gui_input(event , slot):
 	elif slot.item:
 		selected_item = slot.item
 		last_slot = slot
-		last_slot.modulate = Color.aqua
+		
+		if last_slot.can_change_color:
+			last_slot.modulate = Color.aqua
 
 	emit_signal("item_selected", selected_item)
 

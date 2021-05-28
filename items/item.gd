@@ -1,9 +1,11 @@
-extends Node2D
+extends Control
 class_name Item
 
 var itemClass = load("res://items/item_object.gd")
 var itemScene = load("res://items/item.tscn")
 var data = _get_random_item()
+var extra_data 
+var slot_parent
 var quantity = 1
 const possible_items = [preload("res://items/erbs.tres"),preload("res://items/ring.tres")]
 
@@ -27,14 +29,26 @@ func _get_random_item_of_type(type):
 func _ready():
 	if not data:
 		data = _get_random_item()
+	
+	print_debug("" + data.item_name)
 	_change_data(data)
 
 # Altera sprite e gera texto se houver quantidade
 func _change_data(data):
+	if not data:
+		return
+	
 	$sprite.texture = data.Sprite
 	if data.stackable:
 		$quantity.text =  str(quantity)
-
+	
+	extra_data = []
+	
+	for ext in data.data:
+		ext = ext.new()
+		ext.item_parent = self
+		extra_data.append(ext)
+	
 # Retorna uma cópia do item (copies data and quantity)
 func _copy():
 	var item_copy = itemScene.instance()

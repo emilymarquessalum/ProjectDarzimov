@@ -4,10 +4,10 @@ extends ScrollContainer
 var ItemClass = load("res://items/item.tscn")
 var type 
 onready var inv = find_parent("Inventory")
-
+var slot_numbers = 50
 # Seções de slots do inventário
 func _ready():
-	for i in range(50):
+	for i in range(slot_numbers):
 		var inv_slot = inv._make_slot($GridContainer)
 		inv_slot._connect_to_inventory()
 		if randi()%2 == 0:

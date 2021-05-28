@@ -9,7 +9,7 @@ var gravity = 100
 var velocity = Vector2(0,0)
 var speed = 20
 var direction = 30
-var health = 3
+
 var knock = false
 var melee = false
 
@@ -74,17 +74,14 @@ func _on_HitBox_area_entered(area: Area2D):
 	if area.is_in_group("Attack"):
 		var tile = $GroundDetector.get_collider()
 		tile._get_bloody()
-		health -= player.damage
-		if health <= 0:
-			_die()
+		take_damage(player.damage)
 		knock = true
 
 func _on_HitBox_area_exited(area: Area2D):
 	if area.is_in_group("Attack"):
 		knock = false
 
-func _die():
-	queue_free()
+
 
 func _on_MeleeCombat_body_entered(body):
 	if body.is_in_group("Player"):
