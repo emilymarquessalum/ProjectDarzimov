@@ -16,7 +16,7 @@ signal collided(proj, collision)
 signal finished_animation(trinket)
 
 func _inic(it):
-	$Sprite.texture = it.data.Sprite
+	$Sprite.texture = it.data.sprite
 	item = it
 	movement = parabolic_movement.new()
 	movement._inic(self)

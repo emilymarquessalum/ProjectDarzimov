@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Entity",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Enemy.gd"
+"path": "res://entities/Enemies/Enemy.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Entity",
 "language": "GDScript",
-"path": "res://Entity.gd"
+"path": "res://entities/Entity.gd"
 }, {
 "base": "Control",
 "class": "Item",
@@ -25,9 +25,14 @@ _global_script_classes=[ {
 "path": "res://items/item.gd"
 }, {
 "base": "Node",
+"class": "cards_data",
+"language": "GDScript",
+"path": "res://cards/cards_data.gd"
+}, {
+"base": "Node",
 "class": "character",
 "language": "GDScript",
-"path": "res://character.gd"
+"path": "res://tab_controls/npc_folder/dialogue/character.gd"
 }, {
 "base": "Node2D",
 "class": "chest",
@@ -37,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "dialogue_maker",
 "language": "GDScript",
-"path": "res://dialogue_piece_maker.gd"
+"path": "res://tab_controls/npc_folder/dialogue/dialogue_piece_maker.gd"
 }, {
 "base": "Node",
 "class": "dialogue_piece",
@@ -53,6 +58,11 @@ _global_script_classes=[ {
 "class": "item_type",
 "language": "GDScript",
 "path": "res://items/item_type.gd"
+}, {
+"base": "Node",
+"class": "justica",
+"language": "GDScript",
+"path": "res://cards/card_items/justiça.gd"
 }, {
 "base": "Node2D",
 "class": "npc",
@@ -83,12 +93,14 @@ _global_script_class_icons={
 "Enemy": "",
 "Entity": "",
 "Item": "",
+"cards_data": "",
 "character": "",
 "chest": "",
 "dialogue_maker": "",
 "dialogue_piece": "",
 "interactive_object": "",
 "item_type": "",
+"justica": "",
 "npc": "",
 "parabolic_movement": "",
 "straight_line_movement": "",
@@ -99,8 +111,15 @@ _global_script_class_icons={
 [application]
 
 config/name="ProjetoDarzimov"
-run/main_scene="res://menu/menu.tscn"
+run/main_scene="res://rooms/Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Global.gd"
+Items="*res://items.gd"
+CardsData="*res://cards/cards_data.gd"
+Game="*res://Game.gd"
 
 [display]
 

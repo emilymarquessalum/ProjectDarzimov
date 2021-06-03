@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://tiles/Piso.tscn" type="PackedScene" id=1]
+[ext_resource path="res://rooms/essential.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Map/scene_transition.tscn" type="PackedScene" id=3]
+[ext_resource path="res://rooms/room.gd" type="Script" id=4]
+[ext_resource path="res://Map/tiles4.jpg" type="Texture" id=5]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 4 )
+room_width = 160
+room_height = 76
+room_x = 160
+spawn = 1
+tile_texture = ExtResource( 5 )
+tile_region = Rect2( 6.2, 309, 101.188, 94.963 )
+
+[node name="waypoint1" type="Node2D" parent="."]
+position = Vector2( 12.4409, 140.686 )
+
+[node name="waypoint2" type="Node2D" parent="."]
+position = Vector2( 306.343, 36.371 )
+
+[node name="waypoints" type="Node" parent="."]
+
+[node name="Piso" parent="." instance=ExtResource( 1 )]
+position = Vector2( 50.2429, 146.014 )
+
+[node name="Piso6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 19.6545, 159.107 )
+
+[node name="Piso2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 81.3902, 132.799 )
+
+[node name="Piso3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 112.62, 119.662 )
+
+[node name="Piso4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 144.202, 106.221 )
+
+[node name="Piso5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 174.452, 92.9216 )
+
+[node name="Piso7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 206.452, 79.4216 )
+
+[node name="Piso8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 237.952, 65.9216 )
+
+[node name="Piso9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 268.452, 52.4216 )
+
+[node name="Piso12" parent="." instance=ExtResource( 1 )]
+position = Vector2( 34.5196, 171.594 )
+
+[node name="Piso16" parent="." instance=ExtResource( 1 )]
+position = Vector2( 189.317, 105.408 )
+
+[node name="Piso17" parent="." instance=ExtResource( 1 )]
+position = Vector2( 221.317, 91.9083 )
+
+[node name="Piso18" parent="." instance=ExtResource( 1 )]
+position = Vector2( 252.817, 78.4083 )
+
+[node name="Piso19" parent="." instance=ExtResource( 1 )]
+position = Vector2( 283.317, 64.9083 )
+
+[node name="Piso10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 313.952, 52.4216 )
+
+[node name="Area2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( -10.077, 140.786 )
+point = 2
+player_direction = false
+
+[node name="Area2D2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 329.923, 34.786 )
+scene = "res://rooms/second_main_test.tscn"
+point = 1
+
+[node name="essential" parent="." instance=ExtResource( 2 )]

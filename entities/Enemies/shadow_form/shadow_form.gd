@@ -1,0 +1,70 @@
+extends Enemy
+
+var patterns = [
+	{'pattern' :[0,60,50,50], 'indication': [0,0,5]},
+	{'pattern' :[30,25,10], 'indication': [5,0,0]}]
+
+
+var p_index = 0
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var jump = load("res://entities/Enemies/jump_behaviour.gd").new()
+	find_node("Health").connect('died', self, "_justica_reset")
+	behaviours.append(jump)
+	jump.controller = self
+	var p = get_tree().get_current_scene().find_node("Player")
+	var dir = -1
+	if p.flip:
+		dir *= -1
+	_look_at(p.position, true)
+	var po = Game._get_random_empty_floor()
+	if po:
+		position = po.position
+	var areas = find_node("middle_area")
+	
+	while (abs(position.x -  player.position.x) > 170 or abs(position.x -  player.position.x) < 20) and (not find_node("GroundDetector").is_colliding() or areas._inside_floors()):
+		po = Game._get_random_empty_floor()
+		if po:
+			position = po.position
+		
+	scale.x = -scale.x	
+	position.y -= 80
+	_fix_on_ground()
+	
+var dest_y = 0
+func _jump(c):
+	dest_y = -c.jump_frames * c.jump_power	
+
+func _justica_reset():
+	CardsData.justica.behaviour.spawned_shadow = false
+
+
+
+
+onready var state = find_node("awake")
+var time_on_state = 120
+
+func _change_state(a=0,s=""):
+	state = find_node(s)
+	time_on_state = 0
+	
+
+var dest
+onready var player = get_tree().get_current_scene().find_node("Player") 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	#_look_at(player.position, true)
+	
+	
+
+	dest = Vector2.ZERO
+	dest.y = gravity
+	dest.x = 0
+	time_on_state += 1
+	if not dest_y == 0 and state == find_node('running'):
+		dest.y = dest_y
+	dest_y = 0
+	
+	state._update(self)
+
+	move_and_slide(dest, Vector2.UP)

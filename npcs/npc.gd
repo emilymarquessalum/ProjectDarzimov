@@ -72,7 +72,6 @@ func _call_start(piece):
 	piece.emit_signal("started")
 	
 func _ended_dialogue(dialogue):
-	print_debug("!")
 	dialogue.emit_signal("ended")
 
 func _change_camera():
@@ -80,7 +79,7 @@ func _change_camera():
 	var player= get_tree().get_current_scene().find_node("Player")
 	camera.make_current()
 	camera.offset.x = player.position.x
-	camera.offset.y = player.position.y -130
+	camera.offset.y = player.position.y 
 	
 	dialogue.rect_scale = Vector2(0.8, 0.6)
 	dialogue.rect_position.y += 40

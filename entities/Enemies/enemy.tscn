@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://entities/Enemies/enemy_properties.gd" type="Script" id=1]
+[ext_resource path="res://entities/player/Scripts/Health.gd" type="Script" id=2]
+[ext_resource path="res://entities/Enemies/shadow_form/wall_direction.gd" type="Script" id=3]
+[ext_resource path="res://entities/Enemies/middle_area.gd" type="Script" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 120.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 54.037
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2.88713, 4.49382 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 2147483649
+
+[node name="Colider" type="CollisionShape2D" parent="PlayerDetector" groups=[
+"Enemy",
+]]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 3.8743e-06, -3.27826e-07 )
+scale = Vector2( 1e-05, 1e-05 )
+
+[node name="GroundDetector" type="RayCast2D" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+light_mask = 6
+position = Vector2( -0.295654, -0.645565 )
+enabled = true
+cast_to = Vector2( 0, 30 )
+collision_mask = 2147483652
+collide_with_areas = true
+
+[node name="MeleeCombat" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeCombat"]
+position = Vector2( -0.393989, -0.629961 )
+scale = Vector2( 1.43154, 1.43547 )
+shape = SubResource( 2 )
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 2 )
+max_health = 0
+
+[node name="direction_collision" type="RayCast2D" parent="."]
+modulate = Color( 0.611765, 0.12549, 0.12549, 1 )
+use_parent_material = true
+enabled = true
+cast_to = Vector2( -15, 0 )
+collision_mask = 4
+collide_with_areas = true
+script = ExtResource( 3 )
+
+[node name="middle_area" type="Area2D" parent="."]
+position = Vector2( 0, -0.0787449 )
+scale = Vector2( 1.93124, 1.64799 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="middle_area"]
+position = Vector2( -0.353554, -0.176777 )
+shape = SubResource( 3 )

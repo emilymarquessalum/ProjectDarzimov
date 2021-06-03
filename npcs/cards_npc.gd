@@ -4,6 +4,10 @@ var display
 var after_display
 
 func _inic_behaviour():
+	
+	
+	card = CardsData.justica
+	
 	var sprite_1 = load("res://images.jpg")
 	var sprite_2 = load("res://icon.png")
 	var necromancer = character.new()
@@ -70,17 +74,15 @@ func _inic_behaviour():
 
 var text_hint
 func _wait_for_check():
-	print_debug("!!!!!!!!!!!!")
 	var interface = get_tree().get_current_scene().find_node("interface_control")
-	var cards_button = interface.find_node("cards_button")
-	cards_button.connect("pressed",self, "_change_dialogue_pointer", [2] , CONNECT_ONESHOT)
-	cards_button.connect("pressed",cards_button, "_deactivate_shine", [] , CONNECT_ONESHOT)
-	cards_button._activate_shine()
+	
+	interface.connect("opened_interface",self, "_change_dialogue_pointer", [2] , CONNECT_ONESHOT)
 	
 	interface.connect("opened_interface", self, "_remove_text_hint",[], CONNECT_ONESHOT)
 	text_hint = Label.new()
 	text_hint.add_font_override("font",load("res://SmallFont.tres"))
 	text_hint.text = "click on esc to check your cards"
+	text_hint.rect_position = Vector2(-156,-85)
 	get_tree().get_current_scene().find_node("Camera2D").add_child(text_hint)
 
 func _remove_text_hint():
@@ -99,7 +101,7 @@ func _open_card_display():
 	display._change_image(card.sprite)
 	
 var check_for_display_click = false
-var card = load("res://cards/justiça.tres")
+var card 
 func _listen_to_continuation():
 	check_for_display_click = true
 	var cards = get_tree().get_current_scene().find_node("Cards")

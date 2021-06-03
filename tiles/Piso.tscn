@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://tiles/tile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://tiles/piso.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 23.5376, 6.34452 )
+
+[node name="Piso" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="tile3" parent="." instance=ExtResource( 1 )]
+position = Vector2( -15.68, 0 )
+rotation = 3.14159
+scale = Vector2( 1.00109, -0.863456 )
+
+[node name="tile" parent="." instance=ExtResource( 1 )]
+rotation = 3.14159
+scale = Vector2( 1.00109, -0.863456 )
+
+[node name="tile2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 15.7, 0 )
+rotation = 3.14159
+scale = Vector2( 1.00109, -0.863456 )
+
+[node name="area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="area"]
+position = Vector2( 0, -0.117983 )
+shape = SubResource( 1 )

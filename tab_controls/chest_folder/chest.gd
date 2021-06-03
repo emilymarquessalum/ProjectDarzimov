@@ -5,9 +5,10 @@ var item = load("res://items/item.tscn")
 
 onready var interact = $chest
 var items = []
-export(Array, Resource) var items_inside
+var items_inside 
 func _ready():
-	
+	var it = Item.new()
+	items_inside = [it.possible_items[0],it.possible_items[1]]
 	if items_inside:
 		for item_data in items_inside:
 			var item_instance = item.instance()

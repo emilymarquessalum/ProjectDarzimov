@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Inventory/main_inventory/Inventory.gd" type="Script" id=1]
-[ext_resource path="res://Inventory/main_inventory/equipments.gd" type="Script" id=2]
+[ext_resource path="res://Inventory/main_inventory/secundary_weapon.gd" type="Script" id=2]
 [ext_resource path="res://Inventory/main_inventory/Inventory.tres" type="StyleBox" id=3]
 [ext_resource path="res://Inventory/main_inventory/item_equipado.gd" type="Script" id=4]
 
@@ -28,7 +28,7 @@ margin_left = 19.8425
 margin_top = -4.5008
 margin_right = 100.0
 margin_bottom = 16.0104
-rect_scale = Vector2( 0.436887, 0.690325 )
+rect_scale = Vector2( 0.337, 0.69 )
 custom_constants/separation = 3
 __meta__ = {
 "_edit_use_anchors_": false

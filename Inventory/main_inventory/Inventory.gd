@@ -11,7 +11,7 @@ var cancel_slot_click = false
 var inventory_slot_holders = []
 var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
 var types = [item_type.types.ingredient, item_type.types.any,
-		item_type.types.equipment]
+		item_type.types.equipment, item_type.types.weapon]
 var trinket_class = load("res://items/item_trinket.tscn")
 #Criando as seções do inventário, e seus respectivos botões:
 func _ready():
@@ -30,8 +30,46 @@ func _ready():
 		holder.rect_position.y += 10
 	inventory_slot_holders[0].visible = true
 	
-	
+	Global.connect("leaving_area", self, "_globalize_items")
 	$inventory_menu.hide()
+	yield(get_tree().create_timer(.1), "timeout")
+	_read_items_from_global()
+
+# Salva o que estiver no inventário
+# de maneira que a organização pessoal do player não
+# seja afetada
+func _globalize_items():
+	Global.items = []
+
+	for holder in inventory_slot_holders:
+		for slot in holder.slots:
+			
+			var item_to_add = null
+			if not slot.item:
+				item_to_add = ItemClass.instance()
+				item_to_add.data = {'item_name' : "empty"}
+			else:
+				item_to_add = ItemClass.instance()
+				item_to_add.data = slot.item.data
+				item_to_add.quantity = slot.item.quantity
+			Global.items.append(item_to_add)
+
+
+func _read_items_from_global():
+	var global_items = Global.items
+	var i = 0
+	for holder in inventory_slot_holders:
+		for slot in holder.slots:
+			if i >= global_items.size():
+				return
+			if global_items[i].data.item_name == "empty":
+				i += 1
+				continue
+			var it = ItemClass.instance()
+			it.data = global_items[i].data
+			it.quantity = global_items[i].quantity
+			slot._put_item_into_slot(it)
+			i += 1
 
 # Abrindo uma seção do inventário:
 func _open_holder(holder):
@@ -60,32 +98,55 @@ func _get_slot_with_item_of_type(type):
 	var inventory_slots = _get_holder_of_type(type)
 	if not inventory_slots:
 		return null
-	for slot in inventory_slots.get_children():
+	for slot in inventory_slots.slots:
 		if not slot.item:
 			continue
 			return slot
 	return null
 	
 # Tenta adicionar item ao inventário, retorna resultado (true/false)
-func _add_to_inventory(item):
+func _add_to_inventory(item, new_item = true):
 	var inventory_slots = _get_holder_of_type(item.data.type)
 	_open_holder(inventory_slots)
-	inventory_slots = inventory_slots.get_child(0)
-	for inv_slot in inventory_slots.get_children():
+	#inventory_slots = inventory_slots.get_child(0)
+	
+	var inv_slot = null
+	
+	if item.data.stackable:
+		inv_slot = _add_item_to_stacked_slot(item, inventory_slots)
+		
+	if inv_slot == null:
+		inv_slot = _add_item_to_empty_slot(item, inventory_slots)
+		
+	
+	if inv_slot == null:
+		return false
+	
+	if new_item:
+		#Global.items.append (item.data)
+		if inv_slot.can_change_color:
+			inv_slot.modulate = Color.yellow
+	
+	return true
+	
+	
+func _add_item_to_empty_slot(item, inventory_slots):
+	for inv_slot in inventory_slots.slots:
+		if inv_slot.item == null: 
+			inv_slot._put_item_into_slot(item)
+			return inv_slot	
+			
+	return null
+	
+func _add_item_to_stacked_slot(item, inventory_slots):
+	for inv_slot in inventory_slots.slots:
 		if inv_slot._can_stack_item(item):
 			inv_slot.item.quantity += item.quantity
 			inv_slot.item._update_quantity()
+			return inv_slot
 			
-			if inv_slot.can_change_color:
-				inv_slot.modulate = Color.yellow
-			return	true
-	for inv_slot in inventory_slots.get_children():
-		if inv_slot.item == null: 
-			inv_slot._put_item_into_slot(item)
-			if inv_slot.can_change_color:
-				inv_slot.modulate = Color.yellow
-			return true
-	return false
+	return null
+	
 	
 # Cancela selecionar de um item dentro de um slot
 func _deselect_selected_item():

@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Map/scene_transition.tscn" type="PackedScene" id=1]
+[ext_resource path="res://rooms/essential.tscn" type="PackedScene" id=2]
+[ext_resource path="res://tiles/Piso.tscn" type="PackedScene" id=3]
+[ext_resource path="res://rooms/room.gd" type="Script" id=4]
+[ext_resource path="res://Map/tiles4.jpg" type="Texture" id=5]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 4 )
+room_width = 150
+room_height = 57
+room_x = 125
+spawn = 1
+tile_texture = ExtResource( 5 )
+tile_region = Rect2( 6.2, 309, 101.188, 94.963 )
+
+[node name="waypoint1" type="Node2D" parent="."]
+position = Vector2( -20.5423, 33.9983 )
+
+[node name="waypoint2" type="Node2D" parent="."]
+position = Vector2( 304.461, 125.003 )
+
+[node name="Piso" parent="." instance=ExtResource( 3 )]
+position = Vector2( 23, 49.5 )
+
+[node name="Piso10" parent="." instance=ExtResource( 3 )]
+position = Vector2( -11.8972, 49.5 )
+
+[node name="Piso2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 55, 62 )
+
+[node name="Piso3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 87, 74.5 )
+
+[node name="Piso4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 120, 88 )
+
+[node name="Piso5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 153.5, 101 )
+
+[node name="Piso6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 185, 114.5 )
+
+[node name="Piso7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 216.5, 128 )
+
+[node name="Piso8" parent="." instance=ExtResource( 3 )]
+position = Vector2( 248.5, 141 )
+
+[node name="Piso9" parent="." instance=ExtResource( 3 )]
+position = Vector2( 295.5, 141 )
+
+[node name="Node2D" parent="." instance=ExtResource( 2 )]
+
+[node name="Area2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( -45.6917, 32.9631 )
+scene = "res://rooms/main_test.tscn"
+point = 2
+player_direction = false
+
+[node name="Area2D2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 329.31, 125.066 )
+point = 1

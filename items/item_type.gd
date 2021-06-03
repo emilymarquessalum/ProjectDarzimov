@@ -4,6 +4,7 @@ class_name item_type
 enum types{
 	any,
 	ingredient,
-	equipment
+	equipment,
+	weapon
 	}
 
