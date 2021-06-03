@@ -30,6 +30,8 @@ func _ready():
 	scale.x = -scale.x	
 	position.y -= 80
 	_fix_on_ground()
+	var player = get_tree().get_current_scene().find_node("Player")
+	self.keywords = player.keywords
 	
 var dest_y = 0
 func _jump(c):
