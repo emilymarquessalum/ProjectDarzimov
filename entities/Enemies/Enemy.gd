@@ -5,6 +5,10 @@ var ranking = 1
 var gravity = 100
 var unique_to_scene = true
 var tscn_path
+var deals_damage_on_touch = true
+var speed = 20
+var velocity = Vector2(0,0)
+onready var player = get_tree().get_current_scene().find_node("Player")
 onready var y_start_perception = find_node("enemy_properties").y_start_perception 
 func _die():
 	queue_free()

@@ -33,14 +33,14 @@ animations = [ {
 "name": "Parry",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "Jump",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "Walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "Jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 7 ) ],
@@ -119,6 +119,7 @@ anims/blink = SubResource( 9 )
 "Attack",
 "Player",
 ]]
+collision_layer = 3
 collision_mask = 3
 script = ExtResource( 1 )
 
@@ -184,7 +185,7 @@ script = ExtResource( 14 )
 used_behaviours = [ "attack" ]
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
 [connection signal="life_damaged" from="Health" to="." method="_test_for_invulnerability"]
+[connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
 [connection signal="timeout" from="Invunerability" to="." method="_on_Invunerability_timeout"]
 [connection signal="body_entered" from="AttackArea" to="AttackArea" method="_on_AttackArea_body_entered"]

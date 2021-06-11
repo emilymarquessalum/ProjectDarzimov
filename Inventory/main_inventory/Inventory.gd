@@ -34,6 +34,9 @@ func _ready():
 	$inventory_menu.hide()
 	yield(get_tree().create_timer(.1), "timeout")
 	_read_items_from_global()
+	var it = load("res://items/item.tscn").instance()
+	it.data = Items.bow
+	_add_to_inventory(it)
 
 # Salva o que estiver no inventário
 # de maneira que a organização pessoal do player não

@@ -59,6 +59,9 @@ func _test_for_enemy_col():
 		en = en.collider
 	
 	if en and en.is_in_group("Enemy") and not p:
+		
+		if not en.deals_damage_on_touch:
+			return
 		health_control._take_damage(1)
 		
 		

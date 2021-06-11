@@ -1,8 +1,4 @@
 extends Enemy
-
-onready var player = null
-var velocity = Vector2(0,0)
-var speed = 20
 var direction = 30
 
 var knock = false
@@ -10,7 +6,11 @@ var melee = false
 
 
 func _get_direction():
-	return -1 if flip else 1
+	
+	if flip:
+		return -1 * scale.x
+	else: 
+		return 1  * scale.x
 func _ready():
 	_change_state("moving")
 
@@ -24,7 +24,7 @@ func _process(delta):
 	_move_character(delta)
 	current_state._state_behaviour(delta)
 	if player: 
-		_look_at(player.position, false)
+		pass#_look_at(player.position, false)
 
 
 

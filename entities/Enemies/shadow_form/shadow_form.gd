@@ -53,7 +53,6 @@ func _change_state(a=0,s=""):
 	
 
 var dest
-onready var player = get_tree().get_current_scene().find_node("Player") 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#_look_at(player.position, true)

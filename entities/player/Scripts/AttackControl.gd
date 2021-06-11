@@ -14,6 +14,9 @@ onready var player = get_tree().get_current_scene().find_node("Player")
 	
 onready var damage = player.damage
 
+func has_target(type):
+	return type == "Enemy"
+
 func _attack():
 	$AttackColider.disabled = false
 	player.connect("finished_animation", self, "_finish_attack",[],CONNECT_ONESHOT)
@@ -23,5 +26,5 @@ func _finish_attack():
 	$AttackColider.disabled = true
 	emit_signal("finished_attack")
 func _on_AttackArea_body_entered(body):
-	if body.is_in_group("Enemy"):
-		body.health_control._take_damage(self.damage)
+	pass #if body.is_in_group("Enemy"):
+	#	body.health_control._take_damage(self.damage)
