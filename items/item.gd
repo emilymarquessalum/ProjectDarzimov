@@ -11,14 +11,14 @@ const possible_items = [
 	
 	{'item_name' : "Erbs", 'item_description': "Use for potions"
 	, 'type': item_type.types.ingredient, 
-	'sprite' : preload("res://images.jpg"), 
+	'sprite' : preload("res://random_images/images.jpg"), 
 	'stackable': true, 
 	'price' : 3
 	},
 	{'item_name' : "Onyx Ring", 
 	'item_description':"Pure Fashion!",
 	'type': item_type.types.equipment, 
-	'sprite': preload("res://icon.png"),
+	'sprite': preload("res://random_images/icon.png"),
 	'stackable': false,
 	'price':1,},]
 
@@ -46,13 +46,13 @@ func _ready():
 	_change_data(data)
 
 # Altera sprite e gera texto se houver quantidade
-func _change_data(data):
-	if not data:
+func _change_data(d):
+	if not d:
 		return
 	
-	$sprite.texture = data.sprite
+	$sprite.texture = d.sprite
 	if data.stackable:
-		$quantity.text =  str(quantity)
+		$quantity.text = str(quantity)
 
 	
 # Retorna uma cópia do item (copies data and quantity)

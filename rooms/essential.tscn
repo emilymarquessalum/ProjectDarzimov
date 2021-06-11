@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
 [ext_resource path="res://entities/player/Scripts/parries.gd" type="Script" id=3]
+[ext_resource path="res://rooms/audio_control.gd" type="Script" id=4]
 [ext_resource path="res://follow_player.gd" type="Script" id=5]
 [ext_resource path="res://interface/main_interface/interface_control.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=8]
@@ -23,7 +24,7 @@ zoom = Vector2( 0.3, 0.3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 material = SubResource( 2 )
-position = Vector2( 14.5973, 143.08 )
+position = Vector2( 0, 60.018 )
 
 [node name="parry_UI" type="Control" parent="."]
 margin_left = -28.2788
@@ -50,7 +51,7 @@ __meta__ = {
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_priority = 1
-position = Vector2( 160.518, 85.5532 )
+position = Vector2( 0, 86.1142 )
 current = true
 script = ExtResource( 2 )
 
@@ -74,3 +75,6 @@ margin_left = -158.794
 margin_top = -87.7384
 margin_right = -130.794
 margin_bottom = -52.7385
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 4 )

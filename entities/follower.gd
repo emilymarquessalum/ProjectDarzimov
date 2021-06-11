@@ -23,7 +23,7 @@ func _process(delta):
 		dest.y = y
 	
 	
-	if player.position.y - position.y < -7 and next_y >= 0 and get_node("RayCast2D").is_colliding():
+	if player.position.y - position.y < -7 and next_y >= 0 and get_node("GroundDetector").is_colliding():
 			next_y = -max(y_speed,abs(player.position.y - position.y)+27)
 	next_y += y_speed * delta
 	

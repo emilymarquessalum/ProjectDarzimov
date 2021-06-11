@@ -28,12 +28,21 @@ func _physics_process(delta):
 func _on_Timer_timeout():
 			queue_free()
 
-func _on_Sword_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Ground"):
+#func _on_Sword_area_entered(area: Area2D) -> void:
+#	sword_entered_something(area)
+		
+func _on_Sword_body_entered(body):
+	sword_entered_something(body)
+		
+func sword_entered_something(thing):
+	if thing.is_in_group("Ground"):
 			queue_free()
-	elif area.is_in_group("Parry"):
+	elif thing.is_in_group("Parry"):
 			queue_free()
-	elif area.is_in_group("Player"):
-		player.get_node("Health")._take_damage(1)
+	elif thing.is_in_group("Player"):
+		player.find_node("Health")._take_damage(1)
 		queue_free()
 		
+
+
+

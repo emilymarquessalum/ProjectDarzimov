@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://dialogue/npcs/npc.gd" type="Script" id=1]
+[ext_resource path="res://tab_controls/interactive_object.gd" type="Script" id=2]
+[ext_resource path="res://random_images/images.jpg" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8.80594, 7.54917 )
+
+[node name="Node2D" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+save_path = "user://cards_npc.txt"
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.764706, 0.329412, 0.117647, 1 )
+scale = Vector2( 0.0525089, 0.0827268 )
+texture = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 0.749153, 0.37458 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -0.187286 )
+shape = SubResource( 1 )

@@ -5,6 +5,7 @@ tool
 # var a = 2
 # var b = "text"
 export(int) var detection_range
+export(int) var y_start_perception = 20
 export(int) var health
 export(Resource) var sprite
 export(float) var size
@@ -16,6 +17,8 @@ func _ready():
 	$Sprite.modulate = tone_modification
 	$Sprite.scale = Vector2(size,size)
 	$Health.max_health = health
+	$Health.health = health
+	
 	pass # Replace with function body.
 
 
@@ -24,5 +27,5 @@ func _process(delta):
 	if Engine.editor_hint:
 		$PlayerDetector/Colider.shape.radius = detection_range
 		$Sprite.texture = sprite
-		$Sprite.modulate = tone_modification
+		$Sprite.modulate      = tone_modification
 		$Sprite.scale = Vector2(size,size)

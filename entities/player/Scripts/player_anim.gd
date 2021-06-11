@@ -1,13 +1,5 @@
 extends AnimatedSprite
 
-func _ready():
-	
-	var player = get_tree().get_current_scene().find_node("Player")
-	player.find_node("Health").connect("life_damaged", self, "_taken_damage")
-	
-	player.get_node("Invunerability").connect("timeout",self, "_normal_state")
-
-	
 
 func _taken_damage(c):
 	blink = true

@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _end_behaviour(t):
+func _end_behaviour(_t):
 	item.slot_parent._take_item_from_slot()
 
 var item
@@ -31,9 +31,10 @@ func _start_behaviour(t):
 var spawned_shadow
 var base_chance = 10
 var chance = base_chance
+var max_chance = 50
 var chance_increase = 5
 var shadow = load("res://entities/Enemies/shadow_form/shadow_form.tscn")
-func attempt_to_spawn(area):
+func attempt_to_spawn(_area):
 	if spawned_shadow:
 		return
 	
@@ -47,6 +48,8 @@ func attempt_to_spawn(area):
 		spawned_shadow = true
 	else:
 		chance += chance_increase
+		if chance > max_chance:
+			chance = max_chance
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

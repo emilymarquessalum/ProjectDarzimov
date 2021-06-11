@@ -12,7 +12,7 @@ var inventory_slot_holders = []
 var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
 var types = [item_type.types.ingredient, item_type.types.any,
 		item_type.types.equipment, item_type.types.weapon]
-var trinket_class = load("res://items/item_trinket.tscn")
+var trinket_class = preload("res://Map/chest/item_trinket.tscn")
 #Criando as seções do inventário, e seus respectivos botões:
 func _ready():
 	for type in types:

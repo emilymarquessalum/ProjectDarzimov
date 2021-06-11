@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Projectiles/Sword/Scripts/Sword.gd" type="Script" id=1]
-[ext_resource path="res://Particle.png" type="Texture" id=2]
+[ext_resource path="res://Projectiles/Sword/Particle.png" type="Texture" id=2]
 [ext_resource path="res://Projectiles/Sword/Assets/Sword.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 13.0
+radius = 11.3769
 
 [sub_resource type="Animation" id=2]
 resource_name = "RotationL"
@@ -98,5 +98,6 @@ explosiveness = 1.0
 randomness = 1.0
 process_material = SubResource( 4 )
 texture = ExtResource( 2 )
-[connection signal="area_entered" from="." to="." method="_on_Sword_area_entered"]
+
+[connection signal="body_entered" from="." to="." method="_on_Sword_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

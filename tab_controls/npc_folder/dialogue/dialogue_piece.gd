@@ -7,28 +7,40 @@ var lines = []
 
 var first_character = {'sprite' : null}
 var second_character = {'sprite' : null}
+var skip
+func _update_characters():
+	var f = "res://dialogue/characters/"
+	
+	first_character = load(f + first_character + ".tres")
+	second_character = load(f + second_character + ".tres")
+	
+	pass # use paths to find them
 
 
-func _add_to_lines(line_text,character, override=null):
+func _add_text(line_text):
+	var dict_dialogue = {}
+	dict_dialogue["text"] = line_text 
+	lines.append(dict_dialogue)
+	
+
+
+func _add_to_lines(line_text,character, expression):
 	var dict_dialogue = {}
 	dict_dialogue["text"] = line_text 
 	
-	dict_dialogue["first_character_sprite"] = first_character.sprite
+	dict_dialogue["first_character_sprite"] = first_character.sprites["neutral"]
 			
 	dict_dialogue["first_character"] = first_character
 	dict_dialogue["second_character"] = second_character
-	dict_dialogue["second_character_sprite"] = second_character.sprite
+	dict_dialogue["second_character_sprite"] = second_character.sprites["neutral"]
 	
-	dict_dialogue["character"] = character
+	dict_dialogue["character"] = first_character if character == 0  else second_character 
 
-	
-	
-	if override:
-		if character == first_character:
-			dict_dialogue["first_character_sprite"] = override
+	if character == 0:
+		dict_dialogue["first_character_sprite"] = first_character.sprites[expression]
 
-		if character == second_character:
-			dict_dialogue["second_character_sprite"] = override
+	if character == 1:
+		dict_dialogue["second_character_sprite"] = second_character.sprites[expression]
 
 		
 		

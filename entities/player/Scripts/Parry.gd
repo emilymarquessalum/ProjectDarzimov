@@ -9,6 +9,7 @@ export var parry_timer = 1
 
 var parry_clocks = []
 var current_parry
+onready var player = get_tree().get_current_scene().find_node("Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(max_parries):
@@ -34,10 +35,10 @@ func _process(delta):
 		emit_signal("attempted_parry")
 		if not _can_parry():
 			return
-		if Game.Player.do_action("Parry"):
+		if player.do_action("Parry"):
 			_expend_parry()
 			$ParryColider.disabled = false
-			Game.Player.connect("finished_animation", self, "_finish_parry",[],CONNECT_ONESHOT)
+			player.connect("finished_animation", self, "_finish_parry",[],CONNECT_ONESHOT)
 			
 		
 func _find_unloaded_parry():
@@ -76,4 +77,4 @@ func _expend_parry():
 
 func _finish_parry():
 	$ParryColider.disabled = true
-	Game.Player.end_action()
+	player.end_action()

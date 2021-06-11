@@ -3,7 +3,7 @@
 [ext_resource path="res://interface/main_interface/interface_control.gd" type="Script" id=1]
 [ext_resource path="res://interface/main_interface/interface_button.gd" type="Script" id=2]
 [ext_resource path="res://interface/main_interface/interface_text.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Sugestao_de_menu_de_equipados.png" type="Texture" id=4]
+[ext_resource path="res://Inventory/Sugestao_de_menu_de_equipados.png" type="Texture" id=4]
 [ext_resource path="res://Inventory/main_inventory/Inventory.tscn" type="PackedScene" id=5]
 [ext_resource path="res://cards/Cards.tscn" type="PackedScene" id=6]
 
@@ -101,6 +101,7 @@ margin_top = 38.6812
 margin_right = 42.5227
 margin_bottom = 78.6812
 rect_scale = Vector2( 7.8, 3.28 )
+
 [connection signal="pressed" from="buttons/equipment_button" to="." method="_on_equipment_button_pressed"]
 [connection signal="pressed" from="buttons/configurations_button" to="." method="_on_configurations_button_pressed"]
 [connection signal="pressed" from="buttons/exit_button" to="." method="_on_exit_button_pressed"]

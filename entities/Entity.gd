@@ -9,13 +9,18 @@ var alive = true
 onready var health_control = find_node("Health")
 
 var keywords = []
+onready var current_state
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	health_control.connect("died", self, "not_alive")
 	pass # Replace with function body.
 
-
+signal changed_state(c)
+func _change_state(state):
+	state = find_node("states").get_node(state)
+	emit_signal("changed_state", self)
+	current_state = state
+	current_state._start_state()
 
 func not_alive():
 	alive = false
@@ -73,10 +78,11 @@ func get_keyword(keyword_name):
 			return keyword
 	return null
 	
-
+func _get_direction():
+	return 1 if flip else -1
 
 var behaviours = []	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	for behaviour in behaviours:
 		behaviour._act()

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Ice_Caves_3 (1).mp3-dd5e1b3cd2cbaaee6627f64540ccead1.mp3str"
+
+[deps]
+
+source_file="res://sound/Ice_Caves_3 (1).mp3"
+dest_files=[ "res://.import/Ice_Caves_3 (1).mp3-dd5e1b3cd2cbaaee6627f64540ccead1.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

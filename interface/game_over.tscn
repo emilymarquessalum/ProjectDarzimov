@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://interface/main_interface/interface_text.tres" type="DynamicFont" id=1]
+[ext_resource path="res://interface/game_over.gd" type="Script" id=2]
+
+[node name="game_over_screen" type="Control"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="Panel" parent="."]
+modulate = Color( 0.360784, 0.0745098, 0.737255, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 320, 180 )
+rect_scale = Vector2( 1.05615, 1.05615 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="game_over_text" type="Label" parent="."]
+anchor_right = 1.0
+margin_right = -240.0
+margin_bottom = 14.0
+rect_scale = Vector2( 2.47108, 3.62965 )
+custom_fonts/font = ExtResource( 1 )
+text = "GAME OVER!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="game_over_text2" type="Label" parent="."]
+anchor_right = 1.0
+margin_left = 86.8551
+margin_top = 139.3
+margin_right = -104.145
+margin_bottom = 160.3
+rect_scale = Vector2( 0.999885, 1.79715 )
+custom_fonts/font = ExtResource( 1 )
+text = "click to continue"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

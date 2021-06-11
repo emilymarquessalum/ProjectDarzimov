@@ -8,6 +8,7 @@ var patterns = [
 var p_index = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	unique_to_scene = false
 	var jump = load("res://entities/Enemies/jump_behaviour.gd").new()
 	find_node("Health").connect('died', self, "_justica_reset")
 	behaviours.append(jump)

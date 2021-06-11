@@ -13,9 +13,15 @@ func _inic(object):
 	inicial_pos_x = object.position.x
 	inicial_pos_y = object.position.y
 	
+	
+var self_call = false
+var goal_reach = 0
+func _physics_process(delta):
+	if self_call:
+		_update(delta)
+	
+signal reached_goal()
 func _update(delta):
-	
-	
 	if stop:
 		control.position.y += 1
 		return
@@ -24,9 +30,9 @@ func _update(delta):
 	
 	var dist = abs(x1 - x0)
 	
-	if dist == 0:
+	if dist <= goal_reach:
 		get_parent().remove_child(self)
-
+		emit_signal("reached_goal")
 	var nextX = 0
 	var dir = 1
 	if x0 > x1:

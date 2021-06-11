@@ -8,7 +8,7 @@ var current_dialogue_piece
 signal end_dialogue()
 
 func _make_dialogue(dialogue_lines):
-	lines = dialogue_lines
+	lines = dialogue_lines.lines
 	current_line = 0
 	current_dialogue_piece = lines[0]
 	$text.text = current_dialogue_piece.text[0]

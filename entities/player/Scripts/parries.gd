@@ -9,7 +9,7 @@ onready var parry = get_tree().get_current_scene().find_node("Player").find_node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for p in parry.parry_clocks:
-		var ic = load("res://entities/player/parry_icon.tscn").instance()
+		var ic = load("res://interface/player_interface/parry/parry_icon.tscn").instance()
 		add_child(ic)
 		ic.timer = p
 		parry.connect("loaded", self, "hide")

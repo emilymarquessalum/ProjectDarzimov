@@ -1,133 +1,179 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Mountain_Night.png" type="Texture" id=1]
-[ext_resource path="res://npcs/cards_npc.gd" type="Script" id=3]
+[ext_resource path="res://Map/floors/moving_plataform.gd" type="Script" id=2]
+[ext_resource path="res://rooms/waypoint.tscn" type="PackedScene" id=3]
 [ext_resource path="res://rooms/essential.tscn" type="PackedScene" id=4]
-[ext_resource path="res://npcs/npc.tscn" type="PackedScene" id=5]
-[ext_resource path="res://tab_controls/chest_folder/chest.tscn" type="PackedScene" id=6]
-[ext_resource path="res://tiles/Piso.tscn" type="PackedScene" id=7]
-[ext_resource path="res://npcs/basic_follower.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Map/chest/chest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Map/floors/Floor.tscn" type="PackedScene" id=7]
+[ext_resource path="res://dialogue/npcs/basic_follower.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entities/Enemies/Rogue/Rogue.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Map/scene_transition.tscn" type="PackedScene" id=10]
 [ext_resource path="res://rooms/room.gd" type="Script" id=11]
-[ext_resource path="res://tiles/piso_pulavel.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Map/floors/jumpable_floor.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Map/tiles4.jpg" type="Texture" id=13]
-[ext_resource path="res://tiles/piso.gd" type="Script" id=14]
-[ext_resource path="res://images.jpg" type="Texture" id=15]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 11 )
 room_width = 150
-room_height = 75
+room_height = 170
 room_x = 170
 spawn = 1
+area_name = "Main"
 change_tile_on_click = true
 tile_texture = ExtResource( 13 )
-tile_region = Rect2( 45, 35, 120, 160 )
+tile_region = Rect2( 6.2, 309, 101, 94 )
 bloody_tile_texture = ExtResource( 13 )
-bloody_tile_region = Rect2( 212, 311.25, 120, 160 )
+bloody_tile_region = Rect2( 212, 311.25, 101, 94 )
 
 [node name="Mountain_Night" type="Sprite" parent="."]
-position = Vector2( 160.263, 90.3454 )
+position = Vector2( 187.875, 145.81 )
 scale = Vector2( 0.4449, 0.536499 )
 texture = ExtResource( 1 )
 
-[node name="Area2D" parent="." instance=ExtResource( 10 )]
-position = Vector2( 332.019, 145.866 )
-scene = "res://rooms/main_test.tscn"
-point = 1
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 57.1464, 32.5417 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 1 )
 
-[node name="Area2D2" parent="." instance=ExtResource( 10 )]
-position = Vector2( -19.9901, 144.151 )
+[node name="path1" parent="." instance=ExtResource( 10 )]
+position = Vector2( -19.4604, 163.751 )
 scene = "res://rooms/second_main_test.tscn"
-point = 2
-player_direction = false
+
+[node name="waypoint1" parent="path1" instance=ExtResource( 3 )]
+position = Vector2( 33.9795, 0.943878 )
+point = Color( 1, 0, 0, 1 )
+
+[node name="path2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 336.241, 132.163 )
+scene = "res://rooms/main_test.tscn"
+
+[node name="waypoint2" parent="path2" instance=ExtResource( 3 )]
+position = Vector2( -32.5406, -1.4054 )
+point = Color( 0, 0, 1, 1 )
 
 [node name="pisos" type="Node2D" parent="."]
 light_mask = 4
 
-[node name="Piso12" parent="pisos" instance=ExtResource( 7 )]
-position = Vector2( 246.094, 57.3791 )
-override = true
-override_sprite = ExtResource( 15 )
-override_region = Rect2( 0, 0, 100, 100 )
+[node name="piso_pulavel3" parent="pisos" instance=ExtResource( 12 )]
+position = Vector2( 59.1515, 148.518 )
+
+[node name="piso_pulavel" parent="pisos" instance=ExtResource( 12 )]
+position = Vector2( 241.547, 50.7398 )
+script = ExtResource( 2 )
+speed_y = 0.3
+
+[node name="goal1" type="Node2D" parent="pisos/piso_pulavel"]
+position = Vector2( 0, 50.479 )
+
+[node name="goal2" type="Node2D" parent="pisos/piso_pulavel"]
+position = Vector2( 0, 4.229 )
 
 [node name="Piso5" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 344.555, 161.398 )
+position = Vector2( 338.319, 148.29 )
 
 [node name="Piso4" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 299.582, 161.398 )
+position = Vector2( 292.505, 148.29 )
 
 [node name="Piso6" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 260.999, 161.398 )
+position = Vector2( 254.763, 148.29 )
 
 [node name="Piso3" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 229.641, 161.398 )
+position = Vector2( 223.405, 148.29 )
+
+[node name="Piso21" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 191.886, 148.29 )
 
 [node name="Piso2" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 152.708, 161.398 )
+position = Vector2( 146.472, 148.29 )
 
 [node name="Piso10" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 125.025, 161.398 )
-
-[node name="Piso" parent="pisos" instance=ExtResource( 7 )]
-light_mask = 4
-position = Vector2( 32.024, 161.398 )
+position = Vector2( 118.789, 148.29 )
 
 [node name="Piso11" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 8.28654, 161.398 )
+position = Vector2( 1.80399, 183.647 )
 
-[node name="Piso9" parent="pisos" instance=ExtResource( 7 )]
+[node name="Piso8" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 78.121, 161.398 )
+position = Vector2( 273.924, 243.613 )
+
+[node name="Piso13" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 226.605, 243.647 )
+
+[node name="Piso15" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 179.208, 243.658 )
+
+[node name="Piso16" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 131.841, 243.672 )
+
+[node name="Piso17" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 84.5516, 243.684 )
+
+[node name="Piso18" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 37.1063, 243.677 )
+
+[node name="Piso19" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 19.0793, 213.762 )
+rotation = 1.5708
+
+[node name="Piso22" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 291.144, 226.218 )
+rotation = 4.71239
+
+[node name="Piso23" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 291.104, 178.444 )
+rotation = 4.71239
+scale = Vector2( 1.018, 1 )
 
 [node name="Piso7" parent="pisos" instance=ExtResource( 7 )]
-position = Vector2( 173.674, 139.789 )
+position = Vector2( 195.608, 124.579 )
+
+[node name="m" parent="pisos" instance=ExtResource( 12 )]
+position = Vector2( 42.1453, 186.549 )
+script = ExtResource( 2 )
+
+[node name="goal1" type="Node2D" parent="pisos/m"]
+position = Vector2( -11.327, 0 )
+
+[node name="goal2" type="Node2D" parent="pisos/m"]
+position = Vector2( 218.399, 0 )
+
+[node name="piso_pulavel2" parent="pisos" instance=ExtResource( 12 )]
+position = Vector2( 230.6, 212.773 )
 
 [node name="chest" parent="." instance=ExtResource( 6 )]
-position = Vector2( 94.9229, 132.461 )
+position = Vector2( 75.4433, 122.531 )
 
-[node name="npc_basic" parent="." instance=ExtResource( 5 )]
-position = Vector2( 44.1428, 136.13 )
-scale = Vector2( 1.00575, 1 )
-script = ExtResource( 3 )
+[node name="chest2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 35.6276, 217.064 )
 
 [node name="follower" parent="." instance=ExtResource( 8 )]
+position = Vector2( 12.1305, 110.555 )
 
 [node name="Enemy" parent="." instance=ExtResource( 9 )]
-position = Vector2( 108.4, 86.2104 )
+position = Vector2( 204.839, 102.894 )
 
-[node name="Enemy3" parent="." instance=ExtResource( 9 )]
-position = Vector2( 209.517, 94.2285 )
-
-[node name="Enemy4" parent="." instance=ExtResource( 9 )]
-position = Vector2( 255.24, 89.5842 )
-
-[node name="Enemy5" parent="." instance=ExtResource( 9 )]
-position = Vector2( 226.89, 37.211 )
+[node name="Enemy6" parent="." instance=ExtResource( 9 )]
+position = Vector2( 287.748, 124.503 )
 
 [node name="Enemy8" parent="." instance=ExtResource( 9 )]
-position = Vector2( 177.445, 114.274 )
-
-[node name="Node2D" parent="." instance=ExtResource( 12 )]
-position = Vector2( 104.693, 108.983 )
-script = ExtResource( 14 )
-override = true
-override_sprite = ExtResource( 15 )
-override_region = Rect2( 0, 0, 100, 100 )
+position = Vector2( 159.303, 117.04 )
 
 [node name="essential" parent="." instance=ExtResource( 4 )]
-position = Vector2( 0.354034, 1.29372 )
-
-[node name="waypoint1" type="Node2D" parent="."]
-position = Vector2( 14.036, 144.499 )
-
-[node name="waypoint2" type="Node2D" parent="."]
-position = Vector2( 306.066, 144.774 )
+position = Vector2( 1.1516, 0.388611 )

@@ -5,101 +5,121 @@ signal killed()
 
 const GRAVITY = 1000
 const SPEED = 5500
-const JUMP_FORCE = -12000
+const JUMP_FORCE = -14400
 
 
 onready var invulnerability = $Invunerability
 onready var anim = $AnimatedSprite
-
-export var direction = 0
 export var damage = 1
 var velocity = Vector2()
 var jump = 0
 var jump_max = 2
-var actionTime = false
+var has_done_action = false
 
 
 func _ready():
 	var spawn = get_tree().get_current_scene().get_spawn()
 	
-	position= spawn.position
+	spawn._fix_player_position(self)
+	
 	if Global.player_direction:
 		flip = true
 		scale.x = -scale.x
-	$Health.connect("life_damaged", self, "_test_for_invulnerability")
-
-func _test_for_invulnerability(health_control):
-	var inv = get_node("Invunerability")
-	if inv.time_left != 0:
-		health_control.can_take_damage = false
-		return
-	
 		
-	inv.start()
-	
+	_change_state("normal")
+	$Health.connect("died", self, "_end_run")
 
+
+
+
+var p
 func _physics_process(delta):
-	
+	_test_for_enemy_col()
 	_move(delta)
-	_direction()
 	
+	current_state._state_behaviour(delta)
 	
+	if not has_done_action:
+		anim.play("Idle")
 	
-	if actionTime == false:
-		_jump(delta)
-	
-func _die():
-	queue_free()
+	has_done_action = false
 
-func _move(delta):
-	velocity.y+= GRAVITY * delta
 	
-	if velocity.y < 0 && actionTime == false:
-		anim.play("Jump")
-	elif Input.is_action_pressed("a") && actionTime == false:
-		velocity.x = -SPEED * delta
-		anim.play("Walk")
-		if flip == true:
-			scale.x = -scale.x
-			flip = false
-	elif Input.is_action_pressed("d") && actionTime == false:
-		velocity.x = SPEED * delta
-		anim.play("Walk")
-		if flip == false:
-			scale.x = -scale.x
-			flip = true
-	else:
-		velocity.x = 0
-		if actionTime == false:
-			anim.play("Idle")
+func _update_has_done_action(s):
+	if has_done_action:
+		return
+		
+	has_done_action = s
+	
+func _test_for_enemy_col():
+	if _is_invulnerable():
+		return
+	var en = move_and_collide(Vector2.ZERO,true,true,true)
+	if en:
+		en = en.collider
+	
+	if en and en.is_in_group("Enemy") and not p:
+		health_control._take_damage(1)
+		
+		
+		p = parabolic_movement.new()
+		p._inic(self)
+		p.tspeed = 1
+		p.goal_reach = 5
+		var d = en._get_direction()
+		p._goal = Vector2((randi()%20+20)*d,0)+position
+		p.connect("reached_goal",self,"tt")
+		add_child(p)
+	
+func _move(delta):
+	
+	if p:
+		p._update(delta)
+		var col = move_and_collide(Vector2.ZERO,true,true,true)
+		
+		if col and col.collider.is_in_group("Ground"):
+			tt()
+		return
+		
+	velocity.y+= GRAVITY * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-
-
-func _jump(delta):
-	if is_on_floor():
-		jump = jump_max
-	if jump > 0:
-		if Input.is_action_just_pressed("space"):
-			anim.play("Jump")
-			velocity.y = JUMP_FORCE * delta
-			jump -= 1	
-
 func do_action(action):
-	var act = !actionTime
-	if not actionTime:
-		anim.play(action)
-		actionTime = true
-	return act
+	anim.play(action)
 
 signal finished_animation()
 func _on_AnimatedSprite_animation_finished():
 	emit_signal("finished_animation")
 
 
-func end_action():
-	actionTime = false
+func _end_run():
+	Global._reset()
+	Game.game_off()
+	var scen = load("res://interface/game_over.tscn").instance()
+	get_tree().get_current_scene().add_child(scen)
+	_change_state("dead")
+	
+func tt():
+	
+	remove_child(p)
+	p = null
 
-func _direction():
-	direction = (1 if flip else -1)
+func _is_invulnerable():
+	var inv = get_node("Invunerability")
+	return inv.time_left != 0
+
+func _test_for_invulnerability(health_control):
+	if _is_invulnerable():
+		health_control.can_take_damage = false
+		return
+	self.set_collision_mask(0b00000000000000000001)
+	var inv = get_node("Invunerability")
+		
+	inv.start()
+
+func _on_Invunerability_timeout():
+	$AnimatedSprite._normal_state()
+	self.set_collision_mask(0b00000000000000000011)
+	_test_for_enemy_col()
+

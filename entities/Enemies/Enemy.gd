@@ -3,9 +3,12 @@ class_name Enemy
 
 var ranking = 1
 var gravity = 100
-
+var unique_to_scene = true
+var tscn_path
+onready var y_start_perception = find_node("enemy_properties").y_start_perception 
 func _die():
 	queue_free()
+	Game.enemies.erase(self)
 
 signal changed_direction(direction)
 func _changed_direction():
@@ -14,6 +17,12 @@ func _changed_direction():
 func _look_at(a,b):
 	._look_at(a,b)
 	_changed_direction()
+	
+#Override to apply more rules to enemy perception 
+func _could_find(body):
+	var found = abs(global_position.y - body.global_position.y) <= y_start_perception
+	
+	return found
 	
 func _fix_on_ground():
 	var d = 1
@@ -29,7 +38,7 @@ func _change_direction():
 
 	_changed_direction()
 func _react_to_attack(health_control):
-	var tile = $enemy_properties/GroundDetector.get_collider()
+	var tile = get_node("enemy_properties/below_ground_detector").get_collider()
 	if tile:
 		tile._get_bloody()
 	if health_control._life_after_damage_is_taken() <= 0:
@@ -37,8 +46,10 @@ func _react_to_attack(health_control):
 func _ready():
 	_basic_iniciation()
 	find_node("Health").connect("life_damaged", self, "_react_to_attack")
-	pass # Replace with function body.
+	find_node("Health").connect("died", self, "_die")
+	
 
+	
 func _basic_iniciation():
 	var properties = get_node("enemy_properties")
 	
@@ -51,13 +62,13 @@ func _basic_iniciation():
 	meele_combat.connect("body_entered", self, "_on_MeleeCombat_body_entered")
 	meele_combat.connect("body_exited", self, "_on_MeleeCombat_body_exited")
 
-func _on_PlayerDetector_body_entered(body):
+func _on_PlayerDetector_body_entered(_body):
 	pass
 
-func _on_PlayerDetector_body_exited(body):
+func _on_PlayerDetector_body_exited(_body):
 	pass
 
-func _on_MeleeCombat_body_entered(body):
+func _on_MeleeCombat_body_entered(_body):
 	pass
 
 func _on_MeleeCombat_body_exited(body):

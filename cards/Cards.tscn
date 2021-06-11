@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://images.jpg" type="Texture" id=1]
+[ext_resource path="res://random_images/images.jpg" type="Texture" id=1]
 [ext_resource path="res://cards/card.gd" type="Script" id=2]
 [ext_resource path="res://cards/Cards_Interface.gd" type="Script" id=3]
 
