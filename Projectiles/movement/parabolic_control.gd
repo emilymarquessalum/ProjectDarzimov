@@ -23,7 +23,10 @@ func _physics_process(delta):
 	
 	
 func _end():
-	get_parent().remove_child(self)
+	var parent = get_parent()
+	if not parent:
+		return
+	parent.remove_child(self)
 	emit_signal("reached_goal")	
 
 signal reached_goal()

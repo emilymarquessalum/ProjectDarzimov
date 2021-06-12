@@ -1,20 +1,34 @@
 extends Node2D
 var inventory_opened = false
 
-const SlotClass = preload("res://Inventory/main_inventory/slot.gd")
+
 var slotObject = load("res://Inventory/main_inventory/slot.tscn")
 var ItemClass = load("res://items/item.tscn")
+var trinket_class = preload("res://Map/chest/item_trinket.tscn")
+var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
+
 var selected_item = null
-signal item_selected(item)
 var last_slot = null
 var cancel_slot_click = false
 var inventory_slot_holders = []
-var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
 var types = [item_type.types.ingredient, item_type.types.any,
 		item_type.types.equipment, item_type.types.weapon]
-var trinket_class = preload("res://Map/chest/item_trinket.tscn")
+
 #Criando as seções do inventário, e seus respectivos botões:
 func _ready():
+	_build_inventory()
+	inventory_slot_holders[0].visible = true
+	
+	Global.connect("leaving_area", self, "_globalize_items")
+	_read_items_from_global()
+	
+	$inventory_menu.hide()
+	var it = load("res://items/item.tscn").instance()
+	it.data = Items.bow
+	_add_to_inventory(it)
+
+# lê tipos de itens para criar tudo de forma dinamica!
+func _build_inventory():
 	for type in types:
 		var holder = holder_class.instance()
 		holder.type = type
@@ -28,15 +42,6 @@ func _ready():
 		add_child(holder)
 		holder.visible = false
 		holder.rect_position.y += 10
-	inventory_slot_holders[0].visible = true
-	
-	Global.connect("leaving_area", self, "_globalize_items")
-	$inventory_menu.hide()
-	yield(get_tree().create_timer(.1), "timeout")
-	_read_items_from_global()
-	var it = load("res://items/item.tscn").instance()
-	it.data = Items.bow
-	_add_to_inventory(it)
 
 # Salva o que estiver no inventário
 # de maneira que a organização pessoal do player não
@@ -45,34 +50,36 @@ func _globalize_items():
 	Global.items = []
 
 	for holder in inventory_slot_holders:
+		var i = 0
 		for slot in holder.slots:
 			
 			var item_to_add = null
 			if not slot.item:
-				item_to_add = ItemClass.instance()
-				item_to_add.data = {'item_name' : "empty"}
-			else:
-				item_to_add = ItemClass.instance()
-				item_to_add.data = slot.item.data
-				item_to_add.quantity = slot.item.quantity
-			Global.items.append(item_to_add)
-
-
-func _read_items_from_global():
-	var global_items = Global.items
-	var i = 0
-	for holder in inventory_slot_holders:
-		for slot in holder.slots:
-			if i >= global_items.size():
-				return
-			if global_items[i].data.item_name == "empty":
 				i += 1
 				continue
-			var it = ItemClass.instance()
-			it.data = global_items[i].data
-			it.quantity = global_items[i].quantity
-			slot._put_item_into_slot(it)
+			
+			item_to_add = ItemClass.instance()
+			item_to_add.data = slot.item.data
+			item_to_add.quantity = slot.item.quantity
+			var it = {'item' : item_to_add, 'index': i}
+			Global.items.append(it)
 			i += 1
+# lê o conteúdo salvo levando em conta 
+func _read_items_from_global():
+	var global_items = Global.items
+
+	for g in global_items:
+		var it = ItemClass.instance()
+		it.data = g.item.data
+		it.quantity = g.item.quantity
+		_add_to_slot(it,g.index)	
+	
+
+
+
+func _add_to_slot(item, index):
+	var inventory_slots = _get_holder_of_type(item.data.type)
+	inventory_slots.slots[index]._put_item_into_slot(item)
 
 # Abrindo uma seção do inventário:
 func _open_holder(holder):
@@ -159,6 +166,8 @@ func _deselect_selected_item():
 	selected_item = null
 	_slot_mouse_over(null)
 
+
+signal item_selected(item)
 # Global mouse slot functions:
 # (usado caso queiramos que algo aconteça quando qualquer slot
 # entrar ou sair do mouse, como na descrição!)

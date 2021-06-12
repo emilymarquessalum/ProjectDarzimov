@@ -1,4 +1,4 @@
-extends Enemy
+extends Sprite
 
 
 # Declare member variables here. Examples:
@@ -8,17 +8,10 @@ extends Enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_change_state("unactive")
+	self.visible = Engine.editor_hint or get_tree().get_current_scene().keep_hints
 	pass # Replace with function body.
 
-func _mimic_start():
-	_change_state("attacking")
-	
-	
-	
 
-	
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

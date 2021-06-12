@@ -10,19 +10,21 @@
 [ext_resource path="res://entities/Enemies/mimic/move_towards_player.gd" type="Script" id=8]
 [ext_resource path="res://entities/Enemies/mimic/override_velocity.gd" type="Script" id=9]
 
-[sub_resource type="RectangleShape2D" id=2]
-
 [sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10.4101, 9.13458 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" groups=[
 "Enemy",
 ]]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 7.98852, 7.77829 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="chest" type="Area2D" parent="."]
 position = Vector2( -137.179, -142.836 )
@@ -32,7 +34,7 @@ script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="chest"]
 position = Vector2( 145.247, 150.406 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="chest"]
 modulate = Color( 0.478431, 0.231373, 0.0156863, 1 )
@@ -56,7 +58,7 @@ properties = {
 },
 "middle_shape": {
 "position": Vector2( 0, 0 ),
-"scale": Vector2( 1, 1 )
+"scale": Vector2( 0.5, 0.5 )
 },
 "sprite": {
 "position": Vector2( -0.301, 0.782 ),

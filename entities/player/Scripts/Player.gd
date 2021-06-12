@@ -53,7 +53,7 @@ func _update_has_done_action(s):
 	
 func _test_for_enemy_col():
 	if _is_invulnerable():
-		return
+		return false
 	var en = move_and_collide(Vector2.ZERO,true,true,true)
 	if en:
 		en = en.collider
@@ -61,7 +61,7 @@ func _test_for_enemy_col():
 	if en and en.is_in_group("Enemy") and not p:
 		
 		if not en.deals_damage_on_touch:
-			return
+			return false
 		health_control._take_damage(1)
 		
 		
@@ -73,6 +73,7 @@ func _test_for_enemy_col():
 		p._goal = Vector2((randi()%20+20)*d,0)+position
 		p.connect("reached_goal",self,"tt")
 		add_child(p)
+		return true
 	
 func _move(delta):
 	
@@ -124,5 +125,10 @@ func _test_for_invulnerability(health_control):
 func _on_Invunerability_timeout():
 	$AnimatedSprite._normal_state()
 	self.set_collision_mask(0b00000000000000000011)
-	_test_for_enemy_col()
-
+	if _test_for_enemy_col():
+		return
+	while true:
+		var col = move_and_collide(Vector2.ZERO,true,true,true)
+		if not col :
+			return
+		position.x -= 5

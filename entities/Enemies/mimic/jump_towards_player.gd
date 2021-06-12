@@ -26,25 +26,30 @@ func _update(d, c):
 		c._change_state("jumping")
 		var p = parabolic_movement.new()
 		p._inic(c)
-		p.x_strict = true
-		p._goal = c.position - Vector2(20,0)
+		var dir = 1
+		if c.position.x - c.player.position.x > 0:
+			dir = -1
+		p._goal = c.position + Vector2(dir*26,0)
 		p.self_call = true
+		p.tspeed = 0.7
+		p.arc_height = 30
 		c.deals_damage_on_touch = true
 		p.connect("reached_goal", self, "_return_state")
+	
 		c.add_child(p)
 		c.find_node("middle_area").connect("body_entered", self, "test_col",[p])
 		
 		
 func test_col(b,p):
 	
-	if b.is_in_group("Ground"):
-		print_debug("aaa")
-		#p._end()
-		control.get_node("chest").disconnect("area_entered", self, "test_col")		
-		
+	var ground_detector = control.find_node("below_ground_detector")
+	if ground_detector.get_collider() == b:
+		p._end()
+		control.find_node("middle_area").disconnect("body_entered", self, "test_col")		
+		control._fix_on_ground()
 func _return_state():
-	control._change_state("attacking")
-	control.get_node("chest").disconnect("area_entered", self, "test_col")		
+	control._change_state("unactive")
+	print_debug("ccc")
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

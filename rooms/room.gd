@@ -4,6 +4,7 @@ tool
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+export(bool) var keep_hints = false
 export(int) var room_width = 0
 export(int) var room_height =100
 export(int) var room_x = 0

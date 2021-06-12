@@ -92,7 +92,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "property",
 "language": "GDScript",
-"path": "res://entities/Enemies/property.gd"
+"path": "res://entities/Enemies/properties/property.gd"
 }, {
 "base": "Node",
 "class": "straight_line_movement",

@@ -28,13 +28,6 @@ func _could_find(body):
 	
 	return found
 	
-func _fix_on_ground():
-	var d = 1
-	while true:
-		var areas = find_node("middle_area")
-		if not areas._inside_floors():
-			break
-		position.y -= 20 * d
 	
 func _change_direction():
 
@@ -79,6 +72,21 @@ func _on_MeleeCombat_body_exited(body):
 	pass
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+var override = false
+func _physics_process(delta):
+	velocity.y += 1000*delta
+	
+	current_state._state_behaviour(delta)
+	
+	
+	if override:
+		override = false
+		return
+	var current_snap = Vector2.DOWN  * 5
+	
+	
+	
+	velocity = move_and_slide_with_snap(velocity, current_snap
+	
+	, Vector2.UP)
+	

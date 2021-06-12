@@ -22,6 +22,22 @@ func _change_state(state):
 	current_state = state
 	current_state._start_state()
 
+
+# Move o objeto para cima 
+# até que não esteja dentro de um Tile.
+# A mudança em cada iteração é um valor 
+# arbitrário que eu testei e pareceu ser 
+# o melhor entre eficiente e notável
+func _fix_on_ground():
+
+	while true:
+		var areas = move_and_collide(Vector2.ZERO, true,true,true)
+		if not areas:
+			break			
+		if not areas.collider.is_in_group("Ground"):
+			break
+		position.y -= 7 
+
 func not_alive():
 	alive = false
 

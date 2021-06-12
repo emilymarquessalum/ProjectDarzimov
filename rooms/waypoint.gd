@@ -9,8 +9,6 @@ export(bool) var has_path_parent = true
 export(Color) var point = Color.white
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Sprite.visible =  Engine.editor_hint
-	
 	get_parent().waypoint_child = self
 	
 	pass # Replace with function body.
