@@ -20,6 +20,4 @@ func _update(delta, control):
 		control.velocity.x =  (control.speed * 1.5)
 	else:
 		 control.velocity.x =  -(control.speed * 1.5)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+

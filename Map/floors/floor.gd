@@ -5,7 +5,10 @@ tool
 # var a = 2
 # var b = "text"
 
+export(bool) var move
+
 export(bool) var override
+
 export(Resource) var override_sprite
 export(Rect2) var override_region
 # Called when the node enters the scene tree for the first time.
@@ -50,6 +53,14 @@ func _entities_over():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Engine.editor_hint:
+		
+		if move:
+			move = false
+			position.x += get_parent().x_plus	
+			
+			position.y += get_parent().y_plus
+		
+		
 		if override:
 			for tile in get_children():
 				if tile.find_node("sprite"):

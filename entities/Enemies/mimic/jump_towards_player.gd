@@ -41,15 +41,15 @@ func _update(d, c):
 		
 		
 func test_col(b,p):
-	
 	var ground_detector = control.find_node("below_ground_detector")
 	if ground_detector.get_collider() == b:
 		p._end()
 		control.find_node("middle_area").disconnect("body_entered", self, "test_col")		
 		control._fix_on_ground()
+
 func _return_state():
-	control._change_state("unactive")
-	print_debug("ccc")
+	control._change_state("attacking")
+
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

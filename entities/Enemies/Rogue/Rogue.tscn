@@ -19,8 +19,10 @@ position = Vector2( -0.75, -0.375 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
+starting_state = "moving"
 
 [node name="Colider" type="CollisionShape2D" parent="."]
+visible = false
 light_mask = 4
 scale = Vector2( 1.0576, 1.107 )
 shape = SubResource( 1 )

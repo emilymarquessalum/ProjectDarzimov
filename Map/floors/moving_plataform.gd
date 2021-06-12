@@ -46,10 +46,7 @@ func _process(delta):
 	position.x = m_t
 	position.y = m_t_y
 	
-	
-	
-	#position.y = move_toward(position.y, goal.position.y, 1)
-	
+
 	if (ignore_x or abs(position.x - goal.x) < 5 or abs(position.x + 30 - goal.x) < 5) and (abs(position.y - goal.y) < 5 or ignore_y):
 		goal_index += 1
 		if goal_index >= position_goals.size():

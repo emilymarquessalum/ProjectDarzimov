@@ -6,7 +6,6 @@ var melee = false
 
 func _ready():
 	player = null
-	_change_state("moving")
 
 	tscn_path = "res://entities/Enemies/Rogue/Rogue.tscn"
 	scale.x = -scale.x

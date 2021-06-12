@@ -1,1 +1,1 @@
-{"visited_in_run":"false"}
+{"enemies":[{"enemy_type":"res://entities/Enemies/Rogue/Rogue.tscn","x":182.740692,"y":107.050728},{"enemy_type":"res://entities/Enemies/Rogue/Rogue.tscn","x":594.103821,"y":130.761734},{"enemy_type":"res://entities/Enemies/Rogue/Rogue.tscn","x":111.998535,"y":130.761719}],"opened_chests":[],"visited_in_run":"true"}

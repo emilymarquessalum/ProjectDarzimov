@@ -1,12 +1,12 @@
 extends Entity
 class_name Enemy
 
+export(String) var starting_state = ""
 var ranking = 1
 var gravity = 100
 var unique_to_scene = true
 var tscn_path
 var deals_damage_on_touch = true
-var speed = 20
 var velocity = Vector2(0,0)
 onready var player = get_tree().get_current_scene().find_node("Player")
 onready var y_start_perception = find_node("enemy_properties").y_start_perception 
@@ -41,6 +41,7 @@ func _react_to_attack(health_control):
 	if health_control._life_after_damage_is_taken() <= 0:
 		_die()
 func _ready():
+	_change_state(starting_state)
 	_basic_iniciation()
 	find_node("Health").connect("life_damaged", self, "_react_to_attack")
 	find_node("Health").connect("died", self, "_die")

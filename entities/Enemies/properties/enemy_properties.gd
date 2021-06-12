@@ -7,6 +7,7 @@ tool
 export(int) var y_start_perception = 20
 export(int) var health
 
+
 export(Dictionary) var properties = {
 	"sprite":{'position' : Vector2(0,0),
 	'scale' : Vector2(1,1), 'sprite' : "add image", 

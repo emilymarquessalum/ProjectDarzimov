@@ -52,6 +52,7 @@ properties = {
 collision_layer = 2147483649
 
 [node name="detection_radius" type="CollisionShape2D" parent="PlayerDetector"]
+visible = false
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 1, 0, 0, 1 )
 shape = SubResource( 1 )

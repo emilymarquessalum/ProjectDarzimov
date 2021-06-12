@@ -6,6 +6,7 @@ class_name Entity
 # var b = "text"
 var flip = false
 var alive = true
+export(int) var speed = 20
 onready var health_control = find_node("Health")
 
 var keywords = []

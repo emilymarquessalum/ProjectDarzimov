@@ -82,7 +82,7 @@ func _enter_area(t):
 		enemies = []
 		for en_d in data.enemies:
 			var en = load(en_d.enemy_type).instance()
-			get_tree().get_current_scene().add_child(en)
+			get_tree().get_current_scene().get_node("Enemies").add_child(en)
 			en.position.x = en_d.x
 			en.position.y = en_d.y
 
