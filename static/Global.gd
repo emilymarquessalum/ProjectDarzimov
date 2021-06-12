@@ -4,8 +4,14 @@ var waypoint = Color.red
 var player_direction = true
 var cards_d	= [null,null,null]
 var items = []
-var equipped_weapon = null
+var equipped_weapon = null setget _changed_weapon
 var item_class = load("res://items/item.tscn")
+
+signal changed_weapon(new_weapon)
+func _changed_weapon(new):
+	equipped_weapon = new
+	emit_signal("changed_weapon", new)
+	
 
 var to_instance = []
 var characters = [{'c_name': "Player", 'health':3}, ]

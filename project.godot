@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "behaviour",
 "language": "GDScript",
-"path": "res://entities/behaviour.gd"
+"path": "res://entities/state/behaviour.gd"
 }, {
 "base": "Node",
 "class": "cards_data",
@@ -95,6 +95,11 @@ _global_script_classes=[ {
 "path": "res://entities/Enemies/properties/property.gd"
 }, {
 "base": "Node",
+"class": "state",
+"language": "GDScript",
+"path": "res://entities/state/state.gd"
+}, {
+"base": "Node",
 "class": "straight_line_movement",
 "language": "GDScript",
 "path": "res://Projectiles/movement/straight_line.gd"
@@ -127,6 +132,7 @@ _global_script_class_icons={
 "npc_conversation": "",
 "parabolic_movement": "",
 "property": "",
+"state": "",
 "straight_line_movement": "",
 "tab_": "",
 "tab_control": ""

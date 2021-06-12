@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Inventory/main_inventory/Inventory.gd" type="Script" id=1]
-[ext_resource path="res://Inventory/main_inventory/secundary_weapon.gd" type="Script" id=2]
-[ext_resource path="res://Inventory/main_inventory/Inventory.tres" type="StyleBox" id=3]
-[ext_resource path="res://Inventory/main_inventory/item_equipado.gd" type="Script" id=4]
+[ext_resource path="res://Inventory/main_inventory/secundary_weapon_slot.gd" type="Script" id=2]
+[ext_resource path="res://Inventory/main_inventory/styles/Inventory.tres" type="StyleBox" id=3]
+[ext_resource path="res://Inventory/main_inventory/equipments_slot.gd" type="Script" id=4]
 
 [node name="Inventory" type="Node2D"]
 position = Vector2( 202.945, 12.4094 )

@@ -114,22 +114,3 @@ func _is_invulnerable():
 	var inv = get_node("Invunerability")
 	return inv.time_left != 0
 
-func _test_for_invulnerability(health_control):
-	if _is_invulnerable():
-		health_control.can_take_damage = false
-		return
-	self.set_collision_mask(0b00000000000000000001)
-	var inv = get_node("Invunerability")
-		
-	inv.start()
-
-func _on_Invunerability_timeout():
-	$AnimatedSprite._normal_state()
-	self.set_collision_mask(0b00000000000000000011)
-	if _test_for_enemy_col():
-		return
-	while true:
-		var col = move_and_collide(Vector2.ZERO,true,true,true)
-		if not col :
-			return
-		position.x -= 5

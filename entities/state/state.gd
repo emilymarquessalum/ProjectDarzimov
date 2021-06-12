@@ -1,14 +1,7 @@
 extends Node
+class_name state
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	for s in used_behaviours:
 		behaviours.append(behaviour.get_node(s))
 

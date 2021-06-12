@@ -1,4 +1,5 @@
 extends Node2D
+# slot encontrado no meio do inventário para a arma secundária
 
 var done = false
 onready var inv = find_parent("Inventory")
@@ -12,26 +13,15 @@ func fix_remove(item):
 func fix_add(item):
 	item.rect_scale = Vector2(4,4)
 	Global.equipped_weapon = item.data
-	attack = item.data.attack.new()
-	attack._set_controller(player)
-			
 
-func equipment_action():
-	
-	if attack == null:
-		return
-	
-	attack.do_action()
-
-signal done_loading(slots)
+signal done_loading(slot)
 func _process(delta):
-	if Input.is_action_just_pressed("r"):
-		equipment_action()
+	
 		
 	if !done:
 		done = true
 		var inv_slot = inv._make_slot(self)
-		inv_slot.set("custom_styles/panel", load("res://Inventory/main_inventory/new_styleboxflat.tres"))
+		inv_slot.set("custom_styles/panel", load("res://Inventory/main_inventory/styles/gray_circle.tres"))
 		inv_slot.rect_scale = Vector2(5.2,2.5)
 		
 		inv_slot.connect("item_added",self,"fix_add")
@@ -44,9 +34,6 @@ func _process(delta):
 			it.data = Global.equipped_weapon
 			attack = it.data.attack.new()
 			attack.controller = player
-			
-			
-			
 			inv_slot._put_item_into_slot(it)
 
 				

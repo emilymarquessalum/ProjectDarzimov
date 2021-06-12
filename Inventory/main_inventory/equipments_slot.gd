@@ -1,16 +1,13 @@
 extends Node2D
+# slots encontrados em volta do meio do inventário 
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 onready var inv = find_parent("Inventory")
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var inv_slot = inv._make_slot(self)
-	inv_slot.set("custom_styles/panel", load("res://Inventory/main_inventory/new_styleboxflaat.tres"))
+	inv_slot.set("custom_styles/panel", load("res://Inventory/main_inventory/styles/yellow_circle.tres"))
 	inv_slot.rect_scale = Vector2(1.09,0.6)
 	inv_slot.acceptable_type = item_type.types.equipment
 	inv_slot._connect_to_inventory()

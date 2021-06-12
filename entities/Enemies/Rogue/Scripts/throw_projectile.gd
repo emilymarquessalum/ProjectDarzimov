@@ -1,4 +1,4 @@
-extends "res://entities/behaviour.gd"
+extends behaviour
 export(String) var projectile_name = "res://Projectiles/Sword/Sword.tscn"
 onready var projectile_class = load(projectile_name)
 

@@ -1,5 +1,5 @@
-extends state
-
+extends Node
+export(String) var parent_name 
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,6 +10,7 @@ extends state
 func _ready():
 	pass # Replace with function body.
 
-func _state_behaviour(delta):
-	behaviour.get_node("throw_projectile")._update(delta, get_parent().get_parent())
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass

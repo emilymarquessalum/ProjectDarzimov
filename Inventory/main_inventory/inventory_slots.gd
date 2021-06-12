@@ -1,11 +1,12 @@
 extends ScrollContainer
-
+# armazena os slots de cada seção do inventário
 
 var ItemClass = load("res://items/item.tscn")
 var type 
 onready var inv = find_parent("Inventory")
 var slot_numbers = 50
 var slots = []
+
 # Seções de slots do inventário
 func _ready():
 	for i in range(slot_numbers):

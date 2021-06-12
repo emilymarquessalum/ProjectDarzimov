@@ -1,18 +1,19 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://entities/Enemies/Rogue/Assets/Rogue.png" type="Texture" id=1]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/Rogue.gd" type="Script" id=2]
 [ext_resource path="res://entities/Enemies/enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/move.gd" type="Script" id=4]
-[ext_resource path="res://entities/state.gd" type="Script" id=5]
+[ext_resource path="res://entities/state/state.gd" type="Script" id=5]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/throw_projectile.gd" type="Script" id=6]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/attacking.gd" type="Script" id=7]
 [ext_resource path="res://entities/Enemies/shadow_form/wall_direction.gd" type="Script" id=8]
+[ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 10 )
 
-[node name="Enemy" type="KinematicBody2D" groups=[
+[node name="rogue" type="KinematicBody2D" groups=[
 "Enemy",
 ]]
 position = Vector2( -0.75, -0.375 )
@@ -58,6 +59,8 @@ properties = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="behaviours" type="Node" parent="."]
+script = ExtResource( 9 )
+parent_name = "rogue"
 
 [node name="move" type="Node" parent="behaviours"]
 script = ExtResource( 4 )

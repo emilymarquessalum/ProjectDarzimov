@@ -23,9 +23,6 @@ func _ready():
 	_read_items_from_global()
 	
 	$inventory_menu.hide()
-	var it = load("res://items/item.tscn").instance()
-	it.data = Items.bow
-	_add_to_inventory(it)
 
 # lê tipos de itens para criar tudo de forma dinamica!
 func _build_inventory():
@@ -75,7 +72,10 @@ func _read_items_from_global():
 		_add_to_slot(it,g.index)	
 	
 
-
+func _add_item_data_to_inventory(data):
+	var it = ItemClass.instance()
+	it.data = data
+	_add_to_inventory(it)
 
 func _add_to_slot(item, index):
 	var inventory_slots = _get_holder_of_type(item.data.type)

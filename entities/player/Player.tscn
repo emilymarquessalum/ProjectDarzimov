@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://entities/player/Scripts/AttackControl.gd" type="Script" id=1]
 [ext_resource path="res://entities/Health.gd" type="Script" id=2]
@@ -13,8 +13,11 @@
 [ext_resource path="res://entities/player/Assets/Roberto_Jump.png" type="Texture" id=11]
 [ext_resource path="res://entities/player/Scripts/behaviours/attack.gd" type="Script" id=12]
 [ext_resource path="res://entities/player/Scripts/behaviours/move.gd" type="Script" id=13]
-[ext_resource path="res://entities/state.gd" type="Script" id=14]
+[ext_resource path="res://entities/state/state.gd" type="Script" id=14]
 [ext_resource path="res://entities/player/Scripts/behaviours/jump.gd" type="Script" id=15]
+[ext_resource path="res://entities/player/secundary_attack.gd" type="Script" id=16]
+[ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=17]
+[ext_resource path="res://entities/player/Invunerability.gd" type="Script" id=18]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
@@ -23,14 +26,9 @@ next_pass = SubResource( 1 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 11 ) ],
+"frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "Parry",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "Walk",
+"name": "Idle",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 7 ) ],
@@ -38,14 +36,19 @@ animations = [ {
 "name": "Attack",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "Jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "Idle",
+"name": "Parry",
 "speed": 5.0
 } ]
 
@@ -99,7 +102,6 @@ script = ExtResource( 5 )
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource( 2 )
-ignore_damage = true
 
 [node name="ParryPoint" type="Node" parent="."]
 script = SubResource( 4 )
@@ -107,6 +109,7 @@ script = SubResource( 4 )
 [node name="Invunerability" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+script = ExtResource( 18 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
@@ -161,6 +164,8 @@ position = Vector2( 0, 1.52588e-05 )
 shape = SubResource( 12 )
 
 [node name="behaviours" type="Node" parent="."]
+script = ExtResource( 17 )
+parent_name = "Player"
 
 [node name="move" type="Node" parent="behaviours"]
 script = ExtResource( 13 )
@@ -171,6 +176,9 @@ script = ExtResource( 12 )
 [node name="jump" type="Node" parent="behaviours"]
 script = ExtResource( 15 )
 
+[node name="secundary_attack" type="Node" parent="behaviours"]
+script = ExtResource( 16 )
+
 [node name="states" type="Node" parent="."]
 
 [node name="dead" type="Node" parent="states"]
@@ -179,14 +187,14 @@ state_name = "dead"
 
 [node name="normal" type="Node" parent="states"]
 script = ExtResource( 14 )
-used_behaviours = [ "move", "jump", "attack" ]
+used_behaviours = [ "move", "jump", "attack", "secundary_attack" ]
 
 [node name="attacking" type="Node" parent="states"]
 script = ExtResource( 14 )
 used_behaviours = [ "attack" ]
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="life_damaged" from="Health" to="." method="_test_for_invulnerability"]
+[connection signal="life_damaged" from="Health" to="Invunerability" method="_test_for_invulnerability"]
 [connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
-[connection signal="timeout" from="Invunerability" to="." method="_on_Invunerability_timeout"]
+[connection signal="timeout" from="Invunerability" to="Invunerability" method="_on_Invunerability_timeout"]
 [connection signal="body_entered" from="AttackArea" to="AttackArea" method="_on_AttackArea_body_entered"]

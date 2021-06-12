@@ -1,9 +1,6 @@
 extends Node2D
 tool
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 export(bool) var keep_hints = false
 export(int) var room_width = 0
 export(int) var room_height =100
@@ -15,6 +12,7 @@ export(String) var area_name
 var tiles = []
 var first_entered_in_run = true
 
+# Iniciando texturas dos tiles conforme especificado para a area
 func _ready():
 	if not Engine.editor_hint:
 		Global._changed_area()
@@ -24,10 +22,6 @@ func _ready():
 			tile._change_region(tile_region)
 			tile.bloody_sprite = bloody_tile_texture
 			tile.bloody_region = bloody_tile_region
-	else:
-		set_process_input(true)
-			
-	pass # Replace with function body.
 
 
 func get_spawn():

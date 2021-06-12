@@ -20,9 +20,9 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 11 )
-room_width = 600
+room_width = 560
 room_height = 170
-room_x = 170
+room_x = 160
 spawn = 1
 area_name = "Main"
 change_tile_on_click = true
@@ -45,7 +45,7 @@ position = Vector2( 33.9795, 0.943878 )
 point = Color( 1, 0, 0, 1 )
 
 [node name="path2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 730.909, 128.599 )
+position = Vector2( 736.7, 128.599 )
 scene = "res://rooms/main_test.tscn"
 
 [node name="waypoint2" parent="path2" instance=ExtResource( 3 )]
@@ -129,6 +129,10 @@ position = Vector2( 665.887, 148.29 )
 light_mask = 4
 position = Vector2( 705.887, 148.29 )
 
+[node name="Piso34" parent="pisos" instance=ExtResource( 7 )]
+light_mask = 4
+position = Vector2( 740.374, 148.29 )
+
 [node name="Piso29" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
 position = Vector2( 6.04767, 28.6201 )
@@ -136,12 +140,12 @@ rotation = 1.5708
 
 [node name="Piso32" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 734.39, 80.4648 )
+position = Vector2( 716.136, 80.4197 )
 rotation = 1.5708
 
 [node name="Piso33" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
-position = Vector2( 734.39, 35.0564 )
+position = Vector2( 716.136, 32.998 )
 rotation = 1.5708
 
 [node name="Piso30" parent="pisos" instance=ExtResource( 7 )]
@@ -266,19 +270,19 @@ position = Vector2( 287.748, 124.503 )
 [node name="lighting" type="Node2D" parent="."]
 
 [node name="Node2D" parent="lighting" instance=ExtResource( 14 )]
-position = Vector2( 75.8723, -117.564 )
+position = Vector2( 198.243, 72.9786 )
 
 [node name="Node2D3" parent="lighting" instance=ExtResource( 14 )]
-position = Vector2( 233.872, -126.564 )
+position = Vector2( 165.987, 197.891 )
 
 [node name="Node2D4" parent="lighting" instance=ExtResource( 14 )]
-position = Vector2( 365.872, -107.564 )
+position = Vector2( 597.2, 111.235 )
 
 [node name="Node2D5" parent="lighting" instance=ExtResource( 14 )]
-position = Vector2( 482.872, -120.564 )
+position = Vector2( 461.471, 94.4755 )
 
 [node name="Node2D2" parent="lighting" instance=ExtResource( 14 )]
-position = Vector2( 31.5045, 6.05316 )
+position = Vector2( 340.247, 119.961 )
 scale = Vector2( 0.9, 0.9 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="lighting"]
