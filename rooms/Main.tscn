@@ -62,13 +62,29 @@ position = Vector2( 59.1515, 148.518 )
 [node name="piso_pulavel" parent="pisos" instance=ExtResource( 12 )]
 position = Vector2( 241.547, 50.7398 )
 script = ExtResource( 2 )
+speed_x = 0.0
 speed_y = 0.3
+ignore_x = true
 
 [node name="goal1" type="Node2D" parent="pisos/piso_pulavel"]
-position = Vector2( 0, 50.479 )
+show_behind_parent = true
+position = Vector2( 15.049, 49.079 )
 
 [node name="goal2" type="Node2D" parent="pisos/piso_pulavel"]
-position = Vector2( 0, 4.229 )
+position = Vector2( 15.049, 4.92896 )
+
+[node name="piso_pulavel4" parent="pisos" instance=ExtResource( 12 )]
+position = Vector2( 108.205, 88.8374 )
+script = ExtResource( 2 )
+speed_x = 0.3
+speed_y = 0.3
+
+[node name="goal1" type="Node2D" parent="pisos/piso_pulavel4"]
+show_behind_parent = true
+position = Vector2( -85.4864, -73.5036 )
+
+[node name="goal2" type="Node2D" parent="pisos/piso_pulavel4"]
+position = Vector2( 15.049, 4.92896 )
 
 [node name="Piso5" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
@@ -150,6 +166,7 @@ position = Vector2( 42.1453, 186.549 )
 script = ExtResource( 2 )
 
 [node name="goal1" type="Node2D" parent="pisos/m"]
+show_behind_parent = true
 position = Vector2( -11.327, 0 )
 
 [node name="goal2" type="Node2D" parent="pisos/m"]

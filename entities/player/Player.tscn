@@ -23,19 +23,9 @@ next_pass = SubResource( 1 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 6 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "Parry",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ) ],
-"loop": true,
-"name": "Jump",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
@@ -46,6 +36,16 @@ animations = [ {
 "frames": [ ExtResource( 8 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "Attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "Idle",
 "speed": 5.0
 } ]
 
@@ -99,6 +99,7 @@ script = ExtResource( 5 )
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource( 2 )
+ignore_damage = true
 
 [node name="ParryPoint" type="Node" parent="."]
 script = SubResource( 4 )
@@ -151,7 +152,7 @@ disabled = true
 [node name="below_ground_detector" type="RayCast2D" parent="."]
 position = Vector2( 2.00226, 3.67081 )
 enabled = true
-cast_to = Vector2( 0, 15 )
+cast_to = Vector2( 0, 20 )
 collision_mask = 4
 collide_with_areas = true
 

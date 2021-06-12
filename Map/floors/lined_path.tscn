@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="l" type="Line2D" parent="."]
+position = Vector2( -50.8542, 0 )
+points = PoolVector2Array( 0, 0, 100, 100, 101, 20, 85, 865 )
+width = 1000.0

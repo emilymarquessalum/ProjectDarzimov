@@ -2,7 +2,7 @@ extends Node
 
 
 export(int) var max_health = 3
-
+export(bool) var ignore_damage = false
 var health = max_health
 signal life_altered(health)
 signal life_damaged(health_control)
@@ -21,6 +21,8 @@ func _life_after_damage_is_taken():
 	return health - damage_taken
 
 func _take_damage(damage):
+	if ignore_damage:
+		return
 	if health <= 0:
 		return
 	damage_taken = damage

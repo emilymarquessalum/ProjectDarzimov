@@ -64,7 +64,8 @@ func _test_for_enemy_col():
 			return false
 		health_control._take_damage(1)
 		
-		
+		if health_control.ignore_damage:
+			return
 		p = parabolic_movement.new()
 		p._inic(self)
 		p.tspeed = 1
