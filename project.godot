@@ -150,6 +150,7 @@ Global="*res://static/Global.gd"
 Items="*res://items/items.gd"
 CardsData="*res://cards/cards_data.gd"
 Game="*res://static/Game.gd"
+AudioControl="*res://rooms/audio_control.gd"
 
 [display]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Mountain_Night.png" type="Texture" id=1]
 [ext_resource path="res://Map/floors/moving_plataform.gd" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://torcch.tscn" type="PackedScene" id=14]
 [ext_resource path="res://rooms/pisos.gd" type="Script" id=15]
 [ext_resource path="res://editor/editor_hint.tscn" type="PackedScene" id=16]
+[ext_resource path="res://dialogue/npcs/npc.tscn" type="PackedScene" id=17]
 [ext_resource path="res://editor/bundle.gd" type="Script" id=18]
 
 [node name="Main" type="Node2D"]
@@ -230,7 +231,7 @@ position = Vector2( 143.08, 5.493 )
 position = Vector2( 231.722, 214.457 )
 
 [node name="floor_bundle" type="Node2D" parent="pisos"]
-position = Vector2( 335.918, 311.436 )
+position = Vector2( 278.998, -4.43881 )
 script = ExtResource( 18 )
 d_x = 30
 d_y = -16
@@ -269,6 +270,9 @@ position = Vector2( 198.243, 72.9786 )
 [node name="Node2D3" parent="lighting" instance=ExtResource( 14 )]
 position = Vector2( 165.987, 197.891 )
 
+[node name="Node2D6" parent="lighting" instance=ExtResource( 14 )]
+position = Vector2( 63.1047, 204.026 )
+
 [node name="Node2D4" parent="lighting" instance=ExtResource( 14 )]
 position = Vector2( 597.2, 111.235 )
 
@@ -280,8 +284,13 @@ position = Vector2( 340.247, 119.961 )
 scale = Vector2( 0.9, 0.9 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="lighting"]
-visible = false
 color = Color( 0.262745, 0.294118, 0.372549, 1 )
 
 [node name="essential" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1.1516, 0.388611 )
+
+[node name="necromancer" parent="." instance=ExtResource( 17 )]
+position = Vector2( 75.8929, 226.845 )
+dialogue_lines = [ {
+}, {
+} ]

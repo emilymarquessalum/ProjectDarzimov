@@ -6,7 +6,7 @@ var cards_d	= [null,null,null]
 var items = []
 var equipped_weapon = null setget _changed_weapon
 var item_class = load("res://items/item.tscn")
-
+var play_position = 0
 signal changed_weapon(new_weapon)
 func _changed_weapon(new):
 	equipped_weapon = new

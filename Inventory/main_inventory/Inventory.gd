@@ -273,7 +273,9 @@ func _open_inventory():
 	$inventory_menu.show()
 	inventory_opened = true
 	emit_signal("opened_inventory")
+	AudioControl._change_music("song_s")
 	
+
 signal closed_inventory()
 func _close_inventory():
 	emit_signal("closed_inventory")
@@ -282,4 +284,5 @@ func _close_inventory():
 	if selected_item:
 		_deselect_selected_item()
 		emit_signal("item_selected", selected_item)
-
+	AudioControl._return_to_last_song()
+	
