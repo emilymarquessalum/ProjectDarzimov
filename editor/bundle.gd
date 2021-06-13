@@ -41,11 +41,17 @@ func _update():
 		remove_child(c)
 	for i in range(instances):
 		var f = path.instance()
-		f.position.x += d_x * i + dx[i]
-		f.position.y += d_y * i + dy[i]
+		
+		f.position.x += d_x * i 
+		if dx.size() > i:
+			f.position.x += dx[i]
+		f.position.y += d_y * i 
+		if dy.size() > i:
+			f.position.y += dy[i]
 		f.rotation_degrees = instance_rotation
 
 		add_child(f)
+		f.set_owner(get_tree().get_edited_scene_root())
 	
 	
 	

@@ -232,7 +232,6 @@ position = Vector2( 231.722, 214.457 )
 [node name="floor_bundle" type="Node2D" parent="pisos"]
 position = Vector2( 335.918, 311.436 )
 script = ExtResource( 18 )
-instances = 10
 d_x = 30
 d_y = -16
 path = ExtResource( 7 )

@@ -22,7 +22,7 @@ func _ready():
 			tile._change_region(tile_region)
 			tile.bloody_sprite = bloody_tile_texture
 			tile.bloody_region = bloody_tile_region
-
+		
 
 func get_spawn():
 	var waypoints =  get_tree().get_nodes_in_group("Waypoint")
