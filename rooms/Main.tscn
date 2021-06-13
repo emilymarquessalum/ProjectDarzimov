@@ -15,8 +15,8 @@
 [ext_resource path="res://Map/tiles4.jpg" type="Texture" id=13]
 [ext_resource path="res://torcch.tscn" type="PackedScene" id=14]
 [ext_resource path="res://rooms/pisos.gd" type="Script" id=15]
-[ext_resource path="res://entities/editor_hint.tscn" type="PackedScene" id=16]
-[ext_resource path="res://entities/Enemies/visual_editor_hint.gd" type="Script" id=17]
+[ext_resource path="res://editor/editor_hint.tscn" type="PackedScene" id=16]
+[ext_resource path="res://editor/bundle.gd" type="Script" id=18]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 11 )
@@ -61,32 +61,17 @@ y_plus = 40
 position = Vector2( 59.1515, 148.518 )
 
 [node name="piso_pulavel" parent="pisos" instance=ExtResource( 12 )]
-position = Vector2( 241.547, 50.7398 )
+position = Vector2( 238.528, 80.6732 )
 script = ExtResource( 2 )
 speed_x = 0.0
 speed_y = 0.3
 ignore_x = true
 
 [node name="goal1" parent="pisos/piso_pulavel" instance=ExtResource( 16 )]
-position = Vector2( 14.1581, 49.2912 )
+position = Vector2( 18, -49.634 )
 
 [node name="goal2" parent="pisos/piso_pulavel" instance=ExtResource( 16 )]
-position = Vector2( 11.0119, -1.57311 )
-
-[node name="piso_pulavel4" parent="pisos" instance=ExtResource( 12 )]
-position = Vector2( 108.205, 88.8374 )
-script = ExtResource( 2 )
-speed_x = 0.3
-speed_y = 0.3
-
-[node name="goal1" type="Node2D" parent="pisos/piso_pulavel4"]
-show_behind_parent = true
-position = Vector2( -85.4864, -73.5036 )
-script = ExtResource( 17 )
-
-[node name="goal2" type="Node2D" parent="pisos/piso_pulavel4"]
-position = Vector2( 15.049, 4.92896 )
-script = ExtResource( 17 )
+position = Vector2( 18, 29.385 )
 
 [node name="Piso5" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
@@ -107,7 +92,7 @@ position = Vector2( 465.887, 148.29 )
 [node name="Piso20" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
 position = Vector2( 505.887, 148.29 )
-script = ExtResource( 17 )
+script = null
 
 [node name="Piso24" parent="pisos" instance=ExtResource( 7 )]
 light_mask = 4
@@ -230,19 +215,29 @@ scale = Vector2( 1.018, 1 )
 position = Vector2( 195.608, 124.579 )
 
 [node name="m" parent="pisos" instance=ExtResource( 12 )]
-position = Vector2( 42.1453, 186.549 )
+position = Vector2( 118.403, 187.884 )
 script = ExtResource( 2 )
 speed_y = 0.0
 ignore_y = true
 
 [node name="goal1" parent="pisos/m" instance=ExtResource( 16 )]
-position = Vector2( -11.8786, 0.494965 )
+position = Vector2( -74.1499, 5.49323 )
 
 [node name="goal2" parent="pisos/m" instance=ExtResource( 16 )]
-position = Vector2( 217.775, -0.494934 )
+position = Vector2( 143.08, 5.493 )
 
 [node name="piso_pulavel2" parent="pisos" instance=ExtResource( 12 )]
 position = Vector2( 231.722, 214.457 )
+
+[node name="floor_bundle" type="Node2D" parent="pisos"]
+position = Vector2( 335.918, 311.436 )
+script = ExtResource( 18 )
+instances = 10
+d_x = 30
+d_y = -16
+path = ExtResource( 7 )
+dx = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+dy = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 
 [node name="chest" parent="." instance=ExtResource( 6 )]
 position = Vector2( 75.4433, 122.531 )
@@ -286,6 +281,7 @@ position = Vector2( 340.247, 119.961 )
 scale = Vector2( 0.9, 0.9 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="lighting"]
+visible = false
 color = Color( 0.262745, 0.294118, 0.372549, 1 )
 
 [node name="essential" parent="." instance=ExtResource( 4 )]

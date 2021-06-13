@@ -14,6 +14,8 @@ func _ready():
 	pass # Replace with function body.
 func _process(delta):
 	$Sprite.modulate = point
+	$Sprite.visible = Engine.editor_hint or get_tree().get_current_scene().keep_hints
+	
 
 func _fix_player_position(player):
 	player.position= global_position

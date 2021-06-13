@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://entities/Enemies/properties/enemy_properties.gd" type="Script" id=1]
 [ext_resource path="res://entities/Health.gd" type="Script" id=2]
@@ -7,9 +7,8 @@
 [ext_resource path="res://entities/Enemies/properties/image_property.gd" type="Script" id=5]
 [ext_resource path="res://entities/Enemies/properties/raycast_property.gd" type="Script" id=6]
 [ext_resource path="res://entities/Enemies/properties/radius_property.gd" type="Script" id=7]
-[ext_resource path="res://Cursor.png" type="Texture" id=8]
+[ext_resource path="res://editor/editor_hint.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entities/Enemies/hitbox_shape.gd" type="Script" id=9]
-[ext_resource path="res://entities/Enemies/visual_editor_hint.gd" type="Script" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 60.0
@@ -98,10 +97,9 @@ collision_mask = 4
 collide_with_areas = true
 script = ExtResource( 6 )
 
-[node name="Sprite" type="Sprite" parent="front_ground_detector"]
-scale = Vector2( 0.3, 0.3 )
-texture = ExtResource( 8 )
-script = ExtResource( 10 )
+[node name="Node2D" parent="front_ground_detector" instance=ExtResource( 8 )]
+position = Vector2( -0.15986, -0.60764 )
+scale = Vector2( 0.294117, 0.285718 )
 
 [node name="hitbox" type="Area2D" parent="."]
 

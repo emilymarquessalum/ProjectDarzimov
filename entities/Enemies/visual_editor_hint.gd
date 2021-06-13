@@ -8,7 +8,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.visible = Engine.editor_hint or get_tree().get_current_scene().keep_hints
+	$Sprite.visible = Engine.editor_hint or get_tree().get_current_scene().keep_hints
 	pass # Replace with function body.
 
 
