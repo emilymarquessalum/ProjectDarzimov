@@ -20,3 +20,5 @@ func _process(delta):
 	
 	if position.y > scene.room_height:
 		position.y = scene.room_height
+	if position.y < scene.room_y:
+		position.y = scene.room_y

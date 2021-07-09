@@ -5,6 +5,7 @@ export(bool) var keep_hints = false
 export(int) var room_width = 0
 export(int) var room_height =100
 export(int) var room_x = 0
+export(int) var room_y = 0
 export(int) var spawn = 0
 export(String) var area_name
 

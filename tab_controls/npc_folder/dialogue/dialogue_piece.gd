@@ -5,46 +5,53 @@ var option_name = "undefined"
 # Próximas linhas de diálogo (caso ela leve a mais diálogo)
 var lines = []
 
-var first_character = {'sprite' : null}
-var second_character = {'sprite' : null}
-var skip
-func _update_characters():
-	var f = "res://dialogue/characters/"
-	
-	first_character = load(f + first_character + ".tres")
-	second_character = load(f + second_character + ".tres")
-	
-	pass # use paths to find them
+var first_character 
+var second_character 
+var last_exp_1 = "neutral"
+var last_exp_2 = "neutral"
 
+func _update_characters():
+	first_character = _get_character(first_character)
+	second_character = _get_character(second_character)
+
+func _get_character(name):
+	var f = "res://dialogue/characters/"
+	return load(f + name + ".tres")
 
 func _add_text(line_text):
 	var dict_dialogue = {}
 	dict_dialogue["text"] = line_text 
 	lines.append(dict_dialogue)
 	
+func _start(data,controller):
+	first_character = data["characters"][0]
+	second_character = data["characters"][1]
+	_update_characters()
 
+	for line in data["lines"]:
+		_add_to_lines(line["text"], line["first_character"], line["second_character"], line["state_1"],line["state_2"], line["speaker"])
 
-func _add_to_lines(line_text,character, expression):
-	var dict_dialogue = {}
-	dict_dialogue["text"] = line_text 
+	_connect_to_start(data["start"], controller)
+	_connect_to_end(data["end"], controller)
+
+func _add_to_lines(line_text,f_char, s_char, exp_1, exp_2, speaker):
+	var dict_dial = {}
+	dict_dial["text"] = line_text 		
 	
-	dict_dialogue["first_character_sprite"] = first_character.sprites["neutral"]
-			
-	dict_dialogue["first_character"] = first_character
-	dict_dialogue["second_character"] = second_character
-	dict_dialogue["second_character_sprite"] = second_character.sprites["neutral"]
+	f_char = _get_character(f_char) if f_char else first_character
+	s_char = _get_character(s_char) if s_char else second_character
 	
-	dict_dialogue["character"] = first_character if character == 0  else second_character 
+	exp_1 = last_exp_1 if not exp_1 else exp_1
+	exp_2 = last_exp_2 if not exp_2 else exp_2
+	
+	last_exp_1 =  exp_1
+	last_exp_2 = exp_2
+	
+	dict_dial["char_direction"] = 0 if speaker == f_char else 1
+	dict_dial["first_character_sprite"] = f_char.sprites[exp_1]
+	dict_dial["second_character_sprite"] = s_char.sprites[exp_2]
 
-	if character == 0:
-		dict_dialogue["first_character_sprite"] = first_character.sprites[expression]
-
-	if character == 1:
-		dict_dialogue["second_character_sprite"] = second_character.sprites[expression]
-
-		
-		
-	lines.append(dict_dialogue)
+	lines.append(dict_dial)
 	
 # Mais opções depois dela!
 var next_opts = null

@@ -1,24 +1,35 @@
 extends Node2D
 class_name npc
 var npc_control
-export(Array) var dialogue_lines = []
+var dialogue_lines = []
 var dialogue_pointer = 0
 var can_open = true
 var dial = preload("res://tab_controls/npc_folder/dialogue/dialogue.tscn")
 var dialogue
 var dialogue_index = 0
+var last_dialogue_name = null
 var opened = false
 
 export(String) var save_path = "user://.txt"
+export(Array, String) var used_dialogues = []
 var data
 func _ready():
 	npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
 	add_child(npc_control)
 	npc_control.hide()
-	var save_file = File.new()
+	
 	$Area2D.connect("interacted_object", self, "_start_dialogue")
 	
-		
+	var save_file = File.new()
+	var err = save_file.open(save_path, File.WRITE)
+	if not err == OK:
+		return
+	
+	data = JSON.parse(save_file.get_as_text())
+	
+	for dialogues in data["dialogues"]:
+		if not dialogues["name"] in used_dialogues:
+			pass
 	
 	
 func _add_skip(dialogue_l):
@@ -78,7 +89,6 @@ func _dialogue(dialogue_lines=dialogue_lines[dialogue_pointer]):
 	#dialogue_lines.emit_signal("started")
 	get_tree().paused = true
 
-	print_debug("!@")
 	dialogue._make_dialogue(dialogue_lines)
 	
 
@@ -115,16 +125,56 @@ func _change_camera_back():
 func _start_dialogue(d=null):
 	if opened:
 		return
-		
-	print_debug("!@!W")
-	dialogue_lines[dialogue_pointer].emit_signal("started", dialogue_lines[dialogue_pointer])
+	var scene_name = get_tree().get_current_scene().area_name
+	var dialogue_line = _get_dialogue_line(data["dialogue_name_index"][scene_name])
+	if dialogue_line == null:
+		return
+	dialogue_line.emit_signal("started", dialogue_line)
 	dialogue_index = 1
 	opened = true
 
-
-func _continue_dialogue(d=null):
+func _get_dialogue_line(current_dialogue_name = null):
+	var current_dialogue_data
 	
-	dialogue_lines[dialogue_pointer][dialogue_index].emit_signal("started", dialogue_lines[dialogue_pointer][dialogue_index])
+	if current_dialogue_name == null:
+		if used_dialogues.size() >= dialogue_index:
+			return null
+		current_dialogue_name = used_dialogues[dialogue_index]
+
 	dialogue_index += 1
+	current_dialogue_data = data["dialogues"][current_dialogue_name]
+			
+	if current_dialogue_data.has("completed"):
+		return _get_dialogue_line()
+		
+	var current_dialogue = dialogue_piece.new()
+	current_dialogue._start(current_dialogue_data, self)
+	last_dialogue_name = current_dialogue_name
+	return current_dialogue
+	
+func _continue_dialogue(d=null):
+	_save_as_completed_and_continue(last_dialogue_name)
+	var dialogue_line = _get_dialogue_line()
+	if dialogue_line == null:
+		return
+	dialogue_line.emit_signal("started", dialogue_line)
+	
 	#npc_control._make_options(options, self)
 	#npc_control.show()
+func _save_as_completed_and_continue(dial_name):
+	var save_file = File.new()
+	
+	var err = save_file.open(save_path, File.READ_WRITE)
+	
+	if err == OK:
+		data = JSON.parse(save_file.get_as_text())
+		data["dialogues"][dial_name]["completed"] = true
+		var scene_name = get_tree().get_current_scene().area_name
+	
+		if used_dialogues.size() < dialogue_index + 1:
+			data["dialogue_name_index"][scene_name] = used_dialogues[dialogue_index + 1]
+		else:
+			data["dialogue_name_index"][scene_name] = null
+		save_file.store_string(to_json(data))
+	else:
+		print("error")

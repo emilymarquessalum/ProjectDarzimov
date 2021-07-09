@@ -23,7 +23,7 @@ zoom = Vector2( 0.3, 0.3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 material = SubResource( 2 )
-position = Vector2( 0, 60.018 )
+position = Vector2( 3.3371, 1.95258 )
 speed = 50
 
 [node name="parry_UI" type="Control" parent="."]

@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8.80594, 7.54917 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Npc" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 1 )
 save_path = "user://cards_npc.txt"

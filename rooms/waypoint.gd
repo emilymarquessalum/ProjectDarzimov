@@ -18,7 +18,7 @@ func _process(delta):
 	
 
 func _fix_player_position(player):
-	player.position= global_position
+	player.global_position= global_position
 	
 	Global.player_direction = global_position.x - get_parent().global_position.x > 0
 	_spawned()

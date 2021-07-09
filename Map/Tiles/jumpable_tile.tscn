@@ -25,7 +25,7 @@ one_way_collision = true
 
 [node name="sprite" type="Sprite" parent="CollisionShape2D"]
 light_mask = -2147483644
-position = Vector2( -0.0446694, -0.145319 )
+position = Vector2( 0.0544358, -0.0304177 )
 rotation = 3.14159
 scale = Vector2( 0.159826, -0.182395 )
 texture = ExtResource( 2 )

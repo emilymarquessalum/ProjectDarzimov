@@ -6,7 +6,7 @@
 extents = Vector2( 23.5376, 6.34452 )
 
 [node name="piso_pulavel" type="Node2D"]
-scale = Vector2( 0.9, 0.9 )
+scale = Vector2( 0.922074, 0.952843 )
 
 [node name="StaticBody2D" parent="." instance=ExtResource( 1 )]
 
@@ -14,7 +14,7 @@ scale = Vector2( 0.9, 0.9 )
 position = Vector2( 16.0867, -1.90735e-06 )
 
 [node name="StaticBody2D3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 32.0062, -1.90735e-06 )
+position = Vector2( 32.1694, 0.0318556 )
 
 [node name="area" type="Area2D" parent="."]
 position = Vector2( 16.1068, -0.187288 )
