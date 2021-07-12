@@ -49,11 +49,11 @@ func _process(delta):
 		hold.global_position.x+=global_position.x - m_t
 		hold.global_position.y+= global_position.y - m_t_y
 	
-	position.x = m_t
-	position.y = m_t_y
+	global_position.x = m_t
+	global_position.y = m_t_y
 	
 
-	if (ignore_x or abs(position.x - goal.x) < 5 or abs(position.x + 30 - goal.x) < 5) and (abs(position.y - goal.y) < 5 or ignore_y):
+	if (ignore_x or abs(global_position.x - goal.x) < 5 or abs(global_position.x + 30 - goal.x) < 5) and (abs(global_position.y - goal.y) < 5 or ignore_y or abs(global_position.y  - goal.y) < 5):
 		goal_index += 1
 		if goal_index >= position_goals.size():
 			goal_index = 0

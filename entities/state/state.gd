@@ -12,9 +12,9 @@ func _state_behaviour(delta):
 	for b in behaviours:
 		b._update(delta, get_parent().get_parent())
 
-func _start_state():
+func _start_state(data):
 	for b in behaviours:
-		b._start_behaviour()
+		b._start_behaviour_main(data)
 		
 		
 export(String) var state_name = "not named"

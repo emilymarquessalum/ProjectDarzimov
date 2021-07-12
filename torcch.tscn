@@ -2,7 +2,7 @@
 
 [ext_resource path="res://light_with_script.tscn" type="PackedScene" id=1]
 [ext_resource path="res://torcch.gd" type="Script" id=2]
-[ext_resource path="res://Cavern_Part_5.png" type="Texture" id=3]
+[ext_resource path="res://res/torches.png" type="Texture" id=3]
 
 [node name="Node2D" type="Node2D"]
 use_parent_material = true
@@ -10,32 +10,24 @@ script = ExtResource( 2 )
 
 [node name="red_light" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0.44545, 0 )
-texture_scale = 0.5
-energy = 0.76
+color = Color( 0.776471, 0.219608, 0, 1 )
+energy = 1.14
 range_layer_min = -1
 goals = [ 1.5, 0.75, 0.75, 1.5, 1.5, 0.75, 0.75, 1.5 ]
 speed = 0.01
 multiply_by = 0.5
 
-[node name="yellow_light" parent="red_light" instance=ExtResource( 1 )]
-position = Vector2( -0.364433, 0.0561295 )
-texture_scale = 0.35
-color = Color( 1, 0.835294, 0.0980392, 1 )
-energy = 0.9
+[node name="red_light2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.44545, 0 )
+texture_scale = 0.1
+color = Color( 0.776471, 0.67451, 0, 1 )
+energy = 0.920001
 range_layer_min = -1
-goals = [ 0.5, 1.0, 0.9, 1.0, 0.5, 1.0, 0.5, 0.5 ]
+goals = [ 1.5, 0.75, 0.75, 1.5, 1.5, 0.75, 0.75, 1.5 ]
 speed = 0.01
 multiply_by = 0.5
 
-[node name="Cavern_Part_5" type="Sprite" parent="."]
-modulate = Color( 0.603922, 0.352941, 0, 1 )
-light_mask = 0
-position = Vector2( 0.455811, 25.5768 )
-scale = Vector2( 0.00259476, -0.0707994 )
-texture = ExtResource( 3 )
-
-[node name="Cavern_Part_6" type="Sprite" parent="."]
-modulate = Color( 0.937255, 0.290196, 0.0901961, 1 )
-position = Vector2( 0.482803, 11.9152 )
-scale = Vector2( 0.00192602, 0.0383167 )
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.82589, 3.18558 )
+scale = Vector2( 0.649313, 0.539904 )
 texture = ExtResource( 3 )

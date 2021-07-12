@@ -35,9 +35,21 @@ func _change_direction():
 
 	_changed_direction()
 func _react_to_attack(health_control):
-	var tile = get_node("enemy_properties/below_ground_detector").get_collider()
-	if tile:
-		tile._get_bloody()
+	var collision = move_and_collide(Vector2.ZERO,true,true,true)
+	if not (collision and collision.collider is TileMap):
+		return
+	var tilemap = collision.collider
+	var properties = get_node("enemy_properties")
+	var en_pos = self.position 
+	
+	en_pos.y += 30
+	var pos = tilemap.world_to_map(tilemap.to_local(en_pos))
+	pos -= collision.normal
+	
+	var id = tilemap.get_cellv(pos)
+	if id == 0:
+		tilemap.set_cell(pos.x, pos.y, 1)
+	
 	if health_control._life_after_damage_is_taken() <= 0:
 		_die()
 func _ready():

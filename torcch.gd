@@ -10,7 +10,6 @@ extends Node2D
 func _ready():
 	var f = randf() + randf()
 	$red_light.energy = f
-	$red_light/yellow_light.energy = f
 	pass # Replace with function body.
 
 

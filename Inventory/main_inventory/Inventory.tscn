@@ -36,7 +36,7 @@ __meta__ = {
 
 [node name="arma_secundaria" type="Node2D" parent="."]
 process_priority = -3
-position = Vector2( -107.504, 38.533 )
+position = Vector2( -111.068, 38.0876 )
 scale = Vector2( 0.2, 0.2 )
 script = ExtResource( 2 )
 

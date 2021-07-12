@@ -22,18 +22,19 @@ func _life_after_damage_is_taken():
 
 func _take_damage(damage):
 	if ignore_damage:
-		return
+		return false
 	if health <= 0:
-		return
+		return false
 	damage_taken = damage
 	emit_signal("life_damaged",self)
 	if not can_take_damage:
 		can_take_damage = definitive_can_take_damage
-		return
+		return false
 	health -= damage
 	emit_signal("life_altered", health)
 	if health <= 0:
 		emit_signal("died")
+	return true
 func _get_health():
 	return health
 		

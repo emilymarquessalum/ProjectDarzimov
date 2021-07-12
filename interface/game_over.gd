@@ -10,7 +10,7 @@ extends Control
 func _ready():
 	var cam = get_tree().get_current_scene().find_node("Camera2D")
 	
-	rect_position = cam.position - Vector2(158.5,95)
+	rect_position = cam.offset + cam.position - Vector2(170,110)
 	pass # Replace with function body.
 
 func _input(event):

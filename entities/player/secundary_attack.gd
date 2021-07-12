@@ -1,4 +1,4 @@
-extends "res://entities/state/behaviour.gd"
+extends behaviour
 
 
 # Declare member variables here. Examples:

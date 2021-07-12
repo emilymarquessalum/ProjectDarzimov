@@ -55,8 +55,8 @@ __meta__ = {
 margin_left = 96.2457
 margin_top = 52.6697
 margin_right = 164.246
-margin_bottom = 109.67
-rect_scale = Vector2( 2.02398, 1.32747 )
+margin_bottom = 161.67
+rect_scale = Vector2( 2.024, 1.083 )
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -66,7 +66,7 @@ __meta__ = {
 }
 
 [node name="continue_game" type="Button" parent="GridContainer"]
-margin_right = 63.0
+margin_right = 69.0
 margin_bottom = 25.0
 size_flags_stretch_ratio = 0.0
 custom_fonts/font = SubResource( 2 )
@@ -75,11 +75,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="exit_game" type="Button" parent="GridContainer"]
+[node name="new_game" type="Button" parent="GridContainer"]
 margin_top = 42.0
-margin_right = 63.0
+margin_right = 69.0
 margin_bottom = 67.0
+size_flags_stretch_ratio = 0.0
+custom_fonts/font = SubResource( 2 )
+text = "new game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit_game" type="Button" parent="GridContainer"]
+margin_top = 84.0
+margin_right = 69.0
+margin_bottom = 109.0
 custom_fonts/font = SubResource( 3 )
 text = "exit"
+
 [connection signal="pressed" from="GridContainer/continue_game" to="." method="_continue_game_pressed"]
+[connection signal="pressed" from="GridContainer/new_game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="GridContainer/exit_game" to="." method="_on_exit_game_pressed"]

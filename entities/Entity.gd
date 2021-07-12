@@ -14,14 +14,22 @@ onready var current_state
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	health_control.connect("died", self, "not_alive")
+	var updt = get_node("on_update")
+	
+	if not updt:
+		return
+	
+	for act in updt.get_children():
+		behaviours.append(act)
+	
 	pass # Replace with function body.
 
 signal changed_state(c)
-func _change_state(state):
+func _change_state(state, data = null):
 	state = find_node("states").get_node(state)
 	emit_signal("changed_state", self)
 	current_state = state
-	current_state._start_state()
+	current_state._start_state(data)
 
 
 # Move o objeto para cima 
@@ -101,5 +109,5 @@ func _get_direction():
 var behaviours = []	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	for behaviour in behaviours:
-		behaviour._act()
+	for beh in behaviours:
+		beh._update(self)

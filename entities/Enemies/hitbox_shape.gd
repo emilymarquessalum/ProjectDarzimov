@@ -24,8 +24,6 @@ func _something_entered(body):
 		return	
 	
 	if body.has_target("Enemy"):
-		print_debug("FFFEWSDFEWf")
-		
 		en.health_control._take_damage(body.damage)
 
 

@@ -4,8 +4,8 @@ signal life_updated(life)
 signal killed()
 
 const GRAVITY = 1000
-const SPEED = 5500
-const JUMP_FORCE = -14400
+const SPEED = 7000
+const JUMP_FORCE = -17400
 
 
 onready var invulnerability = $Invunerability
@@ -18,6 +18,9 @@ var has_done_action = false
 
 
 func _ready():
+	
+	_change_state("normal")
+	
 	var spawn = get_tree().get_current_scene().get_spawn()
 	
 	spawn._fix_player_position(self)
@@ -26,7 +29,6 @@ func _ready():
 		flip = true
 		scale.x = -scale.x
 		
-	_change_state("normal")
 	$Health.connect("died", self, "_end_run")
 
 
@@ -44,6 +46,7 @@ func _physics_process(delta):
 	
 	has_done_action = false
 
+		
 	
 func _update_has_done_action(s):
 	if has_done_action:
@@ -51,6 +54,8 @@ func _update_has_done_action(s):
 		
 	has_done_action = s
 	
+func _throw_off():
+	pass
 func _test_for_enemy_col():
 	if _is_invulnerable():
 		return false
@@ -82,7 +87,7 @@ func _move(delta):
 		p._update(delta)
 		var col = move_and_collide(Vector2.ZERO,true,true,true)
 		
-		if col and col.collider.is_in_group("Ground"):
+		if col and col.collider is TileMap:
 			tt()
 		return
 		

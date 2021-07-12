@@ -11,7 +11,7 @@
 [ext_resource path="res://entities/Enemies/hitbox_shape.gd" type="Script" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 60.0
+radius = 90.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 54.037
@@ -98,7 +98,7 @@ collide_with_areas = true
 script = ExtResource( 6 )
 
 [node name="Node2D" parent="front_ground_detector" instance=ExtResource( 8 )]
-position = Vector2( -0.15986, -0.60764 )
+position = Vector2( -0.159861, -0.467334 )
 scale = Vector2( 0.294117, 0.285718 )
 
 [node name="hitbox" type="Area2D" parent="."]

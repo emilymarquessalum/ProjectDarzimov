@@ -46,9 +46,14 @@ func _move(delta):
 
 
 func _collision(trinket, obj):
-	if obj.is_in_group("Ground") and trinket.moving:
+	if obj is TileMap and trinket.moving:
 		trinket.moving = false
 		trinket.position.y -= 5
+		
+		#var movement = parabolic_movement.new()
+		#movement._goal = trinket.movement._goal * Vector2(-1,1)
+		#movement._inic(trinket)
+		#trinket.movement = movement
 		return
 	
 	if touch_frames < touch_delay:

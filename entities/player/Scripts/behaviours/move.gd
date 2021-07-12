@@ -1,4 +1,4 @@
-extends Node
+extends behaviour
 
 
 # Declare member variables here. Examples:

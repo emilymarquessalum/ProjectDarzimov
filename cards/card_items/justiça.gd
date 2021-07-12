@@ -42,8 +42,8 @@ func attempt_to_spawn(_area):
 	if c > chance:
 		chance = base_chance
 		spawned_shadow = shadow.instance()
-		var shadow_instance = {'s': "res://entities/Enemies/shadow_form/shadow_form.tscn", 
-		'health':spawned_shadow.find_node("Health")._get_health(),'s_n':spawned_shadow}	
+		var shadow_instance ={'class':"res://entities/Enemies/shadow_form/shadow_form.tscn", 
+		'health':spawned_shadow.find_node("Health")._get_health(),'instance':spawned_shadow}	
 		Global._add_instance(shadow_instance)
 		spawned_shadow = true
 	else:

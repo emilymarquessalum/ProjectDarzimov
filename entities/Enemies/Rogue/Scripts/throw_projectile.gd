@@ -14,9 +14,11 @@ func _update(delta, en):
 
 func _throw():
 	var proj = projectile_class.instance()
-	proj.position = control.get_global_position()
-	proj.player = control.player
 	control.get_parent().add_child(proj)
+	
+	proj.player = control.player
+	proj.global_position = control.global_position
+	proj._start_behaviour()
 	control.get_node("Timer").set_wait_time(4)
 	control.get_node("Timer").start()
 	

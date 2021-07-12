@@ -28,8 +28,9 @@ __meta__ = {
 }
 
 [node name="Sugestao_de_menu_de_equipados" type="Sprite" parent="."]
-position = Vector2( 160.702, 90.7206 )
-scale = Vector2( 0.785604, 0.445217 )
+modulate = Color( 1, 0.992188, 0.992188, 1 )
+position = Vector2( 159.143, 90.7206 )
+scale = Vector2( 0.793284, 0.445217 )
 texture = ExtResource( 4 )
 
 [node name="buttons" type="Control" parent="."]

@@ -11,25 +11,24 @@
 [ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7, 10 )
+extents = Vector2( 7.95011, 8.18046 )
 
 [node name="rogue" type="KinematicBody2D" groups=[
 "Enemy",
 ]]
-position = Vector2( -0.75, -0.375 )
+position = Vector2( 0.141899, -0.969604 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
 starting_state = "moving"
 
 [node name="Colider" type="CollisionShape2D" parent="."]
-visible = false
 light_mask = 4
 scale = Vector2( 1.0576, 1.107 )
 shape = SubResource( 1 )
 
 [node name="enemy_properties" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0.470123, 0.845707 )
+position = Vector2( -0.66381, -1.64637 )
 y_start_perception = 40
 health = 3
 properties = {
@@ -38,11 +37,11 @@ properties = {
 "position": Vector2( -0.447, 3 )
 },
 "detection_radius": {
-"radius": 60
+"radius": 90
 },
 "front_ground_detector": {
-"direction": Vector2( 0, 15 ),
-"position": Vector2( -8.273, 3 )
+"direction": Vector2( 0, 18.064 ),
+"position": Vector2( -8.936, 0.083 )
 },
 "middle_shape": {
 "position": Vector2( 0, 0 ),
@@ -68,16 +67,6 @@ script = ExtResource( 4 )
 [node name="throw_projectile" type="Node" parent="behaviours"]
 script = ExtResource( 6 )
 
-[node name="direction_collision" type="RayCast2D" parent="."]
-modulate = Color( 0.611765, 0.12549, 0.12549, 1 )
-use_parent_material = true
-position = Vector2( -1.85135, 0.337856 )
-enabled = true
-cast_to = Vector2( -15, 0 )
-collision_mask = 6
-collide_with_areas = true
-script = ExtResource( 8 )
-
 [node name="states" type="Node" parent="."]
 
 [node name="moving" type="Node" parent="states"]
@@ -87,5 +76,15 @@ used_behaviours = [ "move" ]
 [node name="attacking" type="Node" parent="states"]
 script = ExtResource( 7 )
 used_behaviours = [ "throw_projectile" ]
+
+[node name="direction_collision" type="RayCast2D" parent="."]
+modulate = Color( 0.611765, 0.12549, 0.12549, 1 )
+use_parent_material = true
+position = Vector2( -1.85135, 0.337856 )
+enabled = true
+cast_to = Vector2( -15, 0 )
+collision_mask = 6
+collide_with_areas = true
+script = ExtResource( 8 )
 
 [connection signal="timeout" from="Timer" to="behaviours/throw_projectile" method="_on_Timer_timeout"]

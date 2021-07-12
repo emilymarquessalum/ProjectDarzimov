@@ -2,11 +2,11 @@ extends Node
 
 var waypoint = Color.red
 var player_direction = true
-var cards_d	= [null,null,null]
 var items = []
 var equipped_weapon = null setget _changed_weapon
 var item_class = load("res://items/item.tscn")
 var play_position = 0
+
 signal changed_weapon(new_weapon)
 func _changed_weapon(new):
 	equipped_weapon = new
@@ -80,28 +80,27 @@ func remove(i):
 	to_instance.remove(i)
 
 func _add_instance(inst):
-	
-	inst.s_n.find_node("Health").connect("died", self, 
+	inst.instance.find_node("Health").connect("died", self, 
 	"remove", [to_instance.size()])
 	to_instance.append(inst)
 
 signal changed_area()
 signal completed_entered_area()
-func _changed_area():
+func _change_area():
 	emit_signal("changed_area", get_tree().get_current_scene())
 	var i = 0
-	for scene in to_instance:
-		
-		var inst = load(scene.s).instance()
+	for entity in to_instance:
+		var inst = load(entity.class).instance()
 		inst.position = get_tree().get_current_scene().find_node("waypoint"+String(waypoint)).position
 
 		get_tree().get_current_scene().add_child(inst)
 		
-		inst.find_node("Health")._set_health(scene.health)
-		scene.s_n = inst
+		inst.find_node("Health")._set_health(entity.health)
+		entity.instance = inst
 		inst.find_node("Health").connect("died", self, "remove", [i])
 		inst.position.y += 40+40*i 
 		i+= 1
+		
 	for character in characters:
 		var c =get_tree().get_current_scene().find_node(character.c_name)
 		c.find_node("Health")._set_health(character.health)

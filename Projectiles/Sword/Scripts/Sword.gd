@@ -9,8 +9,8 @@ var look_vec = Vector2.ZERO
 var player = null
 var speed = 2
 
-func _ready():
-	look_vec = player.position - global_position
+func _start_behaviour():
+	look_vec = player.global_position - global_position
 
 func _physics_process(delta):
 	move = Vector2.ZERO
