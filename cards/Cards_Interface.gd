@@ -5,13 +5,10 @@ onready var cards = [$Card1, $Card2, $Card3]
 var cards_d = cards_data.new()
 
 func _ready():
-	change_cards(CardsData.cards_d,false)
+	change_cards()
+	CardsData.connect("changed_cards_equipped",self,"change_cards")
 
-func change_cards(new_cards, inicialize_effects = true):
+func change_cards():
+	var new_cards = CardsData.cards_equipped
 	for i in range(new_cards.size()):
-		cards[i]._change_card(new_cards[i], inicialize_effects)
-		CardsData.cards_d[i] = new_cards[i]
-		
-func change_card(new_card, index=0):
-	cards[index]._change_card(new_card)
-	CardsData.cards_d[index] = new_card
+		cards[i]._change_card(new_cards[i])

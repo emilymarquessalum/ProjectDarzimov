@@ -3,18 +3,14 @@ extends TextureRect
 var card 
 
 func _ready():
-	texture = load("res://icon.png")
+	texture = load("res://random_images/icon.png")
 
-func _change_card(new_card,inicialize_behaviour=true):
-	if card:
-		var c = card.behaviour
-		c._end_behaviour(self)
+func _change_card(new_card):
+	
 	card = new_card
 	if card:
 		texture = card.sprite
-		var c = card.behaviour
-		if inicialize_behaviour:
-			c._start_behaviour(self)
+	
 		
 		
 func _on_mouse_entered():

@@ -14,6 +14,7 @@ func _start_behaviour():
 	pass
 	
 	
+	
 func _update(delta, en):
 	var ground_detect =en.find_node("enemy_properties").get_node("front_ground_detector")
 	var will_fall = not (ground_detect.is_colliding()) and en.is_on_floor() 

@@ -40,9 +40,9 @@ func _react_to_attack(health_control):
 		return
 	var tilemap = collision.collider
 	var properties = get_node("enemy_properties")
-	var en_pos = self.position 
+	var en_pos = self.global_position 
 	
-	en_pos.y += 30
+	
 	var pos = tilemap.world_to_map(tilemap.to_local(en_pos))
 	pos -= collision.normal
 	

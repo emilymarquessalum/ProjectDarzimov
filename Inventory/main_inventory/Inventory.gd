@@ -11,8 +11,7 @@ var selected_item = null
 var last_slot = null
 var cancel_slot_click = false
 var inventory_slot_holders = []
-var types = [item_type.types.ingredient, item_type.types.any,
-		item_type.types.equipment, item_type.types.weapon]
+var types = [item_type.types.ingredient, item_type.types.any,item_type.types.equipment, item_type.types.weapon]
 
 #Criando as seções do inventário, e seus respectivos botões:
 func _ready():
@@ -24,6 +23,7 @@ func _ready():
 	
 	$inventory_menu.hide()
 
+signal finished_loading_inventory()
 # lê tipos de itens para criar tudo de forma dinamica!
 func _build_inventory():
 	for type in types:
@@ -39,7 +39,7 @@ func _build_inventory():
 		add_child(holder)
 		holder.visible = false
 		holder.rect_position.y += 10
-
+	emit_signal("finished_loading_inventory")
 # Salva o que estiver no inventário
 # de maneira que a organização pessoal do player não
 # seja afetada
@@ -81,10 +81,13 @@ func _add_to_slot(item, index):
 	var inventory_slots = _get_holder_of_type(item.data.type)
 	inventory_slots.slots[index]._put_item_into_slot(item)
 
+
+
 # Abrindo uma seção do inventário:
 func _open_holder(holder):
 	for holdr in inventory_slot_holders:
 		holdr.visible = false
+		
 	holder.visible = true
 	selected_item = null
 	_deselect_selected_item()
@@ -113,6 +116,9 @@ func _get_slot_with_item_of_type(type):
 			continue
 			return slot
 	return null
+	
+func _delayed_add_to_inventory(item, new_item = true):
+	connect("finished_loading_inventory",self,"_add_to_inventory", [item, new_item])
 	
 # Tenta adicionar item ao inventário, retorna resultado (true/false)
 func _add_to_inventory(item, new_item = true):

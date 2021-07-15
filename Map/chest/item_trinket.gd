@@ -20,7 +20,7 @@ func _inic(it):
 	item = it
 	movement = parabolic_movement.new()
 	movement._inic(self)
-	movement._goal = Vector2(position.x + rand_range(-10,10), position.y)
+	movement._goal = Vector2(position.x + rand_range(-2,2), position.y)
 	connect("collided", self, "_collision")
 
 

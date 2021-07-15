@@ -3,7 +3,7 @@ extends Entity
 signal life_updated(life)
 signal killed()
 
-const GRAVITY = 1000
+const GRAVITY = 15
 const SPEED = 7000
 const JUMP_FORCE = -17400
 
@@ -11,7 +11,7 @@ const JUMP_FORCE = -17400
 onready var invulnerability = $Invunerability
 onready var anim = $AnimatedSprite
 export var damage = 1
-var velocity = Vector2()
+var velocity = Vector2.ZERO
 var jump = 0
 var jump_max = 2
 var has_done_action = false
@@ -91,7 +91,7 @@ func _move(delta):
 			tt()
 		return
 		
-	velocity.y+= GRAVITY * delta
+	velocity.y+= GRAVITY 
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 

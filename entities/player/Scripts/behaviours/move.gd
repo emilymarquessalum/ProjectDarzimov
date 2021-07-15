@@ -10,8 +10,7 @@ func _start_behaviour():
 	get_parent().get_parent().connect("changed_state", self, "_stop_moving", [], CONNECT_ONESHOT)
 	pass # Replace with function body.
 
-func _update(delta,player):
-	
+func _update(delta,player): 	
 	if Input.is_action_pressed("a"):
 		_move_to(player,-1,delta)
 	elif Input.is_action_pressed("d"):

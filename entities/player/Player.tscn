@@ -18,7 +18,7 @@
 [ext_resource path="res://entities/player/secundary_attack.gd" type="Script" id=16]
 [ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=17]
 [ext_resource path="res://entities/player/Invunerability.gd" type="Script" id=18]
-[ext_resource path="res://res/Cursor.png" type="Texture" id=19]
+[ext_resource path="res://Cursor.png" type="Texture" id=19]
 [ext_resource path="res://entities/player/spike_collision.gd" type="Script" id=20]
 [ext_resource path="res://entities/player/release.gd" type="Script" id=21]
 
@@ -39,11 +39,6 @@ animations = [ {
 "name": "Attack",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "Walk",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "Parry",
@@ -52,6 +47,11 @@ animations = [ {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "Jump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Walk",
 "speed": 5.0
 } ]
 
@@ -227,7 +227,7 @@ position = Vector2( -3.12167, -1.33786 )
 shape = SubResource( 13 )
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="life_damaged" from="Health" to="Invunerability" method="_test_for_invulnerability"]
 [connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
+[connection signal="life_damaged" from="Health" to="Invunerability" method="_test_for_invulnerability"]
 [connection signal="timeout" from="Invunerability" to="Invunerability" method="_on_Invunerability_timeout"]
 [connection signal="body_entered" from="AttackArea" to="AttackArea" method="_on_AttackArea_body_entered"]

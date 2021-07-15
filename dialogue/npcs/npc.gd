@@ -27,9 +27,7 @@ func _ready():
 	
 	data = JSON.parse(save_file.get_as_text())
 	
-	for dialogues in data["dialogues"]:
-		if not dialogues["name"] in used_dialogues:
-			pass
+	
 	
 	
 func _add_skip(dialogue_l):
@@ -126,7 +124,12 @@ func _start_dialogue(d=null):
 	if opened:
 		return
 	var scene_name = get_tree().get_current_scene().area_name
-	var dialogue_line = _get_dialogue_line(data["dialogue_name_index"][scene_name])
+	var dialogue_name = null
+	if data["dialogue_name_index"].has(scene_name):
+		dialogue_name = data["dialogue_name_index"][scene_name]
+		
+	
+	var dialogue_line = _get_dialogue_line(dialogue_name)
 	if dialogue_line == null:
 		return
 	dialogue_line.emit_signal("started", dialogue_line)

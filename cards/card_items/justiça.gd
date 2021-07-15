@@ -23,7 +23,7 @@ func _start_behaviour(t):
 	t.get_tree().get_current_scene().find_node("Player")._add_keyword({'name': "Azarado", 'quantity': 1})
 	item = itemScene.instance()
 	item.data = bow
-	inv._add_to_inventory(item)
+	inv._delayed_add_to_inventory(item)
 	
 	Global.connect("changed_area", self, "attempt_to_spawn")
 	

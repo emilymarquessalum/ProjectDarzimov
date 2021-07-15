@@ -20,7 +20,9 @@ func _set_controller(c):
 func do_action():
 	var proj = load("res://Projectiles/projectile.tscn").instance()
 	proj.movement = straight_line_movement.new()
-	proj.position = controller.position 
+	controller.get_tree().get_current_scene().add_child(proj)
+
+	proj.global_position = controller.global_position 
 	for group in arrow_groups:
 		proj.add_to_group(group)
 	var dir
@@ -32,7 +34,6 @@ func do_action():
 	
 	proj.connect("body_collision", self, "collided")
 
-	controller.get_tree().get_current_scene().add_child(proj)
 	
 	pass
 

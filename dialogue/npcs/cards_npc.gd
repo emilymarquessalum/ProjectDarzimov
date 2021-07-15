@@ -104,9 +104,9 @@ var check_for_display_click = false
 var card 
 func _listen_to_continuation():
 	check_for_display_click = true
-	var cards = get_tree().get_current_scene().find_node("Cards")
-	cards.change_card(card)
-
+	
+	CardsData._acquire_card(card["name"])
+	CardsData._equip_card(card)
 
 func _process(delta):
 	if check_for_display_click:

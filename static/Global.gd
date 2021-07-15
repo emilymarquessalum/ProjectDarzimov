@@ -12,12 +12,43 @@ func _changed_weapon(new):
 	equipped_weapon = new
 	emit_signal("changed_weapon", new)
 	
-
 var to_instance = []
 var characters = [{'c_name': "Player", 'health':3}, ]
-# Called when the node enters the scene tree for the first time.
+
+var to_save_and_load = [CardsData]
+
 func _ready():
-	pass # Replace with function body.
+	var save_path = "res://save_file.txt" 
+	var load_file = File.new()
+	
+	
+	var err = load_file.open(save_path, File.READ)
+	if err:
+		return
+	var data = JSON.parse(load_file.to_string()).result
+	
+	for loader in to_save_and_load:
+		loader._inic_data(data)
+	
+
+func _save_game():
+	
+	var save_path = "res://save_file.txt" 
+	var load_file = File.new()
+	
+	
+	var err = load_file.open(save_path, File.WRITE)
+	if err:
+		return
+	
+	var data = {}
+	
+	for saver in to_save_and_load:
+		data = saver._save_data(data)
+	
+	load_file.store_string(JSON.print(data))
+		
+
 signal leaving_area()
 
 func leave_area():
@@ -90,8 +121,9 @@ func _change_area():
 	emit_signal("changed_area", get_tree().get_current_scene())
 	var i = 0
 	for entity in to_instance:
+		continue
 		var inst = load(entity.class).instance()
-		inst.position = get_tree().get_current_scene().find_node("waypoint"+String(waypoint)).position
+		inst.position = get_tree().get_current_scene().get_spawn().position
 
 		get_tree().get_current_scene().add_child(inst)
 		

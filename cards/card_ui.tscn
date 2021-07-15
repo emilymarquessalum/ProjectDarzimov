@@ -2,7 +2,6 @@
 
 [ext_resource path="res://cards/card.gd" type="Script" id=1]
 
-
 [node name="Panel" type="Panel"]
 margin_left = 1.33476
 margin_top = -1.91113
@@ -13,4 +12,5 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
