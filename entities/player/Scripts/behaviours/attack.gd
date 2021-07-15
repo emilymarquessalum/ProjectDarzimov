@@ -16,9 +16,8 @@ func _start_behaviour():
 
 func _update(delta,player):
 	var attack_area = player.find_node("AttackArea")
-	player._update_has_done_action(not attack_area.get_node("AttackColider").disabled)
 	if Input.is_action_just_pressed("attack"):
-		player.anim.play("Attack")
+		player.do_action("Attack")
 		player.has_done_action = true
 		attack_area._attack()
 		attack_area.connect("finished_attack",self,"_finish_attack",[player],CONNECT_ONESHOT)

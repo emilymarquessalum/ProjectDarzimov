@@ -24,6 +24,13 @@ func _ready():
 	
 	pass # Replace with function body.
 
+var has_done_action = false
+func _update_has_done_action(s):
+	if has_done_action:
+		return
+		
+	has_done_action = s
+
 signal changed_state(c)
 func _change_state(state, data = null):
 	state = find_node("states").get_node(state)

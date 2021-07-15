@@ -14,7 +14,6 @@ export var damage = 1
 var velocity = Vector2.ZERO
 var jump = 0
 var jump_max = 2
-var has_done_action = false
 
 
 func _ready():
@@ -48,11 +47,7 @@ func _physics_process(delta):
 
 		
 	
-func _update_has_done_action(s):
-	if has_done_action:
-		return
-		
-	has_done_action = s
+
 	
 func _throw_off():
 	pass
@@ -97,6 +92,7 @@ func _move(delta):
 
 func do_action(action):
 	anim.play(action)
+	$Anim.play(action)
 
 signal finished_animation()
 func _on_AnimatedSprite_animation_finished():

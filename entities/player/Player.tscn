@@ -18,7 +18,7 @@
 [ext_resource path="res://entities/player/secundary_attack.gd" type="Script" id=16]
 [ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=17]
 [ext_resource path="res://entities/player/Invunerability.gd" type="Script" id=18]
-[ext_resource path="res://Cursor.png" type="Texture" id=19]
+[ext_resource path="res://Untitled_04-25-2021_11-05-42 (1).png" type="Texture" id=19]
 [ext_resource path="res://entities/player/spike_collision.gd" type="Script" id=20]
 [ext_resource path="res://entities/player/release.gd" type="Script" id=21]
 
@@ -34,9 +34,14 @@ animations = [ {
 "name": "Idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "Attack",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Walk",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ) ],
@@ -48,11 +53,6 @@ animations = [ {
 "loop": true,
 "name": "Jump",
 "speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "Walk",
-"speed": 5.0
 } ]
 
 [sub_resource type="GDScript" id=4]
@@ -60,7 +60,30 @@ script/source = "extends Node
 "
 
 [sub_resource type="Animation" id=5]
-length = 0.45
+tracks/0/type = "value"
+tracks/0/path = NodePath("AttackArea/AttackColider:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.5, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 62.0, 0.0, 62.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AttackArea/AttackColider:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.5, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -7, -0.441 ), Vector2( -15, -0.441 ), Vector2( -7, -0.441 ) ]
+}
 
 [sub_resource type="Animation" id=6]
 
@@ -75,7 +98,7 @@ length = 0.5
 loop = true
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 11, 2 )
+extents = Vector2( 11, 3.17499 )
 
 [sub_resource type="CapsuleShape2D" id=11]
 radius = 3.72452
@@ -137,12 +160,16 @@ collision_mask = 3
 script = ExtResource( 1 )
 
 [node name="AttackColider" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( -12.3585, -0.440918 )
+position = Vector2( -7, -0.441 )
+rotation = 1.0821
+scale = Vector2( 1.14045, 0.816268 )
 shape = SubResource( 10 )
 disabled = true
 
 [node name="Sprite" type="Sprite" parent="AttackArea/AttackColider"]
-position = Vector2( -1.005, -1.34088 )
+position = Vector2( 1.39729, -1.37585 )
+rotation = 2.13643
+scale = Vector2( 0.113989, -0.0710317 )
 texture = ExtResource( 19 )
 
 [node name="AttackTimer" type="Timer" parent="AttackArea"]
@@ -207,6 +234,7 @@ used_behaviours = [ "move", "jump", "attack", "secundary_attack" ]
 
 [node name="attacking" type="Node" parent="states"]
 script = ExtResource( 14 )
+update_has_done_action = true
 used_behaviours = [ "attack" ]
 
 [node name="grabbed" type="Node" parent="states"]
@@ -227,7 +255,7 @@ position = Vector2( -3.12167, -1.33786 )
 shape = SubResource( 13 )
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
 [connection signal="life_damaged" from="Health" to="Invunerability" method="_test_for_invulnerability"]
+[connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
 [connection signal="timeout" from="Invunerability" to="Invunerability" method="_on_Invunerability_timeout"]
 [connection signal="body_entered" from="AttackArea" to="AttackArea" method="_on_AttackArea_body_entered"]
