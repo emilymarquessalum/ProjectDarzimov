@@ -15,7 +15,7 @@ texture = ExtResource( 3 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 position = Vector2( 0, -3.8147e-06 )
-color = Color( 0.0980392, 0.219608, 0.482353, 1 )
+color = Color( 0.0745098, 0.164706, 0.360784, 1 )
 
 [node name="camada_4" type="ParallaxLayer" parent="."]
 position = Vector2( -2.24493, 3.3674 )

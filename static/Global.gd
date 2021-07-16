@@ -1,12 +1,12 @@
 extends Node
 
-var waypoint = Color.red
 var player_direction = true
 var items = []
 var equipped_weapon = null setget _changed_weapon
 var item_class = load("res://items/item.tscn")
 var play_position = 0
-
+var current_spawn_point = {'room' : "", 'area' : "", 'point': Color.red}
+var transition_waypoint = Color.red
 signal changed_weapon(new_weapon)
 func _changed_weapon(new):
 	equipped_weapon = new
@@ -30,6 +30,10 @@ func _ready():
 	for loader in to_save_and_load:
 		loader._inic_data(data)
 	
+	if data.has("spawn_point"):
+		current_spawn_point = data["spawn_point"]
+
+
 
 func _save_game():
 	
@@ -46,6 +50,10 @@ func _save_game():
 	for saver in to_save_and_load:
 		data = saver._save_data(data)
 	
+
+	
+	data["spawn_point"] = current_spawn_point
+	
 	load_file.store_string(JSON.print(data))
 		
 
@@ -57,7 +65,7 @@ func leave_area():
 		character.health = c.find_node("Health")._get_health()
 	var r = 0
 	for character in to_instance:
-		var c =  character.s_n
+		var c =  character.instance
 		if c != null :
 			character.health = c.find_node("Health")._get_health()
 			if character.health == null:
@@ -71,7 +79,6 @@ func leave_area():
 func _reset():
 	to_instance = []
 	equipped_weapon = null
-	waypoint = Color.red
 	characters = [{'c_name': "Player", 'health':3}, ]
 	items = []
 	var path = "res://scene_data/"

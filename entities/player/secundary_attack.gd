@@ -9,7 +9,10 @@ var attack
 func _ready():
 	Global.connect("changed_weapon", self, "_update_attack")
 func _update_attack(data):
-	
+	if data == null:
+		attack = null
+		return
+
 	attack = data.attack.new()
 	attack._set_controller(control)
 

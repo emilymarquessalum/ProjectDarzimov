@@ -24,4 +24,5 @@ func _update(delta,player):
 		player._change_state("attacking")
 		
 func _finish_attack(p):
+	
 	p._change_state("normal")

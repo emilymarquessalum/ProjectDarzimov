@@ -42,8 +42,17 @@ func _get_card_data(name):
 
 
 func _acquire_card(name):
-	_get_card_data(name)["acquired"] = true
+	var card = _get_card_data(name)
+	if card == null:
+		return
+	card["acquired"] = true
+	cards_acquired.append(card)
 
+	
+func _inic_run():
+	for card in cards_equipped:
+		card["behaviour"]._start_behaviour()
+	
 func _inic_data(save_data):
 	var i = 0
 	for card_name in save_data["cards_equipped"]:
@@ -64,9 +73,7 @@ func _save_data(current_save_data):
 		equipped_cards_name.append(name)
 		cards_saved.append(name)
 		
-	for card in cards:
-		if not card.has("acquired"):
-			continue
+	for card in cards_acquired:
 		cards_saved.append(card["name"])
 		
 		current_save_data["saved_cards"] = cards_saved

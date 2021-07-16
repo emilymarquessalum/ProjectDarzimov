@@ -9,10 +9,11 @@
 
 [node name="interface_control" type="Control"]
 pause_mode = 2
-margin_left = -28.0
-margin_top = -97.0
-margin_right = 12.0
-margin_bottom = -57.0
+light_mask = 0
+margin_left = 2.9194
+margin_top = 0.514984
+margin_right = 42.9194
+margin_bottom = 40.515
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -20,6 +21,7 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color( 0.470588, 0.223529, 0.458824, 1 )
+light_mask = 0
 margin_right = 40.0
 margin_bottom = 40.0
 rect_scale = Vector2( 8.02481, 4.51539 )
@@ -29,11 +31,13 @@ __meta__ = {
 
 [node name="Sugestao_de_menu_de_equipados" type="Sprite" parent="."]
 modulate = Color( 1, 0.992188, 0.992188, 1 )
+light_mask = 0
 position = Vector2( 159.143, 90.7206 )
 scale = Vector2( 0.793284, 0.445217 )
 texture = ExtResource( 4 )
 
 [node name="buttons" type="Control" parent="."]
+light_mask = 0
 margin_left = 126.663
 margin_top = -2.75457
 margin_right = 166.663

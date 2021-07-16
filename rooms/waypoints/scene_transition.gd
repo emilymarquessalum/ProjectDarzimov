@@ -41,7 +41,7 @@ func _on_Area2D_body_entered(body):
 	Global.leave_area()
 	var scen = load("res://rooms/" + area + "/" + scene + ".tscn")
 	
-	Global.waypoint = waypoint_child.point
+	Global.transition_waypoint = waypoint_child.point
 	get_tree().change_scene_to(scen) 
 	
 	pass # Replace with function body.

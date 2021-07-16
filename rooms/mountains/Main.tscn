@@ -192,10 +192,11 @@ position = Vector2( 141.781, 122.677 )
 position = Vector2( 211.661, 82.471 )
 
 [node name="essential" parent="." instance=ExtResource( 9 )]
-position = Vector2( -8.55292, -17.3963 )
+position = Vector2( 3.44708, 13.6037 )
 
 [node name="CanvasModulate2" type="CanvasModulate" parent="."]
 show_behind_parent = true
 position = Vector2( 99.9935, -32.1937 )
+color = Color( 0.435294, 0.423529, 0.478431, 1 )
 
 [node name="cave_background" parent="." instance=ExtResource( 8 )]

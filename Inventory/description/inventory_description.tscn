@@ -24,7 +24,7 @@ modulate = Color( 0.803922, 0.270588, 0, 1 )
 margin_left = 0.310707
 margin_top = -0.243449
 margin_right = 10.3107
-margin_bottom = 22.7565
+margin_bottom = 22.7566
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false

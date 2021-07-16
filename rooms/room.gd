@@ -21,7 +21,7 @@ func get_spawn():
 	var waypoints =  get_tree().get_nodes_in_group("Waypoint")
 	var index = 0
 	var waypoint = waypoints[0]
-	while waypoint.point != Global.waypoint:
+	while waypoint.point != Global.transition_waypoint:
 		index += 1
 		waypoint = waypoints[index]
 	return waypoint

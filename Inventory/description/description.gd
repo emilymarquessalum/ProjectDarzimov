@@ -36,10 +36,10 @@ func _process(delta):
 # e altera o tamanho do painel de fundo pelo tamanho do texto
 func _fix_position(descript):
 	var m = get_viewport().get_mouse_position()
-	descript.rect_position.y = m.y - 80
-	descript.rect_position.x = m.x -160
-	if m.x + 80 > get_viewport().get_visible_rect().size.x :
-		descript.rect_position.x = m.x - 240
+	descript.rect_position.y = m.y * 105 / 100
+	descript.rect_position.x = m.x * 102 / 100
+	if m.x * 126/100 > get_viewport().get_visible_rect().size.x :
+		descript.rect_position.x = m.x * 69/100
 	
 	var panel = descript.get_node("Panel")
 	panel.rect_size.y = self.margin_bottom /5
