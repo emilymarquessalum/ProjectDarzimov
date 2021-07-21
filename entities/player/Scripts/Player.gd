@@ -103,7 +103,7 @@ func _end_run():
 	Global._reset()
 	Game.game_off()
 	var scen = load("res://interface/game_over.tscn").instance()
-	get_tree().get_current_scene().add_child(scen)
+	get_tree().get_current_scene().find_node("CanvasLayer").add_child(scen)
 	_change_state("dead")
 	
 func tt():

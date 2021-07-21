@@ -1,19 +1,21 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Map/floors/Floor.tscn" type="PackedScene" id=1]
 [ext_resource path="res://rooms/essential.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Map/scene_transition.tscn" type="PackedScene" id=3]
 [ext_resource path="res://rooms/room.gd" type="Script" id=4]
+[ext_resource path="res://rooms/mountains/bounds.gd" type="Script" id=5]
 [ext_resource path="res://rooms/waypoints/waypoint.tscn" type="PackedScene" id=6]
 [ext_resource path="res://rooms/caves_background.tscn" type="PackedScene" id=7]
 [ext_resource path="res://torcch.tscn" type="PackedScene" id=8]
+[ext_resource path="res://rooms/mountains/bound_element.gd" type="Script" id=9]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 4 )
-room_width = 160
-room_height = 76
-room_x = 160
-room_y = 60
+room_width = 159.123
+room_height = 88.9919
+room_x = 160.463
+room_y = 53.8044
 spawn = 1
 area_name = "going_up"
 
@@ -99,4 +101,25 @@ point = Color( 0, 1, 0, 1 )
 [node name="essential" parent="." instance=ExtResource( 2 )]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color( 0.262745, 0.294118, 0.372549, 1 )
+color = Color( 0.243137, 0.301961, 0.45098, 1 )
+
+[node name="bounds" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0.45098 )
+script = ExtResource( 5 )
+bound_color = Color( 0.141176, 0.14902, 0.286275, 1 )
+
+[node name="bound_x" type="Node2D" parent="bounds"]
+position = Vector2( 0.463074, -201.806 )
+script = ExtResource( 9 )
+
+[node name="bound_y" type="Node2D" parent="bounds"]
+position = Vector2( 93.2154, -36.1956 )
+script = ExtResource( 9 )
+
+[node name="bound_width" type="Node2D" parent="bounds"]
+position = Vector2( 319.123, 9.10088 )
+script = ExtResource( 9 )
+
+[node name="bound_height" type="Node2D" parent="bounds"]
+position = Vector2( 133.983, 178.992 )
+script = ExtResource( 9 )

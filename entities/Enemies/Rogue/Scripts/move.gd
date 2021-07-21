@@ -16,11 +16,11 @@ func _start_behaviour():
 	
 	
 func _update(delta, en):
-	var ground_detect =en.find_node("enemy_properties").get_node("front_ground_detector")
+	var ground_detect =en.find_node("front_ground_detector")
 	var will_fall = not (ground_detect.is_colliding()) and en.is_on_floor() 
 	
 	
-	var in_front = en.get_node("direction_collision")
+	var in_front = en.find_node("direction_collision")
 	 
 	if will_fall or in_front.is_colliding():
 		en.flip = not en.flip

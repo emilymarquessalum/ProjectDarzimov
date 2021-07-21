@@ -2,8 +2,8 @@ extends Node2D
 var inventory_opened = false
 
 
-var slotObject = load("res://Inventory/main_inventory/slot.tscn")
-var ItemClass = load("res://items/item.tscn")
+var slotObject = preload("res://Inventory/main_inventory/slot.tscn")
+var ItemClass = preload("res://items/item.tscn")
 var trinket_class = preload("res://Map/chest/item_trinket.tscn")
 var holder_class = load("res://Inventory/main_inventory/slot_holder.tscn")
 
@@ -22,7 +22,7 @@ func _ready():
 	_read_items_from_global()
 	
 	$inventory_menu.hide()
-
+var int_text = preload("res://interface/main_interface/interface_text.tres")
 signal finished_loading_inventory()
 # lê tipos de itens para criar tudo de forma dinamica!
 func _build_inventory():
@@ -34,7 +34,7 @@ func _build_inventory():
 		$button_holder.add_child(button)
 		button.text = item_type.types.keys()[type]
 		button.theme = Theme.new()
-		button.theme.default_font = load("res://interface_text.tres")
+		button.theme.default_font = int_text
 		button.connect("pressed", self, "_open_holder", [holder])
 		add_child(holder)
 		holder.visible = false
@@ -274,8 +274,8 @@ func try_to_move_item(slot):
 # abrir e fechar inventário:
 signal opened_inventory()
 func _open_inventory():
-	var descript = get_tree().get_current_scene().find_node("description_text")
-	descript._connect_to_inventory()
+	#var descript = get_tree().get_current_scene().find_node("description_text")
+	#descript._connect_to_inventory()
 	$inventory_menu.show()
 	inventory_opened = true
 	emit_signal("opened_inventory")

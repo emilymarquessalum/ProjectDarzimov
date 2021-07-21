@@ -12,13 +12,13 @@ func _process(delta):
 	position.y = player.position.y 
 	if not setting:
 		return
-	if position.x <= scene.room_x:
-		position.x = scene.room_x
+	if global_position.x*zoom.x <= scene.room_x:
+		global_position.x = scene.room_x *zoom.x
 		
-	if position.x >= scene.room_width:
-		position.x = scene.room_width
+	if global_position.x *zoom.x>= scene.room_width:
+		global_position.x = scene.room_width*zoom.x
 	
-	if position.y > scene.room_height:
-		position.y = scene.room_height
-	if position.y < scene.room_y:
-		position.y = scene.room_y
+	if global_position.y*zoom.y > scene.room_height:
+		global_position.y = scene.room_height*zoom.y
+	if global_position.y*zoom.y < scene.room_y:
+		global_position.y = scene.room_y*zoom.y

@@ -13,6 +13,13 @@ var first_entered_in_run = true
 
 # Iniciando texturas dos tiles conforme especificado para a area
 func _ready():
+	var screen_x = get_viewport ().get_visible_rect().size.x 
+	var screen_y = get_viewport ().get_visible_rect().size.y 
+	room_x = $bounds/bound_x.global_position.x + screen_x/2
+	room_y = $bounds/bound_y.global_position.y + screen_y/2
+	room_width = $bounds/bound_width.global_position.x - screen_x/2
+	room_height = $bounds/bound_height.global_position.y - screen_y/2
+	
 	if not Engine.editor_hint:
 		Global._change_area()
 		

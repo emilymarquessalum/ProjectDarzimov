@@ -17,12 +17,12 @@ func _alterate_interface(health):
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.connect("changed_area",self,"_inicialize")
 	
-	var health_control =  get_tree().get_current_scene().find_node("Player").health_control
+
+
+func _inicialize(scn):
+	var health_control =  scn.find_node("Player").health_control
 	health_control.connect("life_altered", self, "_alterate_interface")
 	_alterate_interface(health_control.health)
-	pass
-
-
-
-
+	

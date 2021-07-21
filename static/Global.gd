@@ -5,7 +5,7 @@ var items = []
 var equipped_weapon = null setget _changed_weapon
 var item_class = load("res://items/item.tscn")
 var play_position = 0
-var current_spawn_point = {'room' : "", 'area' : "", 'point': Color.red}
+var current_spawn_point = {'room' : "Main", 'area' : "mountains", 'point': Color.red}
 var transition_waypoint = Color.red
 signal changed_weapon(new_weapon)
 func _changed_weapon(new):

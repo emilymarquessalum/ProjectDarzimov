@@ -11,7 +11,7 @@ var slots = []
 func _ready():
 	for i in range(slot_numbers):
 		var inv_slot = inv._make_slot($GridContainer)
-		inv_slot._connect_to_inventory()
+		inv_slot._connect_to_inventory(inv)
 		slots.append(inv_slot)
 		#if randi()%2 == 0:
 		#	var item = ItemClass.instance()

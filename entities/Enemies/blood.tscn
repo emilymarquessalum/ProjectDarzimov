@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://entities/Enemies/purple_blood.gd" type="Script" id=1]
+
+[sub_resource type="ParticlesMaterial" id=1]
+render_priority = 9
+lifetime_randomness = 0.08
+emission_shape = 1
+emission_sphere_radius = 7.17
+flag_disable_z = true
+direction = Vector3( 1, 1, 0 )
+spread = 22.5
+gravity = Vector3( 0, 98, 0 )
+angular_velocity = -320.87
+angular_velocity_random = 0.19
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = -41.66
+linear_accel_random = 0.08
+radial_accel = -11.1
+damping = 19.45
+angle = 720.0
+color = Color( 1, 0.211765, 0.0313726, 1 )
+
+[node name="Particles2D" type="Particles2D"]
+position = Vector2( 0, 1.9 )
+amount = 20
+speed_scale = 1.3
+explosiveness = 0.5
+visibility_rect = Rect2( -10, -10, 20, 20 )
+process_material = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.742
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

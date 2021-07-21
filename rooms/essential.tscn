@@ -1,12 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
-[ext_resource path="res://entities/player/Scripts/parries.gd" type="Script" id=3]
-[ext_resource path="res://interface/player_interface/health/HealthBarInterface.tscn" type="PackedScene" id=4]
-[ext_resource path="res://follow_player.gd" type="Script" id=5]
-[ext_resource path="res://interface/main_interface/interface_control.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
@@ -25,57 +20,12 @@ zoom = Vector2( 0.3, 0.3 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 material = SubResource( 2 )
 position = Vector2( 3.3371, 1.95258 )
+collision_mask = 1
 speed = 50
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_priority = 1
 light_mask = 0
-position = Vector2( 0, 86.1142 )
+position = Vector2( 0.749146, 0.749161 )
 current = true
 script = ExtResource( 2 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 4
-
-[node name="parry_UI" type="Control" parent="CanvasLayer"]
-margin_left = 316.11
-margin_top = 311.57
-margin_right = 398.11
-margin_bottom = 351.57
-script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-offset_x = -10
-offset_y = -30
-
-[node name="GridContainer" type="GridContainer" parent="CanvasLayer/parry_UI"]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-custom_constants/hseparation = 10
-columns = 3
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="GridContainer" parent="CanvasLayer" instance=ExtResource( 4 )]
-margin_left = 13.7742
-margin_top = 9.06382
-margin_right = 332.774
-margin_bottom = 59.0638
-
-[node name="interface_control" parent="CanvasLayer" instance=ExtResource( 7 )]
-visible = false
-margin_left = -0.855682
-margin_top = 1.70932
-margin_right = 39.1443
-margin_bottom = 41.7093
-
-[node name="description_panel" parent="CanvasLayer" instance=ExtResource( 8 )]
-light_mask = 0
-margin_left = -83.5457
-margin_top = 1.25112
-margin_right = -55.5457
-margin_bottom = 36.251

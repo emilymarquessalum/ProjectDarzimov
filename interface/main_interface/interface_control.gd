@@ -46,7 +46,7 @@ func _open_interface():
 	emit_signal("opened_interface")
 	inventory._open_inventory()
 	inventory.visible = true
-	get_tree().get_current_scene().find_node("lighting").visible = false
+	#get_tree().get_current_scene().find_node("lighting").visible = false
 
 func _close_interface(d=null):
 	if not opened:
@@ -56,4 +56,4 @@ func _close_interface(d=null):
 	get_tree().paused = false
 	emit_signal("closed_interface")
 	_close_all()
-	get_tree().get_current_scene().find_node("lighting").visible = true
+	#get_tree().get_current_scene().find_node("lighting").visible = true

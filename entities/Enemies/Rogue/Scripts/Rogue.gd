@@ -6,7 +6,7 @@ var melee = false
 
 func _ready():
 	player = null
-
+	
 	tscn_path = "res://entities/Enemies/Rogue/Rogue.tscn"
 	scale.x = -scale.x
 	flip = false
@@ -20,6 +20,8 @@ func _on_PlayerDetector_body_entered(body):
 	if body.is_in_group("Player") and _could_find(body):
 		player = body
 		_change_state("attacking")
+	
+
 
 func _on_PlayerDetector_body_exited(body):
 	if body == player:

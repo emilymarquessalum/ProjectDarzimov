@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://interface/main_interface/interface_control.tscn" type="PackedScene" id=1]
+[ext_resource path="res://interface/player_interface/health/HealthBarInterface.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Inventory/description/inventory_description.tscn" type="PackedScene" id=5]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 4
+
+[node name="GridContainer" parent="." instance=ExtResource( 4 )]
+margin_left = 13.7742
+margin_top = 9.06382
+margin_right = 332.774
+margin_bottom = 59.0638
+
+[node name="description_panel" parent="." instance=ExtResource( 5 )]
+visible = false
+light_mask = 0
+margin_left = -83.5457
+margin_top = 1.25112
+margin_right = -55.5457
+margin_bottom = 36.251
+
+[node name="interface_control" parent="." instance=ExtResource( 1 )]

@@ -12,7 +12,7 @@ func _ready():
 		var ic = load("res://interface/player_interface/parry/parry_icon.tscn").instance()
 		add_child(ic)
 		ic.timer = p
-		parry.connect("loaded", self, "hide")
-		parry.connect("used_parry", self, "show")
+	parry.connect("loaded", self, "hide")
+	parry.connect("used_parry", self, "show")
 	pass # Replace with function body.
 

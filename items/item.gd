@@ -1,7 +1,6 @@
 extends Control
 class_name Item
 
-var itemClass = load("res://items/item_object.gd")
 var itemScene = load("res://items/item.tscn")
 var data = _get_random_item() 
 var slot_parent

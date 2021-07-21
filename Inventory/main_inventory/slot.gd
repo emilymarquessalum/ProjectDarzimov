@@ -12,8 +12,7 @@ signal attempt_to_move_item(slot, item) # Tentativa de adicionar ou remover item
 signal selected_slot(slot,inventory) # Slot foi selecionado
 signal double_clicked(slot) # Slot foi clicado duas vezes
 
-func _connect_to_inventory():
-	var inv = get_tree().get_current_scene().find_node("Inventory")
+func _connect_to_inventory(inv):
 	self.connect("gui_input", inv, "_slot_gui_input", [self])
 	self.connect("mouse_entered", inv, "_slot_mouse_over", [self])
 	self.connect("mouse_exited", inv, "_mouse_out_slot", [self])

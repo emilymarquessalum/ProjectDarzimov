@@ -13,6 +13,7 @@ var keywords = []
 onready var current_state
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	return
 	health_control.connect("died", self, "not_alive")
 	var updt = get_node("on_update")
 	

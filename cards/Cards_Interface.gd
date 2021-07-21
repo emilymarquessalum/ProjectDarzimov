@@ -5,6 +5,7 @@ onready var cards = [$Card1, $Card2, $Card3]
 var cards_d = cards_data.new()
 
 func _ready():
+	return
 	change_cards()
 	CardsData.connect("changed_cards_equipped",self,"change_cards")
 

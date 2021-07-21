@@ -15,6 +15,7 @@ func _make_card_data(data):
 	return data
 
 func _ready():
+	return
 	_equip_card(_get_card_data("justica"))
 
 signal changed_cards_equipped()

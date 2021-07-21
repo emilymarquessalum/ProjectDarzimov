@@ -1,59 +1,46 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://entities/Enemies/Rogue/Assets/Rogue.png" type="Texture" id=1]
+[ext_resource path="res://entities/Enemies/hitbox_shape.gd" type="Script" id=1]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/Rogue.gd" type="Script" id=2]
-[ext_resource path="res://entities/Enemies/enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/Health.gd" type="Script" id=3]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/move.gd" type="Script" id=4]
 [ext_resource path="res://entities/state/state.gd" type="Script" id=5]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/throw_projectile.gd" type="Script" id=6]
 [ext_resource path="res://entities/Enemies/Rogue/Scripts/attacking.gd" type="Script" id=7]
 [ext_resource path="res://entities/Enemies/shadow_form/wall_direction.gd" type="Script" id=8]
 [ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=9]
+[ext_resource path="res://entities/Enemies/Rogue/perception.gd" type="Script" id=10]
+[ext_resource path="res://entities/Enemies/properties/property.gd" type="Script" id=12]
+[ext_resource path="res://entities/Enemies/middle_area.gd" type="Script" id=13]
+[ext_resource path="res://entities/Enemies/Rogue/Assets/Rogue.png" type="Texture" id=14]
+[ext_resource path="res://entities/Enemies/properties/raycast_property.gd" type="Script" id=15]
+[ext_resource path="res://entities/Enemies/properties/radius_property.gd" type="Script" id=16]
+[ext_resource path="res://entities/Enemies/Rogue/player_detector.gd" type="Script" id=17]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=1]
+radius = 65.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 54.037
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 2.88713, 4.49382 )
+
+[sub_resource type="RectangleShape2D" id=4]
+
+[sub_resource type="CanvasItemMaterial" id=5]
+blend_mode = 4
+
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 7.95011, 8.18046 )
 
 [node name="rogue" type="KinematicBody2D" groups=[
 "Enemy",
 ]]
-position = Vector2( 0.141899, -0.969604 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
 starting_state = "moving"
-
-[node name="Colider" type="CollisionShape2D" parent="."]
-light_mask = 4
-scale = Vector2( 1.0576, 1.107 )
-shape = SubResource( 1 )
-
-[node name="enemy_properties" parent="." instance=ExtResource( 3 )]
-position = Vector2( -0.66381, -1.64637 )
-y_start_perception = 40
-health = 3
-properties = {
-"below_ground_detector": {
-"direction": Vector2( 0, 15 ),
-"position": Vector2( -0.447, 3 )
-},
-"detection_radius": {
-"radius": 90
-},
-"front_ground_detector": {
-"direction": Vector2( 0, 18.064 ),
-"position": Vector2( -8.936, 0.083 )
-},
-"middle_shape": {
-"position": Vector2( 0, 0 ),
-"scale": Vector2( 0.78, 0.78 )
-},
-"sprite": {
-"position": Vector2( 0, 0 ),
-"scale": Vector2( 0.4, 0.4 ),
-"sprite": ExtResource( 1 ),
-"tone": Color( 1, 1, 1, 1 )
-}
-}
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -77,14 +64,94 @@ used_behaviours = [ "move" ]
 script = ExtResource( 7 )
 used_behaviours = [ "throw_projectile" ]
 
-[node name="direction_collision" type="RayCast2D" parent="."]
+[node name="sprite" type="Sprite" parent="."]
+position = Vector2( 0.27157, -1.61696 )
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 14 )
+
+[node name="Areas" type="Node2D" parent="."]
+
+[node name="player_detector" type="Area2D" parent="Areas"]
+visible = false
+modulate = Color( 0.00784314, 0.00784314, 0.00784314, 1 )
+script = ExtResource( 17 )
+
+[node name="detection_radius" type="CollisionShape2D" parent="Areas/player_detector"]
+shape = SubResource( 1 )
+script = ExtResource( 16 )
+
+[node name="MeleeCombat" type="Area2D" parent="Areas"]
+visible = false
+
+[node name="MeleeCombatCollision" type="CollisionShape2D" parent="Areas/MeleeCombat"]
+position = Vector2( -0.393989, -0.629961 )
+scale = Vector2( 1.43154, 1.43547 )
+shape = SubResource( 2 )
+
+[node name="middle_area" type="Area2D" parent="Areas"]
+visible = false
+position = Vector2( 0, -0.219051 )
+scale = Vector2( 2.5554, 2.44799 )
+script = ExtResource( 13 )
+
+[node name="middle_shape" type="CollisionShape2D" parent="Areas/middle_area"]
+shape = SubResource( 3 )
+script = ExtResource( 12 )
+
+[node name="hitbox" type="Area2D" parent="Areas" groups=[
+"Enemy",
+]]
+visible = false
+
+[node name="hitbox_shape" type="CollisionShape2D" parent="Areas/hitbox"]
+position = Vector2( 0.8909, 0 )
+shape = SubResource( 4 )
+script = ExtResource( 1 )
+
+[node name="RayCasts" type="Node2D" parent="."]
+
+[node name="below_ground_detector" type="RayCast2D" parent="RayCasts"]
+material = SubResource( 5 )
+position = Vector2( 0.647491, 0.650934 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 4
+script = ExtResource( 15 )
+
+[node name="front_ground_detector" type="RayCast2D" parent="RayCasts"]
+position = Vector2( -7.04661, 1.86569 )
+enabled = true
+cast_to = Vector2( 0, 15 )
+collision_mask = 4
+script = ExtResource( 15 )
+
+[node name="direction_collision" type="RayCast2D" parent="RayCasts"]
 modulate = Color( 0.611765, 0.12549, 0.12549, 1 )
 use_parent_material = true
-position = Vector2( -1.85135, 0.337856 )
+position = Vector2( -4.36532, -1.39563 )
 enabled = true
 cast_to = Vector2( -15, 0 )
-collision_mask = 6
-collide_with_areas = true
+collision_mask = 4
 script = ExtResource( 8 )
+
+[node name="perception_cast" type="RayCast2D" parent="RayCasts"]
+process_priority = 17
+modulate = Color( 0, 1, 1, 1 )
+position = Vector2( -5.44095, -8.33643 )
+enabled = true
+cast_to = Vector2( 0, 20 )
+collision_mask = 2
+script = ExtResource( 10 )
+
+[node name="Colider" type="CollisionShape2D" parent="."]
+visible = false
+light_mask = 4
+position = Vector2( -2.67269, 0 )
+scale = Vector2( 1.0576, 1.107 )
+shape = SubResource( 6 )
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource( 3 )
+max_health = 0
 
 [connection signal="timeout" from="Timer" to="behaviours/throw_projectile" method="_on_Timer_timeout"]

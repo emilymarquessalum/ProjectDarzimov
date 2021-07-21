@@ -2,15 +2,17 @@ extends Entity
 class_name Enemy
 
 export(String) var starting_state = ""
+export(int) var health = 3
 var ranking = 1
 var gravity = 100
 var unique_to_scene = true
 var tscn_path
 var deals_damage_on_touch = true
 var velocity = Vector2(0,0)
+export(String,MULTILINE) var damage_particle_effect = "res://entities/Enemies/blood.tscn"
 onready var player = get_tree().get_current_scene().find_node("Player")
-onready var y_start_perception = find_node("enemy_properties").y_start_perception 
 func _die():
+	
 	queue_free()
 	Game.enemies.erase(self)
 
@@ -24,8 +26,7 @@ func _look_at(a,b):
 	
 #Override to apply more rules to enemy perception 
 func _could_find(body):
-	var found = abs(global_position.y - body.global_position.y) <= y_start_perception
-	
+	var found = true
 	return found
 	
 	
@@ -34,56 +35,46 @@ func _change_direction():
 	scale.x = -scale.x
 
 	_changed_direction()
+	
+onready var particle_effect = load(damage_particle_effect)
 func _react_to_attack(health_control):
-	var collision = move_and_collide(Vector2.ZERO,true,true,true)
-	if not (collision and collision.collider is TileMap):
-		return
-	var tilemap = collision.collider
 	var properties = get_node("enemy_properties")
 	var en_pos = self.global_position 
 	
-	
-	var pos = tilemap.world_to_map(tilemap.to_local(en_pos))
-	pos -= collision.normal
-	
-	var id = tilemap.get_cellv(pos)
-	if id == 0:
-		tilemap.set_cell(pos.x, pos.y, 1)
-	
+	var p_e = particle_effect.instance()
+	add_child(p_e)
+	p_e.global_position = global_position
+	behaviours.append(p_e)
 	if health_control._life_after_damage_is_taken() <= 0:
 		_die()
 func _ready():
+
+	
+	$Health.health = health
+	$Health.max_health = health
 	_change_state(starting_state)
-	_basic_iniciation()
-	find_node("Health").connect("life_damaged", self, "_react_to_attack")
-	find_node("Health").connect("died", self, "_die")
+	
+	$Health.connect("life_damaged", self, "_react_to_attack")
+	$Health.connect("died", self, "_die")
 	
 
 	
-func _basic_iniciation():
-	var properties = get_node("enemy_properties")
+
+
 	
-	var player_detector = properties.get_node("PlayerDetector")
-	player_detector.connect("body_entered", self, "_on_PlayerDetector_body_entered")
-	player_detector.connect("body_exited", self, "_on_PlayerDetector_body_exited")
+func _on_PlayerDetector_body_entered(body):
+	if body.is_in_group("Player") and _could_find(body):
+		_player_entered_detection(body)
+
+func _on_PlayerDetector_body_exited(body):
+	if body.is_in_group("Player"):
+		_player_left_detection(body)
+
+func _player_entered_detection(p):
+	pass
 	
-
-	var meele_combat = properties.get_node("MeleeCombat")		
-	meele_combat.connect("body_entered", self, "_on_MeleeCombat_body_entered")
-	meele_combat.connect("body_exited", self, "_on_MeleeCombat_body_exited")
-
-func _on_PlayerDetector_body_entered(_body):
+func _player_left_detection(p):
 	pass
-
-func _on_PlayerDetector_body_exited(_body):
-	pass
-
-func _on_MeleeCombat_body_entered(_body):
-	pass
-
-func _on_MeleeCombat_body_exited(body):
-	pass
-
 
 var override = false
 func _physics_process(delta):
