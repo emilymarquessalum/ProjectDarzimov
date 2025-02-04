@@ -1,7 +1,7 @@
-tool
+@tool
 extends ScrollContainer
 
-onready var nodes = {
+@onready var nodes = {
 	'themes': $VBoxContainer/HBoxContainer3/VBoxContainer/VBoxContainer/HBoxContainer/ThemeOptionButton,
 	'advanced_themes': $VBoxContainer/HBoxContainer3/VBoxContainer/VBoxContainer/HBoxContainer2/AdvancedThemes,
 	'translations': $VBoxContainer/HBoxContainer3/VBoxContainer/VBoxContainer2/HBoxContainer6/Translations,
@@ -45,16 +45,16 @@ func _ready():
 	update_data()
 	
 	# Themes
-	nodes['themes'].connect('item_selected', self, '_on_default_theme_selected')
-	nodes['delay_after_options'].connect('text_changed', self, '_on_delay_options_text_changed')
+	nodes['themes'].connect('item_selected', Callable(self, '_on_default_theme_selected'))
+	nodes['delay_after_options'].connect('text_changed', Callable(self, '_on_delay_options_text_changed'))
 	# TODO move to theme section later
-	nodes['advanced_themes'].connect('toggled', self, '_on_item_toggled', ['dialog', 'advanced_themes'])
+	nodes['advanced_themes'].connect('toggled', Callable(self, '_on_item_toggled').bind('dialog', 'advanced_themes'))
 	
 	for k in DIALOG_KEYS:
-		nodes[k].connect('toggled', self, '_on_item_toggled', ['dialog', k])
+		nodes[k].connect('toggled', Callable(self, '_on_item_toggled').bind('dialog', k))
 	
 	for k in SAVING_KEYS:
-		nodes[k].connect('toggled', self, '_on_item_toggled', ['saving', k])
+		nodes[k].connect('toggled', Callable(self, '_on_item_toggled').bind('saving', k))
 
 
 func update_data():
@@ -70,13 +70,13 @@ func load_values(settings: ConfigFile, section: String, key: Array):
 			if nodes[k] is LineEdit:
 				nodes[k].text = settings.get_value(section, k)
 			else:
-				nodes[k].pressed = settings.get_value(section, k)
+				nodes[k].button_pressed = settings.get_value(section, k)
 
 
 func refresh_themes(settings: ConfigFile):
 	# TODO move to theme section later
 	if settings.has_section_key('dialog', 'advanced_themes'):
-		nodes['advanced_themes'].pressed = settings.get_value('dialog', 'advanced_themes')
+		nodes['advanced_themes'].button_pressed = settings.get_value('dialog', 'advanced_themes')
 	
 	nodes['themes'].clear()
 	var theme_list = DialogicUtil.get_sorted_theme_list()

@@ -23,7 +23,7 @@ const possible_items = [
 
 # Retorna um item aleatório
 func _get_random_item():
-	return possible_items[rand_range(0, possible_items.size())]
+	return possible_items[randf_range(0, possible_items.size())]
 	
 # Retorna item aleatório do (parameter) tipe
 func _get_random_item_of_type(type):
@@ -36,7 +36,7 @@ func _get_random_item_of_type(type):
 		return null
 	if new_possible_items.size() == 1:
 		return new_possible_items[0]
-	return new_possible_items[int(rand_range(0, possible_items.size()))]
+	return new_possible_items[int(randf_range(0, possible_items.size()))]
 
 func _ready():
 	#if not data:
@@ -56,7 +56,7 @@ func _change_data(d):
 	
 # Retorna uma cópia do item (copies data and quantity)
 func _copy():
-	var item_copy = itemScene.instance()
+	var item_copy = itemScene.instantiate()
 	item_copy.data = data
 	item_copy.quantity = quantity
 	return item_copy

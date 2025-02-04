@@ -34,17 +34,17 @@ func _update(d, c):
 		p.tspeed = 0.7
 		p.arc_height = 30
 		c.deals_damage_on_touch = true
-		p.connect("reached_goal", self, "_return_state")
+		p.connect("reached_goal", Callable(self, "_return_state"))
 	
 		c.add_child(p)
-		c.find_node("middle_area").connect("body_entered", self, "test_col",[p])
+		c.find_child("middle_area").connect("body_entered", Callable(self, "test_col").bind(p))
 		
 		
 func test_col(b,p):
-	var ground_detector = control.find_node("below_ground_detector")
+	var ground_detector = control.find_child("below_ground_detector")
 	if ground_detector.get_collider() == b:
 		p._end()
-		control.find_node("middle_area").disconnect("body_entered", self, "test_col")		
+		control.find_child("middle_area").disconnect("body_entered", Callable(self, "test_col"))		
 		control._fix_on_ground()
 
 func _return_state():

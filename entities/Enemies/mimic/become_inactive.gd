@@ -16,7 +16,7 @@ func _start_behaviour():
 
 	get_parent().get_parent().deals_damage_on_touch = false
 	
-	control.get_node("chest").connect("interacted_object", control, "_mimic_start",[], CONNECT_ONESHOT)
+	control.get_node("chest").connect("interacted_object", Callable(control, "_mimic_start").bind(), CONNECT_ONE_SHOT)
 	
 	
 	

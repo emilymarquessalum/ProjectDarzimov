@@ -10,16 +10,16 @@ extends Area2D
 func _ready():
 	pass # Replace with function body.
 
-onready var player = get_tree().get_current_scene().find_node("Player")
+@onready var player = get_tree().get_current_scene().find_child("Player")
 	
-onready var damage = player.damage
+@onready var damage = player.damage
 
 func has_target(type):
 	return type == "Enemy"
 
 func _attack():
 	$AttackColider.disabled = false
-	player.connect("finished_animation", self, "_finish_attack",[],CONNECT_ONESHOT)
+	player.connect("finished_animation", Callable(self, "_finish_attack").bind(), CONNECT_ONE_SHOT)
 
 signal finished_attack()
 func _finish_attack():

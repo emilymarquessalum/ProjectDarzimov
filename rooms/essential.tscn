@@ -3,7 +3,7 @@
 [ext_resource path="res://entities/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticleProcessMaterial" id=1]
 
 [sub_resource type="CanvasItemMaterial" id=2]
 next_pass = SubResource( 1 )

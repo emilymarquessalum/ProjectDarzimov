@@ -31,7 +31,7 @@ class_name Dialogic
 ## @param debug_mode			Debug is disabled by default but can be enabled if needed.
 ## @param use_canvas_instead	Create the Dialog inside a canvas layer to make it show up regardless of the camera 2D/3D situation.
 ## @returns						A Dialog node to be added into the scene tree.
-static func start(timeline: String, reset_saves: bool=true, dialog_scene_path: String="res://addons/dialogic/Dialog.tscn", debug_mode: bool=false, use_canvas_instead=true):
+static func start(Callable(timeline: String, reset_saves: bool=true).bind(dialog_scene_path: String="res://addons/dialogic/Dialog.tscn"), debug_mode: bool=false, use_canvas_instead=true):
 	var dialog_scene = load(dialog_scene_path)
 	var dialog_node = null
 	var canvas_dialog_node = null
@@ -43,14 +43,14 @@ static func start(timeline: String, reset_saves: bool=true, dialog_scene_path: S
 		canvas_dialog_node.set_dialog_node_scene(dialog_scene)
 		dialog_node = canvas_dialog_node.dialog_node
 	else:
-		dialog_node = dialog_scene.instance()
+		dialog_node = dialog_scene.instantiate()
 	
 	dialog_node.reset_saves = reset_saves
 	dialog_node.debug_mode = debug_mode
 	
 	returned_dialog_node = dialog_node if not canvas_dialog_node else canvas_dialog_node
 	
-	if not timeline.empty():
+	if not timeline.is_empty():
 		for t in DialogicUtil.get_timeline_list():
 			if t['name'] == timeline or t['file'] == timeline:
 				dialog_node.timeline = t['file']
@@ -74,9 +74,9 @@ static func start(timeline: String, reset_saves: bool=true, dialog_scene_path: S
 ## @returns						A Dialog node to be added into the scene tree.
 static func start_from_save(initial_timeline: String, dialog_scene_path: String="res://addons/dialogic/Dialog.tscn", debug_mode: bool=false):
 	var current := get_current_timeline()
-	if current.empty():
+	if current.is_empty():
 		current = initial_timeline
-	return start(current, false, dialog_scene_path, debug_mode)
+	return start(Callable(current, false).bind(dialog_scene_path), debug_mode)
 
 ## Gets default values for definitions.
 ## 

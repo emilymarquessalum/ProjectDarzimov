@@ -2,15 +2,15 @@ extends Resource
 class_name npc_conversation
 
 
-export(int) var index
+@export var index: int
 
-export(Resource) var npc_script
+@export var npc_script: Resource
 
-export(Resource) var npc_data
+@export var npc_data: Resource
 # will be used to find path inside a folder of characters,
 # so their sprites can be used in dialogue
-export(String) var character_1
-export(String) var character_2
+@export var character_1: String
+@export var character_2: String
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

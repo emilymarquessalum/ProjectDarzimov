@@ -1,5 +1,5 @@
+@tool
 extends property
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -12,7 +12,7 @@ func _ready():
 
 func update_property(data):
 	s.position = data["position"]
-	s.cast_to = data["direction"]
+	s.target_position = data["direction"]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

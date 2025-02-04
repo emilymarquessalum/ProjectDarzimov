@@ -3,7 +3,7 @@
 [ext_resource path="res://Map/Tiles/jumpable_tile.tscn" type="PackedScene" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 23.5376, 6.34452 )
+size = Vector2( 23.5376, 6.34452 )
 
 [node name="piso_pulavel" type="Node2D"]
 scale = Vector2( 0.922074, 0.952843 )

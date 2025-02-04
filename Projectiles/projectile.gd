@@ -9,7 +9,7 @@ var movement
 var alive = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Health.connect("died", self, "queue_free")
+	$Health.connect("died", Callable(self, "queue_free"))
 	pass # Replace with function body.
 
 

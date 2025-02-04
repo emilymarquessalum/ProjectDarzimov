@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _get_cell_at(ent_pos,collision):
-	var pos = world_to_map(to_local(ent_pos))
+	var pos = local_to_map(to_local(ent_pos))
 	pos -= collision.normal
 	
 	var id = get_cellv(pos)

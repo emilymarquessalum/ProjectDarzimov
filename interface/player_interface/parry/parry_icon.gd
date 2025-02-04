@@ -6,7 +6,7 @@ func _ready():
 	pass
 
 
-onready var parry = get_tree().get_current_scene().find_node("Parry")
+@onready var parry = get_tree().get_current_scene().find_child("Parry")
 
 func _process(delta):
 	if timer:

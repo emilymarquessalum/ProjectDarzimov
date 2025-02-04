@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 
 var editor_file_dialog # EditorFileDialog
@@ -20,7 +20,7 @@ func _ready():
 	$MainPanel/GlossaryEntryEditor.editor_reference = self
 	$MainPanel/ThemeEditor.editor_reference = self
 
-	$MainPanel/MasterTreeContainer/MasterTree.connect("editor_selected", self, 'on_master_tree_editor_selected')
+	$MainPanel/MasterTreeContainer/MasterTree.connect("editor_selected", Callable(self, 'on_master_tree_editor_selected'))
 
 	# Updating the folder structure
 	DialogicUtil.update_resource_folder_structure()
@@ -29,26 +29,26 @@ func _ready():
 	# This part of the code is a bit terrible. But there is no better way
 	# of doing this in Godot at the moment. I'm sorry.
 	var separation = get_constant("separation", "BoxContainer")
-	$MainPanel.margin_left = separation
-	$MainPanel.margin_right = separation * -1
-	$MainPanel.margin_bottom = separation * -1
-	$MainPanel.margin_top = 38
+	$MainPanel.offset_left = separation
+	$MainPanel.offset_right = separation * -1
+	$MainPanel.offset_bottom = separation * -1
+	$MainPanel.offset_top = 38
 	var modifier = ''
 	var _scale = get_constant("inspector_margin", "Editor")
 	_scale = _scale * 0.125
 	if _scale == 1:
-		$MainPanel.margin_top = 30
+		$MainPanel.offset_top = 30
 	if _scale == 1.25:
 		modifier = '-1.25'
-		$MainPanel.margin_top = 37
+		$MainPanel.offset_top = 37
 	if _scale == 1.5:
 		modifier = '-1.25'
-		$MainPanel.margin_top = 46
+		$MainPanel.offset_top = 46
 	if _scale == 1.75:
 		modifier = '-1.25'
-		$MainPanel.margin_top = 53
+		$MainPanel.offset_top = 53
 	if _scale == 2:
-		$MainPanel.margin_top = 59
+		$MainPanel.offset_top = 59
 		modifier = '-2'
 	$ToolBar/NewTimelineButton.icon = load("res://addons/dialogic/Images/Toolbar/add-timeline" + modifier + ".svg")
 	$ToolBar/NewCharactersButton.icon = load("res://addons/dialogic/Images/Toolbar/add-character" + modifier + ".svg")
@@ -56,7 +56,7 @@ func _ready():
 	$ToolBar/NewGlossaryEntryButton.icon = load("res://addons/dialogic/Images/Toolbar/add-glossary" + modifier + ".svg")
 	$ToolBar/NewThemeButton.icon = load("res://addons/dialogic/Images/Toolbar/add-theme" + modifier + ".svg")
 	
-	var modulate_color = Color.white
+	var modulate_color = Color.WHITE
 	if not get_constant("dark_theme", "Editor"):
 		modulate_color = get_color("property_color", "Editor")
 	$ToolBar/NewTimelineButton.modulate = modulate_color
@@ -68,19 +68,19 @@ func _ready():
 	$ToolBar/FoldTools/ButtonFold.icon = get_icon("GuiTreeArrowRight", "EditorIcons")
 	$ToolBar/FoldTools/ButtonUnfold.icon = get_icon("GuiTreeArrowDown", "EditorIcons")
 	# Toolbar
-	$ToolBar/NewTimelineButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_timeline')
-	$ToolBar/NewCharactersButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_character')
-	$ToolBar/NewThemeButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_theme')
-	$ToolBar/NewValueButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_value_definition')
-	$ToolBar/NewGlossaryEntryButton.connect('pressed', $MainPanel/MasterTreeContainer/MasterTree, 'new_glossary_entry')
+	$ToolBar/NewTimelineButton.connect('pressed', Callable($MainPanel/MasterTreeContainer/MasterTree, 'new_timeline'))
+	$ToolBar/NewCharactersButton.connect('pressed', Callable($MainPanel/MasterTreeContainer/MasterTree, 'new_character'))
+	$ToolBar/NewThemeButton.connect('pressed', Callable($MainPanel/MasterTreeContainer/MasterTree, 'new_theme'))
+	$ToolBar/NewValueButton.connect('pressed', Callable($MainPanel/MasterTreeContainer/MasterTree, 'new_value_definition'))
+	$ToolBar/NewGlossaryEntryButton.connect('pressed', Callable($MainPanel/MasterTreeContainer/MasterTree, 'new_glossary_entry'))
 	$ToolBar/Docs.icon = get_icon("Instance", "EditorIcons")
-	$ToolBar/Docs.connect('pressed', OS, "shell_open", ["https://dialogic.coppolaemilio.com"])
-	$ToolBar/FoldTools/ButtonFold.connect('pressed', $MainPanel/TimelineEditor, 'fold_all_nodes')
-	$ToolBar/FoldTools/ButtonUnfold.connect('pressed', $MainPanel/TimelineEditor, 'unfold_all_nodes')
+	$ToolBar/Docs.connect('pressed', Callable(OS, "shell_open").bind("https://dialogic.coppolaemilio.com"))
+	$ToolBar/FoldTools/ButtonFold.connect('pressed', Callable($MainPanel/TimelineEditor, 'fold_all_nodes'))
+	$ToolBar/FoldTools/ButtonUnfold.connect('pressed', Callable($MainPanel/TimelineEditor, 'unfold_all_nodes'))
 	
 	
 	#Connecting confirmation
-	$RemoveFolderConfirmation.connect('confirmed', self, '_on_RemoveFolderConfirmation_confirmed')
+	$RemoveFolderConfirmation.connect('confirmed', Callable(self, '_on_RemoveFolderConfirmation_confirmed'))
 
 	# Loading the version number
 	var config = ConfigFile.new()
@@ -103,7 +103,7 @@ func popup_remove_confirmation(what):
 		'confirmed', self, '_on_RemoveConfirmation_confirmed'):
 				$RemoveConfirmation.disconnect(
 					'confirmed', self, '_on_RemoveConfirmation_confirmed')
-	$RemoveConfirmation.connect('confirmed', self, '_on_RemoveConfirmation_confirmed', [what])
+	$RemoveConfirmation.connect('confirmed', Callable(self, '_on_RemoveConfirmation_confirmed').bind(what))
 	$RemoveConfirmation.popup_centered()
 
 
@@ -135,7 +135,7 @@ func _on_RemoveConfirmation_confirmed(what: String = ''):
 
 
 # Godot dialog
-func godot_dialog(filter, mode = EditorFileDialog.MODE_OPEN_FILE):
+func godot_dialog(filter, mode = EditorFileDialog.FILE_MODE_OPEN_FILE):
 	editor_file_dialog.mode = mode
 	editor_file_dialog.clear_filters()
 	editor_file_dialog.popup_centered_ratio(0.75)
@@ -161,7 +161,7 @@ func godot_dialog_connect(who, method_name, signal_name = "file_selected"):
 	
 	# Connect new signals
 	for new_signal_name in signal_name if typeof(signal_name) == TYPE_ARRAY else [signal_name]:
-		editor_file_dialog.connect(new_signal_name, who, method_name, [who])
+		editor_file_dialog.connect(new_signal_name, Callable(who, method_name).bind(who))
 	
 	file_picker_data['method'] = method_name
 	file_picker_data['node'] = who

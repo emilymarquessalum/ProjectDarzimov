@@ -1,5 +1,5 @@
+@tool
 extends property
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func update_property(data):
-	.update_property(data)
+	super.update_property(data)
 	s.texture = data["sprite"]
 	s.modulate = data["tone"]
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -16,13 +16,13 @@ func _process(delta):
 		
 	var moved = false
 	
-	if x_limit > $image.rect_size.x:
-		$image.rect_size.x +=  grow_speed
-		$image.rect_position.x -=  grow_speed*0.5
+	if x_limit > $image.size.x:
+		$image.size.x +=  grow_speed
+		$image.position.x -=  grow_speed*0.5
 		moved = true
-	if y_limit > $image.rect_size.y:
-		$image.rect_size.y +=grow_speed
-		$image.rect_position.y -=  grow_speed*0.5
+	if y_limit > $image.size.y:
+		$image.size.y +=grow_speed
+		$image.position.y -=  grow_speed*0.5
 		moved = true
 		
 	if not moved:

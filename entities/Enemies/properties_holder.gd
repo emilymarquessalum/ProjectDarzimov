@@ -1,5 +1,5 @@
+@tool
 extends Node2D
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,7 +10,7 @@ tool
 func _ready():
 	pass # Replace with function body.
 
-export(bool) var update_properties
+@export var update_properties: bool
 func _process(delta):
 	if not update_properties:
 		return

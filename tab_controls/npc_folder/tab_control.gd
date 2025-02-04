@@ -22,7 +22,7 @@ func _remove_tab():
 
 func _inicialize_tab(itens	: Array = items, controller = control):
 	_remove_tab()
-	tab =  load(tab_path).instance()
+	tab =  load(tab_path).instantiate()
 	get_parent().add_child(tab)
 	
 	tab.hide()
@@ -52,7 +52,7 @@ func _open_tab(itens	: Array = items, controller = control):
 	opened = true
 	_inicialize_tab()
 	tab.show()
-	var inv = get_tree().get_current_scene().find_node("Inventory")
+	var inv = get_tree().get_current_scene().find_child("Inventory")
 	inv._interface_opened()
 	tab.open_tab(self,itens,  controller)
 
@@ -63,7 +63,7 @@ func _close_tab():
 	items = tab.get_items()
 	_remove_tab()
 	emit_signal("tab_closed", items)
-	var inv = get_tree().get_current_scene().find_node("Inventory")
+	var inv = get_tree().get_current_scene().find_child("Inventory")
 	inv._interface_closed()
 	
 

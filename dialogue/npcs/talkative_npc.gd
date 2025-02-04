@@ -4,7 +4,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _inic_behaviour():
-	$Area2D.connect("interacted_object", self, "_start_dialogue")
+	$Area2D.connect("interacted_object", Callable(self, "_start_dialogue"))
 	
 	var sprite_1 = load("res://images.jpg")
 	var sprite_2 = load("res://icon.png")

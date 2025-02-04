@@ -1,11 +1,11 @@
-tool
+@tool
 extends ScrollContainer
 
 var editor_reference
-onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
+@onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
 var opened_character_data
 var portrait_entry = load("res://addons/dialogic/Editor/CharacterEditor/PortraitEntry.tscn")
-onready var nodes = {
+@onready var nodes = {
 	'editor': $HBoxContainer/Container,
 	'name': $HBoxContainer/Container/Name/LineEdit,
 	'description': $HBoxContainer/Container/Description/TextEdit,
@@ -27,14 +27,14 @@ onready var nodes = {
 
 
 func _ready():
-	nodes['new_portrait_button'].connect('pressed', self, '_on_New_Portrait_Button_pressed')
-	nodes['import_from_folder_button'].connect('pressed', self, '_on_Import_Portrait_Folder_Button_pressed')
-	nodes['display_name_checkbox'].connect('toggled', self, '_on_display_name_toggled')
-	nodes['nickname_checkbox'].connect('toggled', self, '_on_nickname_toggled')
-	nodes['name'].connect('text_changed', self, '_on_name_changed')
-	nodes['name'].connect('focus_exited', self, '_update_name_on_tree')
-	nodes['color'].connect('color_changed', self, '_on_color_changed')
-	var style = get('custom_styles/bg')
+	nodes['new_portrait_button'].connect('pressed', Callable(self, '_on_New_Portrait_Button_pressed'))
+	nodes['import_from_folder_button'].connect('pressed', Callable(self, '_on_Import_Portrait_Folder_Button_pressed'))
+	nodes['display_name_checkbox'].connect('toggled', Callable(self, '_on_display_name_toggled'))
+	nodes['nickname_checkbox'].connect('toggled', Callable(self, '_on_nickname_toggled'))
+	nodes['name'].connect('text_changed', Callable(self, '_on_name_changed'))
+	nodes['name'].connect('focus_exited', Callable(self, '_update_name_on_tree'))
+	nodes['color'].connect('color_changed', Callable(self, '_on_color_changed'))
+	var style = get('theme_override_styles/bg')
 	style.set('bg_color', get_color("base_color", "Editor"))
 	nodes['new_portrait_button'].icon = get_icon("Add", "EditorIcons")
 	nodes['import_from_folder_button'].icon = get_icon("Folder", "EditorIcons")
@@ -65,7 +65,7 @@ func _update_name_on_tree():
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if nodes['name'].has_focus():
-			if event.scancode == KEY_ENTER:
+			if event.keycode == KEY_ENTER:
 				nodes['name'].release_focus()
 
 
@@ -79,9 +79,9 @@ func clear_character_editor():
 	nodes['name'].text = ''
 	nodes['description'].text = ''
 	nodes['color'].color = Color('#ffffff')
-	nodes['mirror_portraits_checkbox'].pressed = false
-	nodes['display_name_checkbox'].pressed = false
-	nodes['nickname_checkbox'].pressed = false
+	nodes['mirror_portraits_checkbox'].button_pressed = false
+	nodes['display_name_checkbox'].button_pressed = false
+	nodes['nickname_checkbox'].button_pressed = false
 	nodes['display_name'].text = ''
 	nodes['nickname'].text = ''
 	nodes['portraits'] = []
@@ -97,7 +97,7 @@ func clear_character_editor():
 
 # Character Creation
 func create_character():
-	var character_file = 'character-' + str(OS.get_unix_time()) + '.json'
+	var character_file = 'character-' + str(Time.get_unix_time_from_system()) + '.json'
 	var character = {
 		'color': '#ffffff',
 		'id': character_file,
@@ -153,14 +153,14 @@ func load_character(filename: String):
 	nodes['name'].text = data.get('name', '')
 	nodes['description'].text = data.get('description', '')
 	nodes['color'].color = Color(data.get('color','#ffffffff'))
-	nodes['display_name_checkbox'].pressed = data.get('display_name_bool', false)
+	nodes['display_name_checkbox'].button_pressed = data.get('display_name_bool', false)
 	nodes['display_name'].text = data.get('display_name', '')
 	nodes['scale'].value = float(data.get('scale', 100))
-	nodes['nickname_checkbox'].pressed = data.get('nickname_bool', false)
+	nodes['nickname_checkbox'].button_pressed = data.get('nickname_bool', false)
 	nodes['nickname'].text = data.get('nickname', '')
 	nodes['offset_x'].value = data.get('offset_x', 0)
 	nodes['offset_y'].value = data.get('offset_y', 0)
-	nodes['mirror_portraits_checkbox'].pressed = data.get('mirror_portraits', false)
+	nodes['mirror_portraits_checkbox'].button_pressed = data.get('mirror_portraits', false)
 	nodes['portrait_preview'].flip_h = data.get('mirror_portraits', false)
 
 	# Portraits
@@ -182,7 +182,7 @@ func _on_New_Portrait_Button_pressed():
 
 
 func create_portrait_entry(p_name = '', path = '', grab_focus = false):
-	var p = portrait_entry.instance()
+	var p = portrait_entry.instantiate()
 	p.editor_reference = editor_reference
 	p.image_node = nodes['portrait_preview']
 	p.image_label = nodes['image_label']
@@ -199,14 +199,14 @@ func create_portrait_entry(p_name = '', path = '', grab_focus = false):
 
 
 func _on_Import_Portrait_Folder_Button_pressed():
-	editor_reference.godot_dialog("*", EditorFileDialog.MODE_OPEN_DIR)
+	editor_reference.godot_dialog("*", EditorFileDialog.FILE_MODE_OPEN_DIR)
 	editor_reference.godot_dialog_connect(self, "_on_dir_selected", "dir_selected")
 
 
 func _on_dir_selected(path, target):
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if dir.open(path) == OK:
-		dir.list_dir_begin()
+		dir.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 		var file_name = dir.get_next()
 		while file_name != "":
 			if not dir.current_is_dir():

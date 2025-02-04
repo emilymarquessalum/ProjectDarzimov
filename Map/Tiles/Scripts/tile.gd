@@ -1,5 +1,5 @@
+@tool
 extends StaticBody2D
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,7 +15,7 @@ func _ready():
 
 
 func _change_sprite(spr):
-	find_node("sprite").texture = spr
+	find_child("sprite").texture = spr
 	sprite = spr
 	
 	
@@ -25,15 +25,15 @@ func return_collision():
 	
 
 func _change_region(reg):
-	find_node("sprite").region_rect = reg
+	find_child("sprite").region_rect = reg
 	region = reg
 	
 
 func _get_bloody():
 	
-	find_node("sprite").texture = bloody_sprite
-	find_node("sprite").region_rect = bloody_region
+	find_child("sprite").texture = bloody_sprite
+	find_child("sprite").region_rect = bloody_region
 	
 func _unbloodify():
-	find_node("sprite").texture = sprite
-	find_node("sprite").region_rect = region
+	find_child("sprite").texture = sprite
+	find_child("sprite").region_rect = region

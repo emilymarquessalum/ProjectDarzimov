@@ -8,17 +8,17 @@
 layer = 4
 
 [node name="GridContainer" parent="." instance=ExtResource( 4 )]
-margin_left = 13.7742
-margin_top = 9.06382
-margin_right = 332.774
-margin_bottom = 59.0638
+offset_left = 13.7742
+offset_top = 9.06382
+offset_right = 332.774
+offset_bottom = 59.0638
 
 [node name="description_panel" parent="." instance=ExtResource( 5 )]
 visible = false
 light_mask = 0
-margin_left = -83.5457
-margin_top = 1.25112
-margin_right = -55.5457
-margin_bottom = 36.251
+offset_left = -83.5457
+offset_top = 1.25112
+offset_right = -55.5457
+offset_bottom = 36.251
 
 [node name="interface_control" parent="." instance=ExtResource( 1 )]

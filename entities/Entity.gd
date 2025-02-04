@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name Entity
 
 # Declare member variables here. Examples:
@@ -6,15 +6,15 @@ class_name Entity
 # var b = "text"
 var flip = false
 var alive = true
-export(int) var speed = 20
-onready var health_control = find_node("Health")
+@export var speed: int = 20
+@onready var health_control = find_child("Health")
 
 var keywords = []
-onready var current_state
+@onready var current_state
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	return
-	health_control.connect("died", self, "not_alive")
+	health_control.connect("died", Callable(self, "not_alive"))
 	var updt = get_node("on_update")
 	
 	if not updt:
@@ -34,7 +34,7 @@ func _update_has_done_action(s):
 
 signal changed_state(c)
 func _change_state(state, data = null):
-	state = find_node("states").get_node(state)
+	state = find_child("states").get_node(state)
 	emit_signal("changed_state", self)
 	current_state = state
 	current_state._start_state(data)

@@ -2,12 +2,12 @@ extends Area2D
 
 var grab_time = 0
 var warning_text
-onready var player = get_tree().get_current_scene().find_node("Player")
+@onready var player = get_tree().get_current_scene().find_child("Player")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _ready():
 	warning_text = Label.new()
 	warning_text.text = "click x to be released!"
-	warning_text.rect_position = Vector2(100,100)
+	warning_text.position = Vector2(100,100)
 	
 func _process(delta):
 	if player.current_state.state_name == "grabbed":

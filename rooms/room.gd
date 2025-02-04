@@ -1,13 +1,13 @@
+@tool
 extends Node2D
-tool
 
-export(bool) var keep_hints = false
-export(int) var room_width = 0
-export(int) var room_height =100
-export(int) var room_x = 0
-export(int) var room_y = 0
-export(int) var spawn = 0
-export(String) var area_name
+@export var keep_hints: bool = false
+@export var room_width: int = 0
+@export var room_height: int =100
+@export var room_x: int = 0
+@export var room_y: int = 0
+@export var spawn: int = 0
+@export var area_name: String
 
 var first_entered_in_run = true
 
@@ -20,7 +20,7 @@ func _ready():
 	room_width = $bounds/bound_width.global_position.x - screen_x/2
 	room_height = $bounds/bound_height.global_position.y - screen_y/2
 	
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		Global._change_area()
 		
 

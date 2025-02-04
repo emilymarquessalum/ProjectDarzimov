@@ -13,7 +13,7 @@
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 4 )
 room_width = 159.123
-room_height = 88.9919
+room_height = 88.992
 room_x = 160.463
 room_y = 53.8044
 spawn = 1
@@ -87,7 +87,7 @@ position = Vector2( -10.077, 140.786 )
 scene = "Main"
 
 [node name="waypoint1" parent="path1" instance=ExtResource( 6 )]
-position = Vector2( 22.2487, 0 )
+position = Vector2( 25.077, -2.786 )
 point = Color( 0, 0, 1, 1 )
 
 [node name="path2" parent="." instance=ExtResource( 3 )]
@@ -95,7 +95,7 @@ position = Vector2( 329.923, 34.786 )
 scene = "second_main_test"
 
 [node name="waypoint2" parent="path2" instance=ExtResource( 6 )]
-position = Vector2( -25.8361, -0.8909 )
+position = Vector2( -27.923, -0.786 )
 point = Color( 0, 1, 0, 1 )
 
 [node name="essential" parent="." instance=ExtResource( 2 )]

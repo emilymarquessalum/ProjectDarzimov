@@ -16,12 +16,12 @@ signal collided(proj, collision)
 signal finished_animation(trinket)
 
 func _inic(it):
-	$Sprite.texture = it.data.sprite
+	$Sprite2D.texture = it.data.sprite
 	item = it
 	movement = parabolic_movement.new()
 	movement._inic(self)
-	movement._goal = Vector2(position.x + rand_range(-2,2), position.y)
-	connect("collided", self, "_collision")
+	movement._goal = Vector2(position.x + randf_range(-2,2), position.y)
+	connect("collided", Callable(self, "_collision"))
 
 
 
@@ -58,11 +58,11 @@ func _collision(trinket, obj):
 	
 	if touch_frames < touch_delay:
 		return
-	var inv = get_tree().get_current_scene().find_node("Inventory")
+	var inv = get_tree().get_current_scene().find_child("Inventory")
 	if obj.is_in_group("Player") and not trinket.moving and not trinket.animate:
 		if inv._add_to_inventory(trinket.item):
 			trinket.animate = true
-			trinket.connect("finished_animation", self, "_trinket_finished_animation")
+			trinket.connect("finished_animation", Callable(self, "_trinket_finished_animation"))
 		
 func _trinket_finished_animation(trinket):
 	trinket.get_parent().remove_child(trinket)

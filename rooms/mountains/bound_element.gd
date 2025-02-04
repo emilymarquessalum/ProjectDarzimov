@@ -1,5 +1,5 @@
+@tool
 extends Node2D
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -14,7 +14,7 @@ func _ready():
 
 var old_pos = position
 func _process(delta):
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		return
 	if old_pos.x != position.x or old_pos.y != position.y:
 		get_parent().update()

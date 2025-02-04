@@ -1,42 +1,42 @@
-tool
+@tool
 extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
 
 # has an event_data variable that stores the current data!!!
 
-export (String) var event_name = "Audio Event"
+@export (String) var event_name = "Audio Event"
 
 ## node references
-onready var name_label := $HBox/Name
-onready var volume_input := $HBox/Volume
-onready var bus_selector := $HBox/BusSelector
-onready var clear_button := $HBox/ButtonClear
-onready var audio_button := $HBox/ButtonAudio
-onready var audio_preview := $HBox/AudioPreview
-onready var preview_play_button := $HBox/ButtonPreviewPlay
+@onready var name_label := $HBox/Name
+@onready var volume_input := $HBox/Volume
+@onready var bus_selector := $HBox/BusSelector
+@onready var clear_button := $HBox/ButtonClear
+@onready var audio_button := $HBox/ButtonAudio
+@onready var audio_preview := $HBox/AudioPreview
+@onready var preview_play_button := $HBox/ButtonPreviewPlay
 
 # used to connect the signals
 func _ready():
 	
 	# signals
-	audio_button.connect("pressed", self, '_on_ButtonAudio_pressed')
-	preview_play_button.connect("pressed", self, '_on_ButtonPreviewPlay_pressed')
-	audio_preview.connect("finished", self, '_on_AudioPreview_finished')
-	clear_button.connect('pressed', self, "_on_ButtonClear_pressed")
-	bus_selector.connect("item_selected", self, "_on_BusSelector_item_selected")
-	volume_input.connect("value_changed", self, "_on_Volume_value_changed")
+	audio_button.connect("pressed", Callable(self, '_on_ButtonAudio_pressed'))
+	preview_play_button.connect("pressed", Callable(self, '_on_ButtonPreviewPlay_pressed'))
+	audio_preview.connect("finished", Callable(self, '_on_AudioPreview_finished'))
+	clear_button.connect('pressed', Callable(self, "_on_ButtonClear_pressed"))
+	bus_selector.connect("item_selected", Callable(self, "_on_BusSelector_item_selected"))
+	volume_input.connect("value_changed", Callable(self, "_on_Volume_value_changed"))
 	
 	# icons
 	clear_button.icon = get_icon("Remove", "EditorIcons")
 	preview_play_button.icon = get_icon("Play", "EditorIcons")
 	
 	# AudioBusPicker update
-	AudioServer.connect("bus_layout_changed", self, "update_bus_selector")
+	AudioServer.connect("bus_layout_changed", Callable(self, "update_bus_selector"))
 	update_bus_selector()
 
 # called by the event block
 func load_data(data:Dictionary):
 	# First set the event_data
-	.load_data(data)
+	super.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
 	if data.has('audio_bus'): 
@@ -69,10 +69,10 @@ func _on_file_selected(path, target):
 
 ### Loading the audio
 func load_audio(path: String):
-	if not path.empty():
+	if not path.is_empty():
 		name_label.text = path.get_file()
-		name_label.hint_tooltip = path
-		audio_button.hint_tooltip = path
+		name_label.tooltip_text = path
+		audio_button.tooltip_text = path
 		clear_button.disabled = false
 		preview_play_button.disabled = false
 		event_data['file'] = path

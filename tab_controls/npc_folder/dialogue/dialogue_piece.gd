@@ -62,11 +62,11 @@ signal ended()
 
 func _connect_to_start(connections, controller):
 	for connection in connections:
-		connect("started", controller, connection)
+		connect("started", Callable(controller, connection))
 
 func _connect_to_end(connections, controller):
 	for connection in connections:
-		connect("ended", controller, connection)
+		connect("ended", Callable(controller, connection))
 
 func _start_basic_dialogue(npc):
 	_connect_to_start(["_dialogue","_change_camera"],npc)

@@ -1,8 +1,8 @@
-tool
+@tool
 extends HBoxContainer
 
-onready var visible_toggle = $VisibleToggle
-onready var preview = $MarginContainer/Preview
+@onready var visible_toggle = $VisibleToggle
+@onready var preview = $MarginContainer/Preview
 
 var enabled : bool
 var expanded: bool
@@ -13,7 +13,7 @@ signal state_changed(expanded)
 
 func _ready():
 	set_enabled(false)
-	visible_toggle.connect("toggled", self, "_on_VisibleToggle_toggled")
+	visible_toggle.connect("toggled", Callable(self, "_on_VisibleToggle_toggled"))
 
 
 func set_preview(text: String):
@@ -36,7 +36,7 @@ func set_expanded(expanded: bool):
 	if not enabled:
 		return 
 	self.expanded = expanded
-	visible_toggle.pressed = expanded
+	visible_toggle.button_pressed = expanded
 	if expanded:
 		preview.hide()
 	else:

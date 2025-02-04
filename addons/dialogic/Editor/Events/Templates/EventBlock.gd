@@ -1,34 +1,34 @@
-tool
+@tool
 extends HBoxContainer
 
 # customization options for the event 
 
 # This is the default data that is going to be saved to json
-export (Dictionary) var event_data: Dictionary = {'event_id':'dialogic_000'}
-export(StyleBoxFlat) var event_style : StyleBoxFlat
+@export (Dictionary) var event_data: Dictionary = {'event_id':'dialogic_000'}
+@export var event_style: StyleBoxFlat
 var selected_style = preload("../styles/selected_styleboxflat_template.tres")
 
-export(Texture) var event_icon : Texture
-export(String) var event_name : String
-export(PackedScene) var header_scene : PackedScene
-export(PackedScene) var body_scene : PackedScene
-export (bool) var expand_on_default := false
-export (bool) var needs_indentation := false
+@export var event_icon: Texture2D
+@export var event_name: String
+@export var header_scene: PackedScene
+@export var body_scene: PackedScene
+@export (bool) var expand_on_default := false
+@export (bool) var needs_indentation := false
 signal option_action(action_name)
 
 
 ### internal node eferences
-onready var panel = $PanelContainer
-onready var warning = $PanelContainer/MarginContainer/VBoxContainer/Header/Warning
-onready var title_container = $PanelContainer/MarginContainer/VBoxContainer/Header/TitleHBoxContainer
-onready var title_label = $PanelContainer/MarginContainer/VBoxContainer/Header/TitleHBoxContainer/TitleMarginContainer/TitleLabel
-onready var icon_texture  = $PanelContainer/MarginContainer/VBoxContainer/Header/IconMarginContainer/IconTexture
-onready var expand_control = $PanelContainer/MarginContainer/VBoxContainer/Header/ExpandControl
-onready var options_control = $PanelContainer/MarginContainer/VBoxContainer/Header/OptionsControl
-onready var header_content_container = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
-onready var body_container = $PanelContainer/MarginContainer/VBoxContainer/Body
-onready var body_content_container = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
-onready var indent_node = $Indent
+@onready var panel = $PanelContainer
+@onready var warning = $PanelContainer/MarginContainer/VBoxContainer/Header/Warning
+@onready var title_container = $PanelContainer/MarginContainer/VBoxContainer/Header/TitleHBoxContainer
+@onready var title_label = $PanelContainer/MarginContainer/VBoxContainer/Header/TitleHBoxContainer/TitleMarginContainer/TitleLabel
+@onready var icon_texture  = $PanelContainer/MarginContainer/VBoxContainer/Header/IconMarginContainer/IconTexture
+@onready var expand_control = $PanelContainer/MarginContainer/VBoxContainer/Header/ExpandControl
+@onready var options_control = $PanelContainer/MarginContainer/VBoxContainer/Header/OptionsControl
+@onready var header_content_container = $PanelContainer/MarginContainer/VBoxContainer/Header/Content
+@onready var body_container = $PanelContainer/MarginContainer/VBoxContainer/Body
+@onready var body_content_container = $PanelContainer/MarginContainer/VBoxContainer/Body/Content
+@onready var indent_node = $Indent
 
 var header_node
 var body_node
@@ -56,11 +56,11 @@ func visual_deselect():
 
 
 func set_event_style(style: StyleBoxFlat):
-	panel.set('custom_styles/panel', style)
+	panel.set('theme_override_styles/panel', style)
 
 
 func get_event_style():
-	return panel.get('custom_styles/panel')
+	return panel.get('theme_override_styles/panel')
 	
 
 # called by the timeline before adding it to the tree
@@ -78,11 +78,11 @@ func get_header():
 
 func set_warning(text):
 	warning.show()
-	warning.hint_tooltip = text
+	warning.tooltip_text = text
 
 
 func remove_warning(text = ''):
-	if warning.hint_tooltip == text or text == '':
+	if warning.tooltip_text == text or text == '':
 		warning.hide()
 
 
@@ -91,7 +91,7 @@ func set_preview(text: String):
 
 
 func set_indent(indent: int):
-	indent_node.rect_min_size = Vector2(indent_size * indent, 0)
+	indent_node.custom_minimum_size = Vector2(indent_size * indent, 0)
 	indent_node.visible = indent != 0
 
 
@@ -103,13 +103,13 @@ func set_expanded(expanded: bool):
 ##								PRIVATE METHODS
 ## *****************************************************************************
 
-func _set_event_icon(icon: Texture):
+func _set_event_icon(icon: Texture2D):
 	icon_texture.texture = icon
 
 
 func _set_event_name(text: String):
 	title_label.text = text
-	if text.empty():
+	if text.is_empty():
 		title_container.hide()
 	else:
 		title_container.show()
@@ -144,7 +144,7 @@ func _set_content(container: Control, scene: PackedScene):
 	for c in container.get_children():
 		container.remove_child(c)
 	if scene != null:
-		var node = scene.instance()
+		var node = scene.instantiate()
 		container.add_child(node)
 #		node.set_owner(get_tree().get_edited_scene_root())
 		return node
@@ -226,32 +226,32 @@ func _ready():
 	warning.icon = get_icon("NodeWarning", "EditorIcons")
 	
 	# signals
-	panel.connect("gui_input", self, '_on_gui_input')
-	expand_control.connect("state_changed", self, "_on_ExpandControl_state_changed")
-	options_control.connect("action", self, "_on_OptionsControl_action")
+	panel.connect("gui_input", Callable(self, '_on_gui_input'))
+	expand_control.connect("state_changed", Callable(self, "_on_ExpandControl_state_changed"))
+	options_control.connect("action", Callable(self, "_on_OptionsControl_action"))
 
 	
 	# when it enters the tree, load the data into the header/body
 	# If there is any external data, it will be set already BEFORE the event is added to tree
 	# if you have a header
 	if get_header():
-		get_header().connect("data_changed", self, "_on_Header_data_changed")
-		get_header().connect("request_open_body", expand_control, "set_expanded", [true])
-		get_header().connect("request_close_body", expand_control, "set_expanded", [false])
-		get_header().connect("request_selection", self, "_request_selection")
-		get_header().connect("request_set_body_enabled", self, "_request_set_body_enabled")
-		get_header().connect("set_warning", self, "set_warning")
-		get_header().connect("remove_warning", self, "remove_warning")
+		get_header().connect("data_changed", Callable(self, "_on_Header_data_changed"))
+		get_header().connect("request_open_body", Callable(expand_control, "set_expanded").bind(true))
+		get_header().connect("request_close_body", Callable(expand_control, "set_expanded").bind(false))
+		get_header().connect("request_selection", Callable(self, "_request_selection"))
+		get_header().connect("request_set_body_enabled", Callable(self, "_request_set_body_enabled"))
+		get_header().connect("set_warning", Callable(self, "set_warning"))
+		get_header().connect("remove_warning", Callable(self, "remove_warning"))
 		get_header().load_data(event_data)
 	# if you have a body
 	if get_body():
-		get_body().connect("data_changed", self, "_on_Body_data_changed")
-		get_body().connect("request_open_body", expand_control, "set_expanded", [true])
-		get_body().connect("request_close_body", expand_control, "set_expanded", [false])
-		get_body().connect("request_set_body_enabled", self, "_request_set_body_enabled")
-		get_body().connect("request_selection", self, "_request_selection")
-		get_body().connect("set_warning", self, "set_warning")
-		get_body().connect("remove_warning", self, "remove_warning")
+		get_body().connect("data_changed", Callable(self, "_on_Body_data_changed"))
+		get_body().connect("request_open_body", Callable(expand_control, "set_expanded").bind(true))
+		get_body().connect("request_close_body", Callable(expand_control, "set_expanded").bind(false))
+		get_body().connect("request_set_body_enabled", Callable(self, "_request_set_body_enabled"))
+		get_body().connect("request_selection", Callable(self, "_request_selection"))
+		get_body().connect("set_warning", Callable(self, "set_warning"))
+		get_body().connect("remove_warning", Callable(self, "remove_warning"))
 		get_body().load_data(event_data)
 	
 	if get_body():

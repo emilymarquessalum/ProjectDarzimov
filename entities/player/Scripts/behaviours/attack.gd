@@ -15,12 +15,12 @@ func _start_behaviour():
 
 
 func _update(delta,player):
-	var attack_area = player.find_node("AttackArea")
+	var attack_area = player.find_child("AttackArea")
 	if Input.is_action_just_pressed("attack"):
 		player.do_action("Attack")
 		player.has_done_action = true
 		attack_area._attack()
-		attack_area.connect("finished_attack",self,"_finish_attack",[player],CONNECT_ONESHOT)
+		attack_area.connect("finished_attack", Callable(self, "_finish_attack").bind(player), CONNECT_ONE_SHOT)
 		player._change_state("attacking")
 		
 func _finish_attack(p):

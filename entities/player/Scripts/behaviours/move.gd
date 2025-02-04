@@ -7,7 +7,7 @@ extends behaviour
 
 # Called when the node enters the scene tree for the first time.
 func _start_behaviour():
-	get_parent().get_parent().connect("changed_state", self, "_stop_moving", [], CONNECT_ONESHOT)
+	get_parent().get_parent().connect("changed_state", Callable(self, "_stop_moving").bind(), CONNECT_ONE_SHOT)
 	pass # Replace with function body.
 
 func _update(delta,player): 	

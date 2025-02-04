@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Cursor.png" type="Texture" id=1]
+[ext_resource path="res://Cursor.png" type="Texture2D" id=1]
 [ext_resource path="res://entities/Health.gd" type="Script" id=2]
 [ext_resource path="res://entities/Enemies/properties/property.gd" type="Script" id=3]
 [ext_resource path="res://entities/Enemies/hitbox_shape.gd" type="Script" id=4]
@@ -20,12 +20,12 @@ radius = 65.0
 radius = 54.037
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 2.88713, 4.49382 )
+size = Vector2( 2.88713, 4.49382 )
 
 [sub_resource type="RectangleShape2D" id=4]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 7.95011, 8.18046 )
+size = Vector2( 7.95011, 8.18046 )
 
 [node name="property_holder" type="Node2D"]
 script = ExtResource( 11 )
@@ -56,7 +56,7 @@ position = Vector2( 0, -0.219051 )
 scale = Vector2( 1.93124, 1.64799 )
 script = ExtResource( 7 )
 
-[node name="sprite" type="Sprite" parent="Areas/middle_area"]
+[node name="sprite" type="Sprite2D" parent="Areas/middle_area"]
 texture = ExtResource( 1 )
 script = ExtResource( 5 )
 
@@ -77,14 +77,14 @@ script = ExtResource( 4 )
 [node name="below_ground_detector" type="RayCast2D" parent="RayCasts"]
 position = Vector2( -3, 3 )
 enabled = true
-cast_to = Vector2( 0, 15 )
+target_position = Vector2( 0, 15 )
 collision_mask = 4
 script = ExtResource( 9 )
 
 [node name="front_ground_detector" type="RayCast2D" parent="RayCasts"]
 position = Vector2( -9, 3 )
 enabled = true
-cast_to = Vector2( 0, 15 )
+target_position = Vector2( 0, 15 )
 collision_mask = 4
 collide_with_areas = true
 script = ExtResource( 9 )
@@ -98,7 +98,7 @@ process_priority = 17
 modulate = Color( 0, 1, 1, 1 )
 position = Vector2( -10.9679, -12.8766 )
 enabled = true
-cast_to = Vector2( 0, 20 )
+target_position = Vector2( 0, 20 )
 collision_mask = 2
 script = ExtResource( 16 )
 

@@ -1,16 +1,11 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://entities/player/Scripts/AttackControl.gd" type="Script" id=1]
 [ext_resource path="res://entities/Health.gd" type="Script" id=2]
 [ext_resource path="res://entities/player/Scripts/Parry.gd" type="Script" id=3]
 [ext_resource path="res://entities/player/Scripts/Player.gd" type="Script" id=4]
 [ext_resource path="res://entities/player/Scripts/player_anim.gd" type="Script" id=5]
-[ext_resource path="res://entities/player/Assets/Roberto.png" type="Texture" id=6]
-[ext_resource path="res://entities/player/Assets/Roberto_Death.png" type="Texture" id=7]
-[ext_resource path="res://entities/player/Assets/RobertoWalk 1.png" type="Texture" id=8]
-[ext_resource path="res://entities/player/Assets/Roberto walk 3.png" type="Texture" id=9]
-[ext_resource path="res://entities/player/Assets/Roberto walk 2.png" type="Texture" id=10]
-[ext_resource path="res://entities/player/Assets/Roberto_Jump.png" type="Texture" id=11]
+[ext_resource path="res://res/player.png" type="Texture2D" id=6]
 [ext_resource path="res://entities/player/Scripts/behaviours/attack.gd" type="Script" id=12]
 [ext_resource path="res://entities/player/Scripts/behaviours/move.gd" type="Script" id=13]
 [ext_resource path="res://entities/state/state.gd" type="Script" id=14]
@@ -18,40 +13,64 @@
 [ext_resource path="res://entities/player/secundary_attack.gd" type="Script" id=16]
 [ext_resource path="res://entities/state/behaviour_control.gd" type="Script" id=17]
 [ext_resource path="res://entities/player/Invunerability.gd" type="Script" id=18]
-[ext_resource path="res://Untitled_04-25-2021_11-05-42 (1).png" type="Texture" id=19]
+[ext_resource path="res://Untitled_04-25-2021_11-05-42 (1).png" type="Texture2D" id=19]
 [ext_resource path="res://entities/player/spike_collision.gd" type="Script" id=20]
 [ext_resource path="res://entities/player/release.gd" type="Script" id=21]
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticleProcessMaterial" id=1]
 
 [sub_resource type="CanvasItemMaterial" id=2]
 next_pass = SubResource( 1 )
 
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 6 )
+region = Rect2( 144, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 6 )
+region = Rect2( 144, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 6 )
+region = Rect2( 80, 0, 40, 64 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 64, 48, 64 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 6 )
+region = Rect2( 80, 64, 40, 64 )
+
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 6 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ) ],
+"frames": [ SubResource( 14 ), SubResource( 14 ), SubResource( 14 ) ],
 "loop": true,
 "name": "Attack",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 11 ) ],
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 14 ) ],
 "loop": true,
 "name": "Jump",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "Walk",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 11 ) ],
+"frames": [ SubResource( 14 ) ],
 "loop": true,
 "name": "Parry",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
+"loop": true,
+"name": "Walk",
 "speed": 5.0
 } ]
 
@@ -68,8 +87,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.1, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0.1, 0.3, 0.5 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ 62.0, 0.0, 62.0 ]
 }
@@ -80,8 +99,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.3, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0.1, 0.3, 0.5 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -7, -0.441 ), Vector2( -15, -0.441 ), Vector2( -7, -0.441 ) ]
 }
@@ -99,23 +118,22 @@ length = 0.5
 loop = true
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 11, 3.17499 )
+size = Vector2( 11, 3.17499 )
 
 [sub_resource type="CapsuleShape2D" id=11]
 radius = 3.72452
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 8.31949, 6.90411 )
+size = Vector2( 8.31949, 6.90411 )
 
 [sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 8.14866, 7.32497 )
+size = Vector2( 8.14866, 7.32497 )
 
-[node name="Player" type="KinematicBody2D" groups=[
-"Player",
-]]
-pause_mode = 1
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+process_mode = 1
 material = SubResource( 2 )
 position = Vector2( -5.05108, 124.633 )
+scale = Vector2( 1.5, 1.5 )
 collision_layer = 17
 collision_mask = 3
 script = ExtResource( 4 )
@@ -124,12 +142,19 @@ __meta__ = {
 }
 speed = 40
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2( 5.72205e-06, 1.5 )
+scale = Vector2( -0.305, 0.266 )
+frames = SubResource( 3 )
+animation = "Walk"
+playing = true
+script = ExtResource( 5 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite2D" parent="."]
 position = Vector2( 5.72205e-06, 1.5 )
 scale = Vector2( 0.304687, 0.265625 )
-frames = SubResource( 3 )
+z_index = 7
 animation = "Parry"
-playing = true
 script = ExtResource( 5 )
 
 [node name="Health" type="Node" parent="."]
@@ -152,10 +177,7 @@ anims/Jump = SubResource( 7 )
 anims/Walk = SubResource( 8 )
 anims/blink = SubResource( 9 )
 
-[node name="AttackArea" type="Area2D" parent="." groups=[
-"Attack",
-"Player",
-]]
+[node name="AttackArea" type="Area2D" parent="." groups=["Attack", "Player"]]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 1 )
@@ -167,7 +189,7 @@ scale = Vector2( 1.14045, 0.816268 )
 shape = SubResource( 10 )
 disabled = true
 
-[node name="Sprite" type="Sprite" parent="AttackArea/AttackColider"]
+[node name="Sprite2D" type="Sprite2D" parent="AttackArea/AttackColider"]
 position = Vector2( 1.39729, -1.37585 )
 rotation = 2.13643
 scale = Vector2( 0.113989, -0.0710317 )
@@ -175,13 +197,11 @@ texture = ExtResource( 19 )
 
 [node name="AttackTimer" type="Timer" parent="AttackArea"]
 
-[node name="Parry" type="Area2D" parent="." groups=[
-"Parry",
-]]
-monitoring = false
-monitorable = false
+[node name="Parry" type="Area2D" parent="." groups=["Parry"]]
 collision_layer = 0
 collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource( 3 )
 parry_timer = 3
 
@@ -196,7 +216,7 @@ disabled = true
 [node name="below_ground_detector" type="RayCast2D" parent="."]
 position = Vector2( 2.00226, 3.67081 )
 enabled = true
-cast_to = Vector2( 0, 20 )
+target_position = Vector2( 0, 20 )
 collision_mask = 4
 collide_with_areas = true
 
@@ -246,7 +266,7 @@ state_name = "grabbed"
 
 [node name="on_update" type="Node2D" parent="."]
 
-[node name="spike_collision" type="KinematicBody2D" parent="on_update"]
+[node name="spike_collision" type="CharacterBody2D" parent="on_update"]
 position = Vector2( 3.05108, 1.36739 )
 collision_layer = 16
 collision_mask = 0
@@ -257,8 +277,9 @@ visible = false
 position = Vector2( -3.12167, -1.33786 )
 shape = SubResource( 13 )
 
-[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="life_damaged" from="Health" to="AnimatedSprite" method="_taken_damage"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="life_damaged" from="Health" to="AnimatedSprite2D" method="_taken_damage"]
 [connection signal="life_damaged" from="Health" to="Invunerability" method="_test_for_invulnerability"]
 [connection signal="timeout" from="Invunerability" to="Invunerability" method="_on_Invunerability_timeout"]
 [connection signal="body_entered" from="AttackArea" to="AttackArea" method="_on_AttackArea_body_entered"]

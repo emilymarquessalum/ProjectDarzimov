@@ -1,5 +1,5 @@
+@tool
 extends RayCast2D
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -11,12 +11,12 @@ func _ready():
 	pass # Replace with function body.
 
 
-onready var en_p = global_position
-onready var p 
-onready var p_p
+@onready var en_p = global_position
+@onready var p 
+@onready var p_p
 var f = 0
 func _process(delta):
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		return
 	f += 1
 	
@@ -26,16 +26,16 @@ func _process(delta):
 	if p == null:
 		var scene = get_parent().get_parent().get_parent()
 		
-		p = scene.find_node("Player")
+		p = scene.find_child("Player")
 	if p == null:
 		return
 	var new_pos = p.global_position - global_position
-	var radius = get_parent().find_node("detection_radius").shape.radius
+	var radius = get_parent().find_child("detection_radius").shape.radius
 	if p.global_position.distance_to(global_position) > radius:
 		new_pos = Vector2.ZERO
 	
 	
-	cast_to = new_pos
+	target_position = new_pos
 	
 	force_raycast_update()
 	if self.is_colliding():

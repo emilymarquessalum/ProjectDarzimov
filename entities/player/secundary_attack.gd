@@ -7,7 +7,7 @@ extends behaviour
 
 var attack
 func _ready():
-	Global.connect("changed_weapon", self, "_update_attack")
+	Global.connect("changed_weapon", Callable(self, "_update_attack"))
 func _update_attack(data):
 	if data == null:
 		attack = null

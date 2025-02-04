@@ -1,16 +1,16 @@
 extends Entity
 class_name Enemy
 
-export(String) var starting_state = ""
-export(int) var health = 3
+@export var starting_state: String = ""
+@export var health: int = 3
 var ranking = 1
 var gravity = 100
 var unique_to_scene = true
 var tscn_path
 var deals_damage_on_touch = true
 var velocity = Vector2(0,0)
-export(String,MULTILINE) var damage_particle_effect = "res://entities/Enemies/blood.tscn"
-onready var player = get_tree().get_current_scene().find_node("Player")
+@export var damage_particle_effect = "res://entities/Enemies/blood.tscn" # (String,MULTILINE)
+@onready var player = get_tree().get_current_scene().find_child("Player")
 func _die():
 	
 	queue_free()
@@ -21,7 +21,7 @@ func _changed_direction():
 	emit_signal("changed_direction", scale.x > 0)
 
 func _look_at(a,b):
-	._look_at(a,b)
+	super._look_at(a,b)
 	_changed_direction()
 	
 #Override to apply more rules to enemy perception 
@@ -36,12 +36,12 @@ func _change_direction():
 
 	_changed_direction()
 	
-onready var particle_effect = load(damage_particle_effect)
+@onready var particle_effect = load(damage_particle_effect)
 func _react_to_attack(health_control):
 	var properties = get_node("enemy_properties")
 	var en_pos = self.global_position 
 	
-	var p_e = particle_effect.instance()
+	var p_e = particle_effect.instantiate()
 	add_child(p_e)
 	p_e.global_position = global_position
 	behaviours.append(p_e)
@@ -54,8 +54,8 @@ func _ready():
 	$Health.max_health = health
 	_change_state(starting_state)
 	
-	$Health.connect("life_damaged", self, "_react_to_attack")
-	$Health.connect("died", self, "_die")
+	$Health.connect("life_damaged", Callable(self, "_react_to_attack"))
+	$Health.connect("died", Callable(self, "_die"))
 	
 
 	

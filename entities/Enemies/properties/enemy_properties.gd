@@ -1,11 +1,11 @@
+@tool
 extends Node2D
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export(int) var y_start_perception = 20
-export(int) var health
+@export var y_start_perception: int = 20
+@export var health: int
 
 
 

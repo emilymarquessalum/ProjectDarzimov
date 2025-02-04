@@ -19,13 +19,13 @@ var item
 var itemScene = load("res://items/item.tscn")
 var bow = Items.bow
 func _start_behaviour(t):
-	var inv = t.get_tree().get_current_scene().find_node("Inventory")
-	t.get_tree().get_current_scene().find_node("Player")._add_keyword({'name': "Azarado", 'quantity': 1})
-	item = itemScene.instance()
+	var inv = t.get_tree().get_current_scene().find_child("Inventory")
+	t.get_tree().get_current_scene().find_child("Player")._add_keyword({'name': "Azarado", 'quantity': 1})
+	item = itemScene.instantiate()
 	item.data = bow
 	inv._delayed_add_to_inventory(item)
 	
-	Global.connect("changed_area", self, "attempt_to_spawn")
+	Global.connect("changed_area", Callable(self, "attempt_to_spawn"))
 	
 
 var spawned_shadow
@@ -41,9 +41,9 @@ func attempt_to_spawn(_area):
 	var c = randi()%100
 	if c > chance:
 		chance = base_chance
-		spawned_shadow = shadow.instance()
+		spawned_shadow = shadow.instantiate()
 		var shadow_instance ={'class':"res://entities/Enemies/shadow_form/shadow_form.tscn", 
-		'health':spawned_shadow.find_node("Health")._get_health(),'instance':spawned_shadow}	
+		'health':spawned_shadow.find_child("Health")._get_health(),'instance':spawned_shadow}	
 		Global._add_instance(shadow_instance)
 		spawned_shadow = true
 	else:

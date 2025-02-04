@@ -1,15 +1,15 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://res/Cavern_Part_2.png" type="Texture" id=1]
-[ext_resource path="res://res/Cavern_Part_1.png" type="Texture" id=2]
-[ext_resource path="res://res/Cavern_Part_5.png" type="Texture" id=3]
-[ext_resource path="res://res/Cavern_Part_3.png" type="Texture" id=4]
-[ext_resource path="res://res/Cavern_Part_4.png" type="Texture" id=5]
+[ext_resource path="res://res/Cavern_Part_2.png" type="Texture2D" id=1]
+[ext_resource path="res://res/Cavern_Part_1.png" type="Texture2D" id=2]
+[ext_resource path="res://res/Cavern_Part_5.png" type="Texture2D" id=3]
+[ext_resource path="res://res/Cavern_Part_3.png" type="Texture2D" id=4]
+[ext_resource path="res://res/Cavern_Part_4.png" type="Texture2D" id=5]
 
 [node name="cave_background" type="ParallaxBackground"]
 layer = -1
 
-[node name="Cavern_Part_5" type="Sprite" parent="."]
+[node name="Cavern_Part_5" type="Sprite2D" parent="."]
 position = Vector2( 278.556, 144.042 )
 texture = ExtResource( 3 )
 
@@ -22,7 +22,7 @@ position = Vector2( -2.24493, 3.3674 )
 motion_scale = Vector2( 0.1, 1 )
 motion_mirroring = Vector2( 512, 0 )
 
-[node name="Sprite" type="Sprite" parent="camada_4"]
+[node name="Sprite2D" type="Sprite2D" parent="camada_4"]
 position = Vector2( 154.722, 157.093 )
 scale = Vector2( 0.5, 0.8 )
 texture = ExtResource( 5 )
@@ -32,7 +32,7 @@ position = Vector2( -2.24493, 3.3674 )
 motion_scale = Vector2( 0.2, 1 )
 motion_mirroring = Vector2( 512, 0 )
 
-[node name="Sprite" type="Sprite" parent="camada_3"]
+[node name="Sprite2D" type="Sprite2D" parent="camada_3"]
 position = Vector2( 154.722, 154.722 )
 scale = Vector2( 0.5, 0.8 )
 texture = ExtResource( 4 )
@@ -41,7 +41,7 @@ texture = ExtResource( 4 )
 motion_scale = Vector2( 0.3, 1 )
 motion_mirroring = Vector2( 512, 0 )
 
-[node name="Sprite" type="Sprite" parent="camada_2"]
+[node name="Sprite2D" type="Sprite2D" parent="camada_2"]
 position = Vector2( 154.722, 155.911 )
 scale = Vector2( 0.5, 0.8 )
 texture = ExtResource( 1 )
@@ -51,7 +51,7 @@ position = Vector2( -2.24493, 3.3674 )
 motion_scale = Vector2( 0.4, 1 )
 motion_mirroring = Vector2( 512, 0 )
 
-[node name="Sprite" type="Sprite" parent="camada_1"]
+[node name="Sprite2D" type="Sprite2D" parent="camada_1"]
 position = Vector2( 154.722, 59.428 )
 scale = Vector2( 0.5, 1.429 )
 texture = ExtResource( 2 )

@@ -1,4 +1,4 @@
-tool
+@tool
 extends MenuButton
 
 var current_piece
@@ -8,7 +8,7 @@ func _ready():
 	# Praise the paths (っ´ω`c)♡
 	current_piece = get_parent().get_parent().get_parent().get_parent()
 	var popup = get_popup()
-	popup.connect("index_pressed", self, "_on_OptionSelected")
+	popup.connect("index_pressed", Callable(self, "_on_OptionSelected"))
 
 
 func _on_OptionSelected(index):

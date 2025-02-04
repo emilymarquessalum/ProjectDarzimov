@@ -3,7 +3,7 @@ class_name chest
 
 var item = load("res://items/item.tscn")
 
-onready var interact = $chest
+@onready var interact = $chest
 var items = []
 var scene_index
 var items_inside 
@@ -19,10 +19,10 @@ func _ready():
 			item_instance.data = item_data
 			items.append(item_instance)
 	else:
-		items.append(item.instance())
-		items.append(item.instance())
-		items.append(item.instance())
-	var inv_control = get_tree().get_current_scene().find_node("interface_control")
+		items.append(item.instantiate())
+		items.append(item.instantiate())
+		items.append(item.instantiate())
+	var inv_control = get_tree().get_current_scene().find_child("interface_control")
 	
 	interact.connect("interacted_object", self, 
 	"_drop_items")
@@ -34,8 +34,8 @@ func _drop_items():
 		return
 	opened = true
 	for item in items:
-		var item_trink = trinket_class.instance()
-		item_trink.position.x = rand_range(0, 15)
+		var item_trink = trinket_class.instantiate()
+		item_trink.position.x = randf_range(0, 15)
 		item_trink._inic(item._copy())
 		add_child(item_trink)
 		

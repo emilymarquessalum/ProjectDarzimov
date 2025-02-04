@@ -5,34 +5,34 @@
 [sub_resource type="Theme" id=1]
 
 [node name="npc_control" type="Control"]
-pause_mode = 2
-margin_left = -0.840897
-margin_top = 4.20448
-margin_right = 39.1591
-margin_bottom = 44.2045
+process_mode = 3
+offset_left = -0.840897
+offset_top = 4.20448
+offset_right = 39.1591
+offset_bottom = 44.2045
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_left = 1.13669
-margin_top = -3.20393
-margin_right = 245.137
-margin_bottom = 110.796
-rect_scale = Vector2( 0.681812, 0.747398 )
+offset_left = 1.13669
+offset_top = -3.20393
+offset_right = 245.137
+offset_bottom = 110.796
+scale = Vector2( 0.681812, 0.747398 )
 theme = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="container" type="GridContainer" parent="."]
-pause_mode = 2
-margin_left = 7.66509
-margin_top = 1.53227
-margin_right = 47.6651
-margin_bottom = 41.5323
-rect_scale = Vector2( 2.05361, 1.10699 )
+process_mode = 3
+offset_left = 7.66509
+offset_top = 1.53227
+offset_right = 47.6651
+offset_bottom = 41.5323
+scale = Vector2( 2.05361, 1.10699 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

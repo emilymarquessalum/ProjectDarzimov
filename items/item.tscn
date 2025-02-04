@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://items/item.gd" type="Script" id=1]
-[ext_resource path="res://font_stuff/SmallFont.tres" type="DynamicFont" id=2]
-[ext_resource path="res://random_images/images.jpg" type="Texture" id=3]
+[ext_resource path="res://font_stuff/SmallFont.tres" type="FontFile" id=2]
+[ext_resource path="res://random_images/images.jpg" type="Texture2D" id=3]
 
 [node name="Item" type="Control"]
-margin_right = 40.0
-margin_bottom = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
@@ -14,11 +14,11 @@ __meta__ = {
 }
 
 [node name="sprite" type="TextureRect" parent="."]
-margin_left = -0.148651
-margin_top = 3.12167
-margin_right = 4.85135
-margin_bottom = 8.12167
-rect_scale = Vector2( 1.72311, 0.99632 )
+offset_left = -0.148651
+offset_top = 3.12167
+offset_right = 4.85135
+offset_bottom = 8.12167
+scale = Vector2( 1.72311, 0.99632 )
 mouse_filter = 2
 texture = ExtResource( 3 )
 expand = true
@@ -27,12 +27,12 @@ __meta__ = {
 }
 
 [node name="quantity" type="Label" parent="."]
-margin_left = 0.753863
-margin_top = 3.57672
-margin_right = 40.7539
-margin_bottom = 17.5767
-custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
+offset_left = 0.753863
+offset_top = 3.57672
+offset_right = 40.7539
+offset_bottom = 17.5767
+theme_override_fonts/font = ExtResource( 2 )
+theme_override_colors/font_color = Color( 1, 1, 1, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

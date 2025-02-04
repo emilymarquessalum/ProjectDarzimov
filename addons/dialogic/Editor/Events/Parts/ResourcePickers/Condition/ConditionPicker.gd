@@ -1,13 +1,13 @@
-tool
+@tool
 extends HBoxContainer
 
-export (bool) var optional := false
+@export (bool) var optional := false
 
 var default_definition_text = 'Select Definition'
 var default_condition_text = 'equal to'
-onready var Definition = $Values/Definition
-onready var Condition = $Values/Condition
-onready var Value = $Values/Value
+@onready var Definition = $Values/Definition
+@onready var Condition = $Values/Condition
+@onready var Value = $Values/Value
 var options = [{
 		"text": "equal to",
 		"condition": "=="
@@ -31,20 +31,20 @@ var options = [{
 
 
 func _ready():
-	Definition.get_popup().connect("index_pressed", self, '_on_definition_selected')
-	Definition.connect("about_to_show", self, "_on_definition_about_to_show")
+	Definition.get_popup().connect("index_pressed", Callable(self, '_on_definition_selected'))
+	Definition.connect("about_to_popup", Callable(self, "_on_definition_about_to_show"))
 	
-	Condition.get_popup().connect("index_pressed", self, '_on_condition_selected')
-	Condition.connect("about_to_show", self, "_on_condition_about_to_show")
+	Condition.get_popup().connect("index_pressed", Callable(self, '_on_condition_selected'))
+	Condition.connect("about_to_popup", Callable(self, "_on_condition_about_to_show"))
 	
-	Value.connect("text_changed", self, "_on_value_changed")
+	Value.connect("text_changed", Callable(self, "_on_value_changed"))
 
 	$HasCondition.visible = false
 	$Values.visible = true
 
 	if optional:
 		$HasCondition.visible = true
-		$HasCondition/CheckBox.connect('toggled', self, '_on_toggle_visibility')
+		$HasCondition/CheckBox.connect('toggled', Callable(self, '_on_toggle_visibility'))
 		$Values.visible = false
 
 

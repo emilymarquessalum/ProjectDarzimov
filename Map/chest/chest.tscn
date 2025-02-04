@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://res/chest-export.png" type="Texture" id=1]
+[ext_resource path="res://res/chest-export.png" type="Texture2D" id=1]
 [ext_resource path="res://Map/chest/chest.gd" type="Script" id=2]
 [ext_resource path="res://tab_controls/interactive_object.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10.4101, 9.13458 )
+size = Vector2( 10.4101, 9.13458 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
@@ -20,7 +20,7 @@ visible = false
 position = Vector2( 145.247, 150.406 )
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="chest"]
+[node name="Sprite2D" type="Sprite2D" parent="chest"]
 position = Vector2( 145.568, 150.323 )
 scale = Vector2( 0.0784343, 0.0946575 )
 texture = ExtResource( 1 )

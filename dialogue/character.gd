@@ -5,7 +5,7 @@ extends Resource
 # var a = 2
 # var b = "text"
 
-export(Dictionary) var sprites 
+@export var sprites: Dictionary 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

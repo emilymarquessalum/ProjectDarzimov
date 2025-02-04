@@ -21,7 +21,7 @@ func init(expression: String = '') -> void:
 func _ready():
 	if debug:
 		print('Character data loaded: ', character_data)
-		print(rect_position, $TextureRect.rect_size)
+		print(position, $TextureRect.size)
 
 
 func set_portrait(expression: String) -> void:
@@ -38,7 +38,7 @@ func set_portrait(expression: String) -> void:
 		if p['name'] == expression:
 			if is_scene(p['path']):
 				var custom_node = load(p['path'])
-				var instance = custom_node.instance()
+				var instance = custom_node.instantiate()
 				instance.name = 'DialogicCustomPortraitScene'
 				add_child(instance)
 				
@@ -82,7 +82,7 @@ func move_to_position(position_offset, time = 0.5):
 	direction = position_offset
 	modulate = Color(1,1,1,0)
 	tween_modulate(modulate, Color(1,1,1, 1), time)
-	rect_position = positions[position_offset]
+	position = positions[position_offset]
 	
 	# Setting the scale of the portrait
 	var custom_scale = Vector2(1, 1)
@@ -92,15 +92,15 @@ func move_to_position(position_offset, time = 0.5):
 				float(character_data['data']['scale']) / 100,
 				float(character_data['data']['scale']) / 100
 			)
-			rect_scale = custom_scale
+			scale = custom_scale
 		if character_data['data'].has('offset_x'):
-			rect_position += Vector2(
+			position += Vector2(
 				character_data['data']['offset_x'],
 				character_data['data']['offset_y']
 			)
 			
 	if $TextureRect.get('texture'):
-		rect_position -= Vector2(
+		position -= Vector2(
 			$TextureRect.texture.get_width() * 0.5,
 			$TextureRect.texture.get_height()
 		) * custom_scale
@@ -119,10 +119,10 @@ func fade_in(time = 0.5):
 		elif direction == 'left':
 			end_pos = Vector2(-40, 0)
 		else:
-			rect_position += Vector2(0, 40)
+			position += Vector2(0, 40)
 
 		$TweenPosition.interpolate_property(
-			self, "rect_position", rect_position, rect_position + end_pos, time,
+			self, "position", position, position + end_pos, time,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
 		)
 		$TweenPosition.start()
@@ -133,7 +133,7 @@ func fade_out(time = 0.5):
 	var end = modulate
 	end.a = 0
 	tween_modulate(modulate, end, time)
-	$Tween.connect("tween_all_completed", self, "queue_free")
+	$Tween.connect("tween_all_completed", Callable(self, "queue_free"))
 
 
 func focus():

@@ -4,12 +4,12 @@ extends Area2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export var max_parries = 3
-export var parry_timer = 1
+@export var max_parries = 3
+@export var parry_timer = 1
 
 var parry_clocks = []
 var current_parry
-onready var player = get_tree().get_current_scene().find_node("Player")
+@onready var player = get_tree().get_current_scene().find_child("Player")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(max_parries):
@@ -38,7 +38,7 @@ func _process(delta):
 		if player.do_action("Parry"):
 			_expend_parry()
 			$ParryColider.disabled = false
-			player.connect("finished_animation", self, "_finish_parry",[],CONNECT_ONESHOT)
+			player.connect("finished_animation", Callable(self, "_finish_parry").bind(), CONNECT_ONE_SHOT)
 			
 		
 func _find_unloaded_parry():

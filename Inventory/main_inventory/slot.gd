@@ -13,13 +13,13 @@ signal selected_slot(slot,inventory) # Slot foi selecionado
 signal double_clicked(slot) # Slot foi clicado duas vezes
 
 func _connect_to_inventory(inv):
-	self.connect("gui_input", inv, "_slot_gui_input", [self])
-	self.connect("mouse_entered", inv, "_slot_mouse_over", [self])
-	self.connect("mouse_exited", inv, "_mouse_out_slot", [self])
+	self.connect("gui_input", Callable(inv, "_slot_gui_input").bind(self))
+	self.connect("mouse_entered", Callable(inv, "_slot_mouse_over").bind(self))
+	self.connect("mouse_exited", Callable(inv, "_mouse_out_slot").bind(self))
 
 func disconnect_from_inventory_mouse_over():
-	self.disconnect("mouse_entered", get_tree().get_current_scene().get_node("Inventory"), "_slot_mouse_over")
-	self.disconnect("mouse_exited", get_tree().get_current_scene().get_node("Inventory"), "_mouse_out_slot")
+	self.disconnect("mouse_entered", Callable(get_tree().get_current_scene().get_node("Inventory"), "_slot_mouse_over"))
+	self.disconnect("mouse_exited", Callable(get_tree().get_current_scene().get_node("Inventory"), "_mouse_out_slot"))
 
 # Retorna o texto que será usado na descrição
 func _get_description():
@@ -76,7 +76,7 @@ func _can_move_item_into_slot(attempt_item):
 	if not _item_fits(attempt_item):
 		return false
 	if not _move_attempt():
-		modulate = Color.white
+		modulate = Color.WHITE
 		return false
 	
 	return true
@@ -92,7 +92,7 @@ func _put_item_into_slot(new_item):
 	emit_signal("item_added", item)
 	if not item:
 		return
-	item.rect_position = Vector2(0,0)
+	item.position = Vector2(0,0)
 	item.slot_parent = self
 	add_child(item)
 	

@@ -1,13 +1,13 @@
-tool
+@tool
 extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
 
 # has an event_data variable that stores the current data!!!
 
-export (bool) var allow_no_character := false
+@export (bool) var allow_no_character := false
 
 ## node references
-onready var picker_menu = $HBox/MenuButton
-onready var icon = $HBox/Icon
+@onready var picker_menu = $HBox/MenuButton
+@onready var icon = $HBox/Icon
 
 
 func _ready():
@@ -19,13 +19,13 @@ func _ready():
 		allow_no_character = true
 	
 	# Connections
-	picker_menu.connect("about_to_show", self, "_on_PickerMenu_about_to_show")
+	picker_menu.connect("about_to_popup", Callable(self, "_on_PickerMenu_about_to_show"))
 
 
 # called by the event block
 func load_data(data:Dictionary):
 	# First set the event_data
-	.load_data(data)
+	super.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
 	update_to_character()
@@ -41,7 +41,7 @@ func update_to_character():
 	if event_data['character'] != '':
 		if event_data['character'] == '[All]':
 			picker_menu.text = "All characters"
-			icon.modulate = Color.white
+			icon.modulate = Color.WHITE
 		else:
 			for ch in DialogicUtil.get_character_list():
 				if ch['file'] == event_data['character']:
@@ -52,7 +52,7 @@ func update_to_character():
 			picker_menu.text = 'No Character'
 		else:
 			picker_menu.text = 'Select Character'
-		icon.modulate = Color.white
+		icon.modulate = Color.WHITE
 
 
 # when an index is selected on one of the menus.
@@ -115,8 +115,8 @@ func build_PickerMenuFolder(menu:PopupMenu, folder_structure:Dictionary, current
 		menu.set_item_metadata(index, {'file':file})
 		index += 1
 	
-	if not menu.is_connected("index_pressed", self, "_on_PickerMenu_selected"):
-		menu.connect("index_pressed", self, '_on_PickerMenu_selected', [menu])
+	if not menu.is_connected("index_pressed", Callable(self, "_on_PickerMenu_selected")):
+		menu.connect("index_pressed", Callable(self, '_on_PickerMenu_selected').bind(menu))
 	
 	menu.name = current_folder_name
 	return current_folder_name

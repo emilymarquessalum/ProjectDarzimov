@@ -14,12 +14,12 @@ func _change_card(new_card):
 		
 		
 func _on_mouse_entered():
-	var descript = get_tree().get_current_scene().find_node("description_text")
+	var descript = get_tree().get_current_scene().find_child("description_text")
 	descript._change_description(self)
 	
 
 func _on_mouse_exited():
-	var descript = get_tree().get_current_scene().find_node("description_text")
+	var descript = get_tree().get_current_scene().find_child("description_text")
 	descript._change_description(null)
 
 func _get_description():

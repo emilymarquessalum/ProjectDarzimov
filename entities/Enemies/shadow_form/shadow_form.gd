@@ -10,10 +10,10 @@ var p_index = 0
 func _ready():
 	unique_to_scene = false
 	var jump = load("res://entities/Enemies/jump_behaviour.gd").new()
-	find_node("Health").connect('died', self, "_justica_reset")
+	find_child("Health").connect('died', Callable(self, "_justica_reset"))
 	behaviours.append(jump)
 	jump.controller = self
-	var p = get_tree().get_current_scene().find_node("Player")
+	var p = get_tree().get_current_scene().find_child("Player")
 	var dir = -1
 	if p.flip:
 		dir *= -1
@@ -21,9 +21,9 @@ func _ready():
 	var po = Game._get_random_empty_floor()
 	if po:
 		position = po.position
-	var areas = find_node("middle_area")
+	var areas = find_child("middle_area")
 	
-	while (abs(position.x -  player.position.x) > 170 or abs(position.x -  player.position.x) < 20) and (not find_node("GroundDetector").is_colliding() or areas._inside_floors()):
+	while (abs(position.x -  player.position.x) > 170 or abs(position.x -  player.position.x) < 20) and (not find_child("GroundDetector").is_colliding() or areas._inside_floors()):
 		po = Game._get_random_empty_floor()
 		if po:
 			position = po.position
@@ -31,7 +31,7 @@ func _ready():
 	scale.x = -scale.x	
 	position.y -= 80
 	_fix_on_ground()
-	var player = get_tree().get_current_scene().find_node("Player")
+	var player = get_tree().get_current_scene().find_child("Player")
 	self.keywords = player.keywords
 	
 var dest_y = 0
@@ -44,11 +44,11 @@ func _justica_reset():
 
 
 
-onready var state = find_node("awake")
+@onready var state = find_child("awake")
 var time_on_state = 120
 
 func _change_state(a=0,s=""):
-	state = find_node(s)
+	state = find_child(s)
 	time_on_state = 0
 	
 
@@ -63,10 +63,12 @@ func _process(delta):
 	dest.y = gravity
 	dest.x = 0
 	time_on_state += 1
-	if not dest_y == 0 and state == find_node('running'):
+	if not dest_y == 0 and state == find_child('running'):
 		dest.y = dest_y
 	dest_y = 0
 	
 	state._update(self)
 
-	move_and_slide(dest, Vector2.UP)
+	set_velocity(dest)
+	set_up_direction(Vector2.UP)
+	move_and_slide()

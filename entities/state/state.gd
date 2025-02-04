@@ -5,11 +5,11 @@ func _ready():
 	for s in used_behaviours:
 		behaviours.append(behaviour.get_node(s))
 
-export(bool) var update_has_done_action = false
-onready var behaviour  = get_parent().get_parent().find_node("behaviours")
-export(Array,String) var used_behaviours = []
-onready var behaviours = []
-onready var controller = get_parent().get_parent()
+@export var update_has_done_action: bool = false
+@onready var behaviour  = get_parent().get_parent().find_child("behaviours")
+@export var used_behaviours = [] # (Array,String)
+@onready var behaviours = []
+@onready var controller = get_parent().get_parent()
 func _state_behaviour(delta):
 	for b in behaviours:
 		b._update(delta, controller)
@@ -20,7 +20,7 @@ func _start_state(data):
 		b._start_behaviour_main(data)
 		
 		
-export(String) var state_name = "not named"
+@export var state_name: String = "not named"
 func get_name():
 	return state_name
 	

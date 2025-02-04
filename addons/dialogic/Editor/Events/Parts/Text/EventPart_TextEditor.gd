@@ -1,34 +1,34 @@
-tool
+@tool
 extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
 
 # has an event_data variable that stores the current data!!!
 var text_height = 21
 
 ## node references
-onready var text_editor = $TextEdit
+@onready var text_editor = $TextEdit
 
 
 # used to connect the signals
 func _ready():
 	# signals
-	text_editor.connect("text_changed", self, "_on_TextEditor_text_changed")
-	text_editor.connect("focus_entered", self, "_on_TextEditor_focus_entered")
+	text_editor.connect("text_changed", Callable(self, "_on_TextEditor_text_changed"))
+	text_editor.connect("focus_entered", Callable(self, "_on_TextEditor_focus_entered"))
 	
 	# stylistig setup
-	text_editor.syntax_highlighting = true
+	text_editor.syntax_highlighter = true
 	text_editor.add_color_region('[', ']', get_color("axis_z_color", "Editor"))
-	text_editor.set('custom_colors/number_color', get_color("font_color", "Editor"))
+	text_editor.set('theme_override_colors/number_color', get_color("font_color", "Editor"))
 	
 	var _scale = get_constant("inspector_margin", "Editor")
 	_scale = _scale * 0.125
 	text_height = text_height * _scale
-	text_editor.set("rect_min_size", Vector2(0, text_height*2))
+	text_editor.set("custom_minimum_size", Vector2(0, text_height*2))
 	
 
 # called by the event block
 func load_data(data:Dictionary):
 	# First set the event_data
-	.load_data(data)
+	super.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
 	# in case this is a text event
@@ -42,7 +42,7 @@ func load_data(data:Dictionary):
 		text_editor.text = event_data['text']
 	
 	# resize the text_editor to the correct size 
-	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))
+	text_editor.custom_minimum_size.y = text_height * (2 + text_editor.text.count('\n'))
 
 # has to return the wanted preview, only useful for body parts
 func get_preview():
@@ -73,13 +73,13 @@ func _on_TextEditor_text_changed():
 	# otherwise
 	else:
 		event_data['text'] = text_editor.text
-	text_editor.rect_min_size.y = text_height * (2 + text_editor.text.count('\n'))
+	text_editor.custom_minimum_size.y = text_height * (2 + text_editor.text.count('\n'))
 	
 	# informs the parent about the changes!
 	data_changed()
 
 func _on_TextEditor_focus_entered() -> void:
-	if (Input.is_mouse_button_pressed(BUTTON_LEFT)):
+	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
 		emit_signal("request_selection")
 
 

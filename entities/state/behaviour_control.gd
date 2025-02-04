@@ -1,5 +1,5 @@
 extends Node
-export(String) var parent_name 
+@export var parent_name: String 
 
 # Declare member variables here. Examples:
 # var a = 2

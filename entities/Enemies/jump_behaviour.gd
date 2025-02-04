@@ -12,7 +12,7 @@ var jump_power = 2.4
 var jump_max_frames = 40
 
 func _act():
-	if controller.find_node("direction_collision").is_colliding() and controller.is_on_floor():
+	if controller.find_child("direction_collision").is_colliding() and controller.is_on_floor():
 		jump = true
 		jump_frames = jump_max_frames
 	if jump:

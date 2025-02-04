@@ -1,6 +1,6 @@
 extends behaviour
-export(String) var projectile_name = "res://Projectiles/Sword/Sword.tscn"
-onready var projectile_class = load(projectile_name)
+@export var projectile_name: String = "res://Projectiles/Sword/Sword.tscn"
+@onready var projectile_class = load(projectile_name)
 
 
 func _start_behaviour():
@@ -13,7 +13,7 @@ func _update(delta, en):
 	pass
 
 func _throw():
-	var proj = projectile_class.instance()
+	var proj = projectile_class.instantiate()
 	control.get_parent().add_child(proj)
 	
 	proj.player = control.player

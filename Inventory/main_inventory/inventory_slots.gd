@@ -3,7 +3,7 @@ extends ScrollContainer
 
 var ItemClass = load("res://items/item.tscn")
 var type 
-onready var inv = find_parent("Inventory")
+@onready var inv = find_parent("Inventory")
 var slot_numbers = 50
 var slots = []
 

@@ -8,19 +8,19 @@ extends GridContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var equips = get_tree().get_current_scene().find_node("arma_secundaria")
-	equips.connect("done_loading", self, "start_interface")
+	var equips = get_tree().get_current_scene().find_child("arma_secundaria")
+	equips.connect("done_loading", Callable(self, "start_interface"))
 	
 	pass # Replace with function body.
 
 func start_interface(slot):
 	
 	
-	var sp = Sprite.new()
+	var sp = Sprite2D.new()
 	add_child(sp)
 	
-	slot.connect("item_added", self, "change_image", [sp])
-	slot.connect("item_removed", self, "remove_image", [sp])
+	slot.connect("item_added", Callable(self, "change_image").bind(sp))
+	slot.connect("item_removed", Callable(self, "remove_image").bind(sp))
 	pass
 	
 

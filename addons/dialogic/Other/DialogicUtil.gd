@@ -1,4 +1,4 @@
-tool
+@tool
 class_name DialogicUtil
 
 ## This class is used by the DialogicEditor
@@ -57,7 +57,7 @@ static func get_characters_dict():
 
 static func get_sorted_character_list():
 	var array = get_character_list()
-	array.sort_custom(DialgicSorter, 'sort_resources')
+	array.sort_custom(Callable(DialgicSorter, 'sort_resources'))
 	return array
 
 ## *****************************************************************************
@@ -86,7 +86,7 @@ static func get_timeline_dict() -> Dictionary:
 
 static func get_sorted_timeline_list():
 	var array = get_timeline_list()
-	array.sort_custom(DialgicSorter, 'sort_resources')
+	array.sort_custom(Callable(DialgicSorter, 'sort_resources'))
 	return array
 
 
@@ -112,7 +112,7 @@ static func get_theme_dict() -> Dictionary:
 
 static func get_sorted_theme_list():
 	var array = get_theme_list()
-	array.sort_custom(DialgicSorter, 'sort_resources')
+	array.sort_custom(Callable(DialgicSorter, 'sort_resources'))
 	return array
 
 
@@ -131,7 +131,7 @@ static func get_default_definitions_dict():
 
 static func get_sorted_default_definitions_list():
 	var array = get_default_definitions_list()
-	array.sort_custom(DialgicSorter, 'sort_resources')
+	array.sort_custom(Callable(DialgicSorter, 'sort_resources'))
 	return array
 
 ## *****************************************************************************
@@ -180,7 +180,7 @@ static func get_folder_at_path(path):
 static func set_folder_content_recursive(path_array: Array, orig_data: Dictionary, new_data: Dictionary) -> Dictionary:
 	if len(path_array) == 1:
 		if path_array[0] in orig_data['folders'].keys():
-			if new_data.empty():
+			if new_data.is_empty():
 				orig_data['folders'].erase(path_array[0])
 			else:
 				orig_data["folders"][path_array[0]] = new_data
@@ -338,7 +338,7 @@ static func check_folders_recursive(folder_data: Dictionary, file_names:Array):
 ## *****************************************************************************
 
 static func generate_random_id() -> String:
-	return str(OS.get_unix_time()) + '-' + str(100 + randi()%899+1)
+	return str(Time.get_unix_time_from_system()) + '-' + str(100 + randi()%899+1)
 
 
 static func compare_dicts(dict_1: Dictionary, dict_2: Dictionary) -> bool:
@@ -444,7 +444,7 @@ static func resource_fixer():
 						{'emit_signal'}:
 							i['event_id'] = 'dialogic_040'
 						# Change Scene event
-						{'change_scene'}:
+						{'change_scene_to_file'}:
 							i['event_id'] = 'dialogic_041'
 						# Call Node event
 						{'call_node'}:
@@ -463,7 +463,7 @@ static func resource_fixer():
 class DialgicSorter:
 
 	static func key_available(key, a: Dictionary) -> bool:
-		return key in a.keys() and not a[key].empty()
+		return key in a.keys() and not a[key].is_empty()
 
 	static func get_compare_value(a: Dictionary) -> String:
 		if key_available('display_name', a):

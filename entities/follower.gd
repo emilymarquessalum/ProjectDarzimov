@@ -6,7 +6,7 @@ var player # as we add more followers, they will not all follow
 
 
 func _ready():
-	player = get_tree().get_current_scene().find_node("Player")
+	player = get_tree().get_current_scene().find_child("Player")
 	pass 
 	
 var next_y = position.y
@@ -28,5 +28,7 @@ func _process(delta):
 	next_y += y_speed * delta
 	
 	dest.y = next_y 
-	move_and_slide(dest, Vector2.UP)
+	set_velocity(dest)
+	set_up_direction(Vector2.UP)
+	move_and_slide()
 	

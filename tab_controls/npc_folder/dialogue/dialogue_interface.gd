@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 
 
@@ -15,15 +15,15 @@ func _ready():
 func _enter_tree():
   set_process_input(true)
 
-var color = Color.webgray
+var color = Color.WEB_GRAY
 func _draw():
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		draw_rect(Rect2(0,0,100,100), color)
 
 
 func _update():
 	
-		color = Color.rebeccapurple
+		color = Color.REBECCA_PURPLE
 		_draw()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

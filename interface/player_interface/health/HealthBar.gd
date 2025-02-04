@@ -12,17 +12,17 @@ func _alterate_interface(health):
 	
 	while last_health < health:
 		last_health += 1
-		var heart = heart_tscn.instance()
+		var heart = heart_tscn.instantiate()
 		add_child(heart)
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.connect("changed_area",self,"_inicialize")
+	Global.connect("changed_area", Callable(self, "_inicialize"))
 	
 
 
 func _inicialize(scn):
-	var health_control =  scn.find_node("Player").health_control
-	health_control.connect("life_altered", self, "_alterate_interface")
+	var health_control =  scn.find_child("Player").health_control
+	health_control.connect("life_altered", Callable(self, "_alterate_interface"))
 	_alterate_interface(health_control.health)
 	

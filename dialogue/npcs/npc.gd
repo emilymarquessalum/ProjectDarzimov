@@ -10,22 +10,24 @@ var dialogue_index = 0
 var last_dialogue_name = null
 var opened = false
 
-export(String) var save_path = "user://.txt"
-export(Array, String) var used_dialogues = []
+@export var save_path: String = "user://.txt"
+@export var used_dialogues = [] # (Array, String)
 var data
 func _ready():
-	npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instance()
+	npc_control = load("res://tab_controls/npc_folder/npc_control.tscn").instantiate()
 	add_child(npc_control)
 	npc_control.hide()
 	
-	$Area2D.connect("interacted_object", self, "_start_dialogue")
+	$Area2D.connect("interacted_object", Callable(self, "_start_dialogue"))
 	
 	var save_file = File.new()
 	var err = save_file.open(save_path, File.WRITE)
 	if not err == OK:
 		return
 	
-	data = JSON.parse(save_file.get_as_text())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(save_file.get_as_text())
+	data = test_json_conv.get_data()
 	
 	
 	
@@ -43,7 +45,7 @@ func _change_dialogue_pointer(d = dialogue_pointer + 1):
 	var err = save_file.open(save_path, File.WRITE)
 	
 	if err == OK:
-		save_file.store_string(to_json(data))
+		save_file.store_string(JSON.new().stringify(data))
 	else:
 		print("error")
 	
@@ -53,11 +55,11 @@ func _close_dialogue():
 	if npc_control:
 		npc_control.hide()
 	get_tree().paused = false
-	var interface = get_tree().get_current_scene().find_node("interface_control")
-	interface.disconnect("opened_interface", self, "_close_interface")
+	var interface = get_tree().get_current_scene().find_child("interface_control")
+	interface.disconnect("opened_interface", Callable(self, "_close_interface"))
 		
 func _close_interface():
-	var interface = get_tree().get_current_scene().find_node("interface_control")
+	var interface = get_tree().get_current_scene().find_child("interface_control")
 	interface._close_interface()
 	get_tree().paused = true
 		
@@ -75,22 +77,22 @@ func _open_options():
 		
 	npc_control._make_options(next_opts, self)
 	npc_control.show()
-	var player = get_tree().get_current_scene().find_node("Player")
-	npc_control.rect_position.x = 0
-	npc_control.rect_position.y = -80
+	var player = get_tree().get_current_scene().find_child("Player")
+	npc_control.position.x = 0
+	npc_control.position.y = -80
 
 func _dialogue(dialogue_lines=dialogue_lines[dialogue_pointer]):
 	
-	var interface = get_tree().get_current_scene().find_node("interface_control")
-	interface.connect("opened_interface", self, "_close_interface")
-	dialogue = dial.instance()
+	var interface = get_tree().get_current_scene().find_child("interface_control")
+	interface.connect("opened_interface", Callable(self, "_close_interface"))
+	dialogue = dial.instantiate()
 	#dialogue_lines.emit_signal("started")
 	get_tree().paused = true
 
 	dialogue._make_dialogue(dialogue_lines)
 	
 
-	dialogue.connect("end_dialogue", self, "_ended_dialogue",[dialogue_lines], CONNECT_ONESHOT)
+	dialogue.connect("end_dialogue", Callable(self, "_ended_dialogue").bind(dialogue_lines), CONNECT_ONE_SHOT)
 	
 	if npc_control:
 		npc_control.hide()
@@ -104,19 +106,19 @@ func _ended_dialogue(dialogue):
 	dialogue.emit_signal("ended")
 
 func _change_camera():
-	var camera = get_tree().get_current_scene().find_node("focus_camera")
-	var player= get_tree().get_current_scene().find_node("Player")
+	var camera = get_tree().get_current_scene().find_child("focus_camera")
+	var player= get_tree().get_current_scene().find_child("Player")
 	camera.make_current()
 	camera.offset.x = player.position.x
 	camera.offset.y = player.position.y 
 	
-	dialogue.rect_scale = Vector2(0.8, 0.6)
-	dialogue.rect_position.y += 40
-	dialogue.rect_position.x = player.position.x - 36
+	dialogue.scale = Vector2(0.8, 0.6)
+	dialogue.position.y += 40
+	dialogue.position.x = player.position.x - 36
 	
 	
 func _change_camera_back():
-	var camera = get_tree().get_current_scene().find_node("Camera2D")
+	var camera = get_tree().get_current_scene().find_child("Camera2D")
 	camera.make_current()
 
 # funções de diálogo options 
@@ -170,7 +172,9 @@ func _save_as_completed_and_continue(dial_name):
 	var err = save_file.open(save_path, File.READ_WRITE)
 	
 	if err == OK:
-		data = JSON.parse(save_file.get_as_text())
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(save_file.get_as_text())
+		data = test_json_conv.get_data()
 		data["dialogues"][dial_name]["completed"] = true
 		var scene_name = get_tree().get_current_scene().area_name
 	
@@ -178,6 +182,6 @@ func _save_as_completed_and_continue(dial_name):
 			data["dialogue_name_index"][scene_name] = used_dialogues[dialogue_index + 1]
 		else:
 			data["dialogue_name_index"][scene_name] = null
-		save_file.store_string(to_json(data))
+		save_file.store_string(JSON.new().stringify(data))
 	else:
 		print("error")

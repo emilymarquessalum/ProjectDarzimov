@@ -1,5 +1,5 @@
 extends Resource
 
-export(Resource) var behaviour
-export(Texture) var sprite
-export(String, MULTILINE) var description
+@export var behaviour: Resource
+@export var sprite: Texture2D
+@export var description # (String, MULTILINE)

@@ -14,7 +14,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-onready var en = get_parent().get_parent().get_parent()
+@onready var en = get_parent().get_parent().get_parent()
 
 func _on_hitbox_body_entered(body):
 	_something_entered(body)

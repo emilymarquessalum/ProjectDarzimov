@@ -8,16 +8,15 @@ const SPEED = 7000
 const JUMP_FORCE = -17400
 
 
-onready var invulnerability = $Invunerability
-onready var anim = $AnimatedSprite
-export var damage = 1
+@onready var invulnerability = $Invunerability
+@onready var anim = $AnimatedSprite2D
+@export var damage = 1
 var velocity = Vector2.ZERO
 var jump = 0
 var jump_max = 2
 
 
-func _ready():
-	
+func _ready(): 
 	_change_state("normal")
 	
 	var spawn = get_tree().get_current_scene().get_spawn()
@@ -28,7 +27,7 @@ func _ready():
 		flip = true
 		scale.x = -scale.x
 		
-	$Health.connect("died", self, "_end_run")
+	$Health.connect("died", Callable(self, "_end_run"))
 
 
 
@@ -72,7 +71,7 @@ func _test_for_enemy_col():
 		p.goal_reach = 5
 		var d = en._get_direction()
 		p._goal = Vector2((randi()%20+20)*d,0)+position
-		p.connect("reached_goal",self,"tt")
+		p.connect("reached_goal", Callable(self, "tt"))
 		add_child(p)
 		return true
 	
@@ -87,7 +86,10 @@ func _move(delta):
 		return
 		
 	velocity.y+= GRAVITY 
-	velocity = move_and_slide(velocity, Vector2.UP)
+	set_velocity(velocity)
+	set_up_direction(Vector2.UP)
+	move_and_slide()
+	velocity = velocity
 
 
 func do_action(action):
@@ -102,8 +104,12 @@ func _on_AnimatedSprite_animation_finished():
 func _end_run():
 	Global._reset()
 	Game.game_off()
-	var scen = load("res://interface/game_over.tscn").instance()
-	get_tree().get_current_scene().find_node("CanvasLayer").add_child(scen)
+	var scen = load("res://interface/game_over.tscn").instantiate()
+	
+	var canvas_name = "CanvasLayer"
+	canvas_name = "CanvasModulate2"
+	
+	get_tree().get_current_scene().find_child(canvas_name).add_child(scen)
 	_change_state("dead")
 	
 func tt():

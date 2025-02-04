@@ -12,7 +12,7 @@ func _make_options(options, option_control):
 	for option in options:	
 		var new_option = Button.new()
 		new_option.text = option.lines[0]
-		new_option.connect("pressed", option_control,"_dialogue",[option])
+		new_option.connect("pressed", Callable(option_control, "_dialogue").bind(option))
 		$container.add_child(new_option)
 
 

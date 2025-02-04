@@ -5,10 +5,10 @@ extends Node
 # var a = 2
 # var b = "text"
 
-export(String,MULTILINE) var line
-export(bool) var first_speaking = true
-export(Resource) var first_character_sprite
-export(Resource) var second_character_sprite
+@export var line # (String,MULTILINE)
+@export var first_speaking: bool = true
+@export var first_character_sprite: Resource
+@export var second_character_sprite: Resource
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

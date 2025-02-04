@@ -18,7 +18,7 @@ func _set_controller(c):
 
 
 func do_action():
-	var proj = load("res://Projectiles/projectile.tscn").instance()
+	var proj = load("res://Projectiles/projectile.tscn").instantiate()
 	proj.movement = straight_line_movement.new()
 	controller.get_tree().get_current_scene().add_child(proj)
 
@@ -32,7 +32,7 @@ func do_action():
 		dir = Vector2.LEFT
 	proj.movement._inic(proj, dir, 5)
 	
-	proj.connect("body_collision", self, "collided")
+	proj.connect("body_collision", Callable(self, "collided"))
 
 	
 	pass
@@ -50,7 +50,7 @@ func collided(proj, collider):
 				proj.alive = false
 				#proj.get_parent().remove_child(proj)
 				proj.queue_free()
-				collider.find_node("Health")._take_damage(2 + controller.keyword_number())
+				collider.find_child("Health")._take_damage(2 + controller.keyword_number())
 		
 			break
 

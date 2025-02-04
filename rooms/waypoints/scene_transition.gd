@@ -5,10 +5,10 @@ extends Area2D
 # var a = 2
 # var b = "text"
 var waypoint_child
-export(String,MULTILINE) var scene = "null"
-export(String,MULTILINE) var area = "mountains"
+@export var scene = "null" # (String,MULTILINE)
+@export var area = "mountains" # (String,MULTILINE)
 func _spawned():
-	Global.connect("completed_entered_area", self, "_fix_enemy_positions",[], CONNECT_ONESHOT)
+	Global.connect("completed_entered_area", Callable(self, "_fix_enemy_positions").bind(), CONNECT_ONE_SHOT)
 	
 
 func _fix_enemy_positions():
@@ -42,6 +42,6 @@ func _on_Area2D_body_entered(body):
 	var scen = load("res://rooms/" + area + "/" + scene + ".tscn")
 	
 	Global.transition_waypoint = waypoint_child.point
-	get_tree().change_scene_to(scen) 
+	get_tree().change_scene_to_packed(scen) 
 	
 	pass # Replace with function body.

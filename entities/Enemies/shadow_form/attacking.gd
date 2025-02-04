@@ -21,7 +21,7 @@ var bow = Items.bow
 
 var interval = 60
 var frames = 0
-onready var p = find_parent("shadow_form") 
+@onready var p = find_parent("shadow_form") 
 func _update(s):
 	p._look_at(p.player.position, true)
 	frames += 1

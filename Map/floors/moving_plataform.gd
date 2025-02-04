@@ -1,20 +1,20 @@
 extends "res://Map/floors/floor.gd"
 
-export(float) var speed_x = 1
-export(float) var speed_y = 1
+@export var speed_x: float = 1
+@export var speed_y: float = 1
 
-export(bool) var ignore_x = false
-export(bool) var ignore_y = false
+@export var ignore_x: bool = false
+@export var ignore_y: bool = false
 
 func _ready():
 	var ps = []
 	var n = 1
-	var node = find_node("goal" + String(n))
+	var node = find_child("goal" + String(n))
 	while node:
 		ps.append(node)
 		##holders.append(node)
 		n += 1
-		node = find_node("goal" + String(n))
+		node = find_child("goal" + String(n))
 		
 	
 	for p in ps:

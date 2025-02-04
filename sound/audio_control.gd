@@ -7,7 +7,7 @@ extends AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pause_mode = Node.PAUSE_MODE_PROCESS
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	_change_music("ice_caves")
 var music_records = {}
 var last_song_name = null

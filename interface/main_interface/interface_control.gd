@@ -1,7 +1,7 @@
 extends Control
 
-onready var inventory = $Inventory
-onready var cards = $Cards
+@onready var inventory = $Inventory
+@onready var cards = $Cards
 var opened = false
 
 signal closed_interface()
@@ -30,7 +30,7 @@ func _on_configurations_button_pressed():
 # Volta ao menu principal!
 func _on_exit_button_pressed():
 	get_tree().paused = false
-	get_tree().change_scene("res://menu/menu.tscn")
+	get_tree().change_scene_to_file("res://menu/menu.tscn")
 
 func _process(delta):
 	if Input.is_action_just_released("open_interface"):

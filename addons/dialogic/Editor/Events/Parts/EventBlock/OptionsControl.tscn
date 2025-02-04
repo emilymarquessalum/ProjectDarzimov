@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/dialogic/Editor/Events/Parts/EventBlock/OptionsControl.gd" type="Script" id=1]
-[ext_resource path="res://addons/dialogic/Images/Pieces/expand-icon.svg" type="Texture" id=2]
+[ext_resource path="res://addons/dialogic/Images/Pieces/expand-icon.svg" type="Texture2D" id=2]
 
 
 [node name="OptionsControl" type="MenuButton"]
-margin_right = 29.0
-margin_bottom = 20.0
+offset_right = 29.0
+offset_bottom = 20.0
 icon = ExtResource( 2 )
 clip_text = true
 align = 2

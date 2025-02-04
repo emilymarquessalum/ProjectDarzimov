@@ -19,7 +19,7 @@ func _update(p):
 		
 		if abs(p.position.x -  p.player.position.x) > 50 and p.time_on_state > 60:
 			p._change_state(0,"prepare_attack")
-			p.health_control.connect("life_damaged", p, "_change_state", ["running"],CONNECT_ONESHOT)
+			p.health_control.connect("life_damaged", Callable(p, "_change_state").bind("running"), CONNECT_ONE_SHOT)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

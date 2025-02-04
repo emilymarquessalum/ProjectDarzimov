@@ -1,9 +1,9 @@
-tool
+@tool
 extends Control
 
 var editor_reference
-onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
-onready var settings_editor = get_node('../SettingsEditor')
+@onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
+@onready var settings_editor = get_node('../SettingsEditor')
 var current_theme : String = ''
 var use_advanced_themes : bool = false
 var preview_character_selected : String = 'random'
@@ -36,14 +36,14 @@ var first_time_loading_theme_full_size_bug := 0
 # complain because "that is not how you are supposed to work". If there was only
 # a way to set an id and then access that node via id...
 # Here you have paths in all its glory. Praise the paths (っ´ω`c)♡
-onready var advanced_containers := {
+@onready var advanced_containers := {
 	'buttons' : {
 		'container': $"VBoxContainer/TabContainer/Choice Buttons/Column3/GridContainer",
 		'disabled_text': $"VBoxContainer/TabContainer/Choice Buttons/Column3/Label"
 	}
 }
 
-onready var n : Dictionary = {
+@onready var n : Dictionary = {
 	# Dialog Text
 	'theme_text_shadow': $"VBoxContainer/TabContainer/Dialog Text/Column2/GridContainer/HBoxContainer2/CheckBoxShadow",
 	'theme_text_shadow_color': $"VBoxContainer/TabContainer/Dialog Text/Column2/GridContainer/HBoxContainer2/ColorPickerButtonShadow",
@@ -151,18 +151,18 @@ onready var n : Dictionary = {
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 func _ready() -> void:
-	AudioServer.connect("bus_layout_changed", self, "_on_bus_layout_changed")
+	AudioServer.connect("bus_layout_changed", Callable(self, "_on_bus_layout_changed"))
 	# Signal connection to free up some memory
-	connect("visibility_changed", self, "_on_visibility_changed")
+	connect("visibility_changed", Callable(self, "_on_visibility_changed"))
 	if get_constant("dark_theme", "Editor"):
 		$VBoxContainer/HBoxContainer3/PreviewButton.icon = load("res://addons/dialogic/Images/Plugin/plugin-editor-icon-dark-theme.svg")
 	else:
 		$VBoxContainer/HBoxContainer3/PreviewButton.icon = load("res://addons/dialogic/Images/Plugin/plugin-editor-icon-light-theme.svg")
 	
 	$DelayPreviewTimer.one_shot = true
-	$DelayPreviewTimer.connect("timeout", self, '_on_DelayPreview_timer_timeout')
+	$DelayPreviewTimer.connect("timeout", Callable(self, '_on_DelayPreview_timer_timeout'))
 	
-	var title_style = $"VBoxContainer/TabContainer/Dialog Text/Column/SectionTitle".get('custom_styles/normal')
+	var title_style = $"VBoxContainer/TabContainer/Dialog Text/Column/SectionTitle".get('theme_override_styles/normal')
 	title_style.set('bg_color', get_color("prop_category", "Editor"))
 	
 	$"VBoxContainer/TabContainer/Name Label/Column/GridContainer/RegularFont/NameFontOpen".icon = get_icon("Edit", "EditorIcons")
@@ -174,45 +174,45 @@ func _ready() -> void:
 	$"VBoxContainer/TabContainer/Glossary/Column3/GridContainer/ExtraFont/ExtraFontOpen".icon = get_icon("Edit", "EditorIcons")
 	$"VBoxContainer/TabContainer/Glossary/Column/GridContainer/BackgroundPanel/BGPanelOpen".icon = get_icon("Edit", "EditorIcons")
 	
-	n['text_preview'].syntax_highlighting = true
+	n['text_preview'].syntax_highlighter = true
 	n['text_preview'].add_color_region('[', ']', get_color("axis_z_color", "Editor"))
 	
 	# Dialog Text tab
-	n['theme_text_shadow'].connect('toggled', self, '_on_generic_checkbox', ['text', 'shadow'])
-	n['single_portrait_mode'].connect('toggled', self, '_on_generic_checkbox', ['settings', 'single_portrait_mode'])
-	n['theme_text_speed'].connect('value_changed', self, '_on_generic_value_change', ['text','speed'])
+	n['theme_text_shadow'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('text', 'shadow'))
+	n['single_portrait_mode'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('settings', 'single_portrait_mode'))
+	n['theme_text_speed'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('text','speed'))
 	
 	# Dialog Box tab
-	n['theme_background_color_visible'].connect('toggled', self, '_on_generic_checkbox', ['background', 'use_color'])
-	n['background_texture_button_visible'].connect('toggled', self, '_on_generic_checkbox', ['background', 'use_image'])
-	n['background_modulation'].connect('toggled', self, '_on_generic_checkbox', ['background', 'modulation'])
-	n['background_full_width'].connect('toggled', self, '_on_generic_checkbox', ['background', 'full_width'])
-	n['animation_show_time'].connect('value_changed', self, '_on_generic_value_change', ['animation', 'show_time'])
-	n['bottom_gap'].connect('value_changed', self, '_on_generic_value_change', ['box', 'bottom_gap'])
-	n['next_indicator_scale'].connect('value_changed', self, '_on_generic_value_change', ['next_indicator', 'scale'])
+	n['theme_background_color_visible'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('background', 'use_color'))
+	n['background_texture_button_visible'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('background', 'use_image'))
+	n['background_modulation'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('background', 'modulation'))
+	n['background_full_width'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('background', 'full_width'))
+	n['animation_show_time'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('animation', 'show_time'))
+	n['bottom_gap'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('box', 'bottom_gap'))
+	n['next_indicator_scale'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('next_indicator', 'scale'))
 
 	# Name tab
-	n['name_shadow_visible'].connect('toggled', self, '_on_generic_checkbox', ['name', 'shadow_visible'])
-	n['name_background_visible'].connect('toggled', self, '_on_generic_checkbox', ['name', 'background_visible'])
-	n['name_image_visible'].connect('toggled', self, '_on_generic_checkbox', ['name', 'image_visible'])
-	n['name_background_modulation'].connect('toggled', self, '_on_generic_checkbox', ['name', 'modulation'])
+	n['name_shadow_visible'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('name', 'shadow_visible'))
+	n['name_background_visible'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('name', 'background_visible'))
+	n['name_image_visible'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('name', 'image_visible'))
+	n['name_background_modulation'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('name', 'modulation'))
 
 	# Buttons tab
-	n['button_fixed'].connect('toggled', self, '_on_generic_checkbox', ['buttons', 'fixed'])
+	n['button_fixed'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('buttons', 'fixed'))
 	
 	# Choice button style modifiers
-	n['button_normal'].connect('picking_background', self, '_on_ButtonTextureButton_pressed')
-	n['button_hover'].connect('picking_background', self, '_on_ButtonTextureButton_pressed')
-	n['button_pressed'].connect('picking_background', self, '_on_ButtonTextureButton_pressed')
-	n['button_disabled'].connect('picking_background', self, '_on_ButtonTextureButton_pressed')
+	n['button_normal'].connect('picking_background', Callable(self, '_on_ButtonTextureButton_pressed'))
+	n['button_hover'].connect('picking_background', Callable(self, '_on_ButtonTextureButton_pressed'))
+	n['button_pressed'].connect('picking_background', Callable(self, '_on_ButtonTextureButton_pressed'))
+	n['button_disabled'].connect('picking_background', Callable(self, '_on_ButtonTextureButton_pressed'))
 	
-	n['button_normal'].connect('style_modified', self, '_on_choice_style_modified')
-	n['button_hover'].connect('style_modified', self, '_on_choice_style_modified')
-	n['button_pressed'].connect('style_modified', self, '_on_choice_style_modified')
-	n['button_disabled'].connect('style_modified', self, '_on_choice_style_modified')
+	n['button_normal'].connect('style_modified', Callable(self, '_on_choice_style_modified'))
+	n['button_hover'].connect('style_modified', Callable(self, '_on_choice_style_modified'))
+	n['button_pressed'].connect('style_modified', Callable(self, '_on_choice_style_modified'))
+	n['button_disabled'].connect('style_modified', Callable(self, '_on_choice_style_modified'))
 	
 	n['name_position'].text = 'Left'
-	n['name_position'].connect('item_selected', self, '_on_name_position_selected')
+	n['name_position'].connect('item_selected', Callable(self, '_on_name_position_selected'))
 	var name_positions_popup = n['name_position'].get_popup()
 	name_positions_popup.clear()
 	name_positions_popup.add_radio_check_item('Left')
@@ -221,17 +221,17 @@ func _ready() -> void:
 	n['name_position'].select(0)
 	
 	# Glossary tab
-	n['glossary_enabled'].connect('toggled', self, '_on_generic_checkbox', ['definitions','show_glossary'])
+	n['glossary_enabled'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('definitions','show_glossary'))
 
 	# Audio tab
-	n['typing_sfx_enabled'].connect('toggled', self, '_on_generic_checkbox', ['typing_sfx','enable'])
-	n['typing_sfx_volume'].connect('value_changed', self, '_on_generic_value_change', ['typing_sfx', 'volume'])
-	n['typing_sfx_volume_range'].connect('value_changed', self, '_on_generic_value_change', ['typing_sfx', 'random_volume_range'])
-	n['typing_sfx_pitch_range'].connect('value_changed', self, '_on_generic_value_change', ['typing_sfx', 'random_pitch_range'])
+	n['typing_sfx_enabled'].connect('toggled', Callable(self, '_on_generic_checkbox').bind('typing_sfx','enable'))
+	n['typing_sfx_volume'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('typing_sfx', 'volume'))
+	n['typing_sfx_volume_range'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('typing_sfx', 'random_volume_range'))
+	n['typing_sfx_pitch_range'].connect('value_changed', Callable(self, '_on_generic_value_change').bind('typing_sfx', 'random_pitch_range'))
 
 	# Character Picker
-	n['character_picker'].connect('about_to_show', self, 'character_picker_about_to_show')
-	n['character_picker'].get_popup().connect('index_pressed', self, 'character_picker_selected')
+	n['character_picker'].connect('about_to_popup', Callable(self, 'character_picker_about_to_show'))
+	n['character_picker'].get_popup().connect('index_pressed', Callable(self, 'character_picker_selected'))
 	
 	# Force preview update
 	_on_visibility_changed()
@@ -277,22 +277,22 @@ func load_theme(filename):
 	setup_advanced_containers()
 	# Settings
 	n['theme_action_key'].text = theme.get_value('settings', 'action_key', 'ui_accept')
-	n['single_portrait_mode'].pressed = theme.get_value('settings', 'single_portrait_mode', false) # Currently in Dialog Text tab
+	n['single_portrait_mode'].button_pressed = theme.get_value('settings', 'single_portrait_mode', false) # Currently in Dialog Text tab
 	
 	# Background
 	n['theme_background_image'].text = DialogicResources.get_filename_from_path(theme.get_value('background', 'image', default_background))
-	n['background_texture_button_visible'].pressed = theme.get_value('background', 'use_image', true)
+	n['background_texture_button_visible'].button_pressed = theme.get_value('background', 'use_image', true)
 	n['theme_background_color'].color = Color(theme.get_value('background', 'color', '#ff000000'))
-	n['theme_background_color_visible'].pressed = theme.get_value('background', 'use_color', false)
+	n['theme_background_color_visible'].button_pressed = theme.get_value('background', 'use_color', false)
 	n['theme_next_image'].text = DialogicResources.get_filename_from_path(theme.get_value('next_indicator', 'image', 'res://addons/dialogic/Example Assets/next-indicator/next-indicator.png'))
 	n['next_indicator_scale'].value = theme.get_value('next_indicator', 'scale', 0.4)
 	var next_indicator_offset = theme.get_value('next_indicator', 'offset', Vector2(13,10))
 	n['next_indicator_offset_x'].value = next_indicator_offset.x
 	n['next_indicator_offset_y'].value = next_indicator_offset.y
 
-	n['background_modulation'].pressed = theme.get_value('background', 'modulation', false)
+	n['background_modulation'].button_pressed = theme.get_value('background', 'modulation', false)
 	n['background_modulation_color'].color = Color(theme.get_value('background', 'modulation_color', '#ffffffff'))
-	n['background_full_width'].pressed = theme.get_value('background', 'full_width', false)
+	n['background_full_width'].button_pressed = theme.get_value('background', 'full_width', false)
 	
 	
 	var size_value = theme.get_value('box', 'size', Vector2(910, 167))
@@ -302,19 +302,19 @@ func load_theme(filename):
 	n['bottom_gap'].value = theme.get_value('box', 'bottom_gap', 40)
 	
 	# Buttons
-	n['button_use_native'].pressed = theme.get_value('buttons', 'use_native', false)
-	n['button_use_custom'].pressed = theme.get_value('buttons', 'use_custom', false)
+	n['button_use_native'].button_pressed = theme.get_value('buttons', 'use_native', false)
+	n['button_use_custom'].button_pressed = theme.get_value('buttons', 'use_custom', false)
 	n['button_custom_path'].text = DialogicResources.get_filename_from_path(theme.get_value('buttons', 'custom_path', ""))
 	n['button_offset_x'].value = theme.get_value('buttons', 'padding', Vector2(5,5)).x
 	n['button_offset_y'].value = theme.get_value('buttons', 'padding', Vector2(5,5)).y
 	n['button_separation'].value = theme.get_value('buttons', 'gap', 5)
-	n['button_fixed'].pressed = theme.get_value('buttons', 'fixed', false)
+	n['button_fixed'].button_pressed = theme.get_value('buttons', 'fixed', false)
 	n['button_fixed_x'].value = theme.get_value('buttons', 'fixed_size', Vector2(130,40)).x
 	n['button_fixed_y'].value = theme.get_value('buttons', 'fixed_size', Vector2(130,40)).y
 	
 	
 	
-	var default_style = [false, Color.white, false, Color.black, true, default_background, false, Color.white]
+	var default_style = [false, Color.WHITE, false, Color.BLACK, true, default_background, false, Color.WHITE]
 	n['button_normal'].load_style(theme.get_value('buttons', 'normal', default_style))
 	n['button_hover'].load_style(theme.get_value('buttons', 'hover', default_style))
 	n['button_pressed'].load_style(theme.get_value('buttons', 'pressed', default_style))
@@ -336,7 +336,7 @@ func load_theme(filename):
 	
 	n['glossary_background_panel'].text = DialogicResources.get_filename_from_path(theme.get_value('definitions', 'background_panel', "res://addons/dialogic/Example Assets/backgrounds/GlossaryBackground.tres"))
 	
-	n['glossary_enabled'].pressed = theme.get_value('definitions', 'show_glossary', true)
+	n['glossary_enabled'].button_pressed = theme.get_value('definitions', 'show_glossary', true)
 	
 	# Text
 	n['theme_text_speed'].value = theme.get_value('text','speed', 2)
@@ -344,7 +344,7 @@ func load_theme(filename):
 	n['theme_font_bold'].text = DialogicResources.get_filename_from_path(theme.get_value('text', 'bold_font', 'res://addons/dialogic/Example Assets/Fonts/DefaultBoldFont.tres'))
 	n['theme_font_italic'].text = DialogicResources.get_filename_from_path(theme.get_value('text', 'italic_font', 'res://addons/dialogic/Example Assets/Fonts/DefaultItalicFont.tres'))
 	n['theme_text_color'].color = Color(theme.get_value('text', 'color', '#ffffffff'))
-	n['theme_text_shadow'].pressed = theme.get_value('text', 'shadow', false)
+	n['theme_text_shadow'].button_pressed = theme.get_value('text', 'shadow', false)
 	n['theme_text_shadow_color'].color = Color(theme.get_value('text', 'shadow_color', '#9e000000'))
 	n['theme_shadow_offset_x'].value = theme.get_value('text', 'shadow_offset', Vector2(2,2)).x
 	n['theme_shadow_offset_y'].value = theme.get_value('text', 'shadow_offset', Vector2(2,2)).y
@@ -362,20 +362,20 @@ func load_theme(filename):
 	
 	# Name
 	n['name_font'].text = DialogicResources.get_filename_from_path(theme.get_value('name', 'font', 'res://addons/dialogic/Example Assets/Fonts/NameFont.tres'))
-	n['name_auto_color'].pressed = theme.get_value('name', 'auto_color', true)
-	n['name_background_visible'].pressed = theme.get_value('name', 'background_visible', false)
+	n['name_auto_color'].button_pressed = theme.get_value('name', 'auto_color', true)
+	n['name_background_visible'].button_pressed = theme.get_value('name', 'background_visible', false)
 	n['name_background'].color = Color(theme.get_value('name', 'background', "#ff000000"))
-	n['name_image_visible'].pressed = theme.get_value('name', 'image_visible', false)
+	n['name_image_visible'].button_pressed = theme.get_value('name', 'image_visible', false)
 
 	n['name_image'].text = DialogicResources.get_filename_from_path(theme.get_value('name', 'image', 'res://addons/dialogic/Example Assets/backgrounds/background-2.png'))
-	n['name_background_modulation'].pressed = theme.get_value('name', 'modulation', false)
+	n['name_background_modulation'].button_pressed = theme.get_value('name', 'modulation', false)
 	n['name_background_modulation_color'].color = Color(theme.get_value('name', 'modulation_color', '#ffffffff'))
 
 	n['name_padding_x'].value = theme.get_value('name', 'name_padding', Vector2(10,0)).x
 	n['name_padding_y'].value = theme.get_value('name', 'name_padding', Vector2(10,0)).y
 	
 	n['name_shadow'].color = Color(theme.get_value('name', 'shadow', "#9e000000"))
-	n['name_shadow_visible'].pressed = theme.get_value('name', 'shadow_visible', true)
+	n['name_shadow_visible'].button_pressed = theme.get_value('name', 'shadow_visible', true)
 	n['name_shadow_offset_x'].value = theme.get_value('name', 'shadow_offset', Vector2(2,2)).x
 	n['name_shadow_offset_y'].value = theme.get_value('name', 'shadow_offset', Vector2(2,2)).y
 	n['name_bottom_gap'].value = theme.get_value('name', 'bottom_gap', 48)
@@ -384,12 +384,12 @@ func load_theme(filename):
 	n['name_position'].select(theme.get_value('name', 'position', 0))
 	
 	# Audio
-	n['typing_sfx_enabled'].pressed = theme.get_value('typing_sfx', 'enable', false)
+	n['typing_sfx_enabled'].button_pressed = theme.get_value('typing_sfx', 'enable', false)
 	n['typing_sfx_path'].text = DialogicResources.get_filename_from_path(theme.get_value('typing_sfx', 'path', "res://addons/dialogic/Example Assets/Sound Effects/Keyboard Noises"))
 	n['typing_sfx_volume'].value = theme.get_value('typing_sfx', 'volume', -10)
 	n['typing_sfx_volume_range'].value = theme.get_value('typing_sfx', 'random_volume_range', 5)
 	n['typing_sfx_pitch_range'].value = theme.get_value('typing_sfx', 'random_pitch_range', 0.2)
-	n['typing_sfx_allow_interrupt'].pressed = theme.get_value('typing_sfx', 'allow_interrupt', true)
+	n['typing_sfx_allow_interrupt'].button_pressed = theme.get_value('typing_sfx', 'allow_interrupt', true)
 	
 	update_audio_bus_option_buttons()
 	
@@ -414,7 +414,7 @@ func load_theme(filename):
 
 
 func create_theme() -> String:
-	var theme_file : String = 'theme-' + str(OS.get_unix_time()) + '.cfg'
+	var theme_file : String = 'theme-' + str(Time.get_unix_time_from_system()) + '.cfg'
 	DialogicResources.add_theme(theme_file)
 	load_theme(theme_file)
 	# Check if it is the only theme to set as default
@@ -425,7 +425,7 @@ func create_theme() -> String:
 
 
 func duplicate_theme(from_filename) -> void:
-	var duplicate_theme : String = 'theme-' + str(OS.get_unix_time()) + '.cfg'
+	var duplicate_theme : String = 'theme-' + str(Time.get_unix_time_from_system()) + '.cfg'
 	DialogicResources.duplicate_theme(from_filename, duplicate_theme)
 	DialogicResources.set_theme_value(duplicate_theme, 'settings', 'name', duplicate_theme)
 	master_tree.build_themes(duplicate_theme)
@@ -437,7 +437,7 @@ func _on_visibility_changed() -> void:
 		# Refreshing the dialog 
 		_on_PreviewButton_pressed()
 		if first_time_loading_theme_full_size_bug == 0:
-			yield(get_tree().create_timer(0.01), "timeout")
+			await get_tree().create_timer(0.01).timeout
 			for i in $VBoxContainer/Panel.get_children():
 				i.resize_main()
 			first_time_loading_theme_full_size_bug += 1
@@ -455,7 +455,7 @@ func _on_DelayPreview_timer_timeout() -> void:
 func _on_PreviewButton_pressed() -> void:
 	for i in $VBoxContainer/Panel.get_children():
 		i.free()
-	var preview_dialog = Dialogic.start('', true, "res://addons/dialogic/Dialog.tscn", false, false)
+	var preview_dialog = Dialogic.start(Callable('', true).bind("res://addons/dialogic/Dialog.tscn"), false, false)
 	preview_dialog.preview = true
 	
 	if n['character_picker']: # Sometimes it can't find the node
@@ -478,8 +478,8 @@ func _on_PreviewButton_pressed() -> void:
 	var box_size = preview_dialog.current_theme.get_value('box', 'size', Vector2(910, 167)).y
 	var bottom_gap = preview_dialog.current_theme.get_value('box', 'bottom_gap', 40)
 	var extra = 90
-	$VBoxContainer/Panel.rect_min_size.y = box_size + extra + bottom_gap
-	$VBoxContainer/Panel.rect_size.y = 0
+	$VBoxContainer/Panel.custom_minimum_size.y = box_size + extra + bottom_gap
+	$VBoxContainer/Panel.size.y = 0
 	preview_dialog.call_deferred('resize_main')
 
 
@@ -712,7 +712,7 @@ func _on_ActionOptionButton_item_selected(index) -> void:
 func _on_ActionOptionButton_pressed() -> void:
 	n['theme_action_key'].clear()
 	n['theme_action_key'].add_item('[Select Action]')
-	InputMap.load_from_globals()
+	InputMap.load_from_project_settings()
 	for a in InputMap.get_actions():
 		n['theme_action_key'].add_item(a)
 
@@ -989,7 +989,7 @@ func _on_Glossary_BackgroundPanel_selected(path, target):
 
 ## ------------ 		AUDIO  TAB	 	------------------------------------
 func _on_TypingPathButton_pressed() -> void:
-	editor_reference.godot_dialog("*.ogg, *.wav", EditorFileDialog.MODE_OPEN_ANY)
+	editor_reference.godot_dialog("*.ogg, *.wav", EditorFileDialog.FILE_MODE_OPEN_ANY)
 	editor_reference.godot_dialog_connect(self, "_on_typingPath_selected", ["dir_selected", "file_selected"])
 
 func _on_typingPath_selected(path, target) -> void:

@@ -2,18 +2,18 @@
 
 [ext_resource path="res://interface/main_interface/interface_control.gd" type="Script" id=1]
 [ext_resource path="res://interface/main_interface/interface_button.gd" type="Script" id=2]
-[ext_resource path="res://interface/main_interface/interface_text.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Inventory/Sugestao_de_menu_de_equipados.png" type="Texture" id=4]
+[ext_resource path="res://interface/main_interface/interface_text.tres" type="FontFile" id=3]
+[ext_resource path="res://Inventory/Sugestao_de_menu_de_equipados.png" type="Texture2D" id=4]
 [ext_resource path="res://Inventory/main_inventory/Inventory.tscn" type="PackedScene" id=5]
 [ext_resource path="res://cards/Cards.tscn" type="PackedScene" id=6]
 
 [node name="interface_control" type="Control"]
-pause_mode = 2
+process_mode = 3
 light_mask = 0
-margin_left = 2.9194
-margin_top = 0.514984
-margin_right = 42.9194
-margin_bottom = 40.515
+offset_left = 2.9194
+offset_top = 0.514984
+offset_right = 42.9194
+offset_bottom = 40.515
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -22,14 +22,14 @@ __meta__ = {
 [node name="Panel" type="Panel" parent="."]
 modulate = Color( 0.470588, 0.223529, 0.458824, 1 )
 light_mask = 0
-margin_right = 40.0
-margin_bottom = 40.0
-rect_scale = Vector2( 8.02481, 4.51539 )
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2( 8.02481, 4.51539 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sugestao_de_menu_de_equipados" type="Sprite" parent="."]
+[node name="Sugestao_de_menu_de_equipados" type="Sprite2D" parent="."]
 modulate = Color( 1, 0.992188, 0.992188, 1 )
 light_mask = 0
 position = Vector2( 159.143, 90.7206 )
@@ -38,22 +38,22 @@ texture = ExtResource( 4 )
 
 [node name="buttons" type="Control" parent="."]
 light_mask = 0
-margin_left = 126.663
-margin_top = -2.75457
-margin_right = 166.663
-margin_bottom = 37.2454
+offset_left = 126.663
+offset_top = -2.75457
+offset_right = 166.663
+offset_bottom = 37.2454
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="equipment_button" type="Button" parent="buttons"]
-margin_left = -160.508
-margin_top = 4.3928
-margin_right = -14.5075
-margin_bottom = 31.3928
-rect_scale = Vector2( 0.483954, 0.680372 )
-rect_pivot_offset = Vector2( 72.3454, 25.6761 )
-custom_fonts/font = ExtResource( 3 )
+offset_left = -160.508
+offset_top = 4.3928
+offset_right = -14.5075
+offset_bottom = 31.3928
+scale = Vector2( 0.483954, 0.680372 )
+pivot_offset = Vector2( 72.3454, 25.6761 )
+theme_override_fonts/font = ExtResource( 3 )
 text = "EQUIPMENT"
 script = ExtResource( 2 )
 __meta__ = {
@@ -61,13 +61,13 @@ __meta__ = {
 }
 
 [node name="configurations_button" type="Button" parent="buttons"]
-margin_left = -168.189
-margin_top = 27.2671
-margin_right = 28.8109
-margin_bottom = 54.2672
-rect_scale = Vector2( 0.371888, 0.680372 )
-rect_pivot_offset = Vector2( 72.3454, 25.6761 )
-custom_fonts/font = ExtResource( 3 )
+offset_left = -168.189
+offset_top = 27.2671
+offset_right = 28.8109
+offset_bottom = 54.2672
+scale = Vector2( 0.371888, 0.680372 )
+pivot_offset = Vector2( 72.3454, 25.6761 )
+theme_override_fonts/font = ExtResource( 3 )
 text = "CONFIGURATIONS"
 script = ExtResource( 2 )
 __meta__ = {
@@ -75,13 +75,13 @@ __meta__ = {
 }
 
 [node name="exit_button" type="Button" parent="buttons"]
-margin_left = -162.579
-margin_top = 48.131
-margin_right = -16.5792
-margin_bottom = 75.131
-rect_scale = Vector2( 0.443956, 0.680372 )
-rect_pivot_offset = Vector2( 72.3454, 25.6761 )
-custom_fonts/font = ExtResource( 3 )
+offset_left = -162.579
+offset_top = 48.131
+offset_right = -16.5792
+offset_bottom = 75.131
+scale = Vector2( 0.443956, 0.680372 )
+pivot_offset = Vector2( 72.3454, 25.6761 )
+theme_override_fonts/font = ExtResource( 3 )
 text = "EXIT"
 script = ExtResource( 2 )
 __meta__ = {
@@ -93,19 +93,19 @@ position = Vector2( 230.19, 27.8309 )
 scale = Vector2( 0.792492, 0.897283 )
 
 [node name="Cards" parent="." instance=ExtResource( 6 )]
-margin_left = 34.1474
-margin_top = 125.898
-margin_right = 111.148
-margin_bottom = 161.898
-rect_scale = Vector2( 5.84186, 1.27712 )
+offset_left = 34.1474
+offset_top = 125.898
+offset_right = 111.148
+offset_bottom = 161.898
+scale = Vector2( 5.84186, 1.27712 )
 
 [node name="configurations" type="Control" parent="."]
 visible = false
-margin_left = 2.52269
-margin_top = 38.6812
-margin_right = 42.5227
-margin_bottom = 78.6812
-rect_scale = Vector2( 7.8, 3.28 )
+offset_left = 2.52269
+offset_top = 38.6812
+offset_right = 42.5227
+offset_bottom = 78.6812
+scale = Vector2( 7.8, 3.28 )
 
 [connection signal="pressed" from="buttons/equipment_button" to="." method="_on_equipment_button_pressed"]
 [connection signal="pressed" from="buttons/configurations_button" to="." method="_on_configurations_button_pressed"]

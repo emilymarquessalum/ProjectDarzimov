@@ -15,16 +15,16 @@ func _update(p):
 	
 	p._look_at(p.player.position, true)
 	if animation_up:
-		p.find_node("Sprite").modulate.r8 += p.patterns[p.p_index].indication[0]
-		p.find_node("Sprite").modulate.g8 += p.patterns[p.p_index].indication[1]
-		p.find_node("Sprite").modulate.b8 += p.patterns[p.p_index].indication[2]
-		if p.find_node("Sprite").modulate.r8 == 255 or p.find_node("Sprite").modulate.g8 == 255 or p.find_node("Sprite").modulate.b8 == 255:
+		p.find_child("Sprite2D").modulate.r8 += p.patterns[p.p_index].indication[0]
+		p.find_child("Sprite2D").modulate.g8 += p.patterns[p.p_index].indication[1]
+		p.find_child("Sprite2D").modulate.b8 += p.patterns[p.p_index].indication[2]
+		if p.find_child("Sprite2D").modulate.r8 == 255 or p.find_child("Sprite2D").modulate.g8 == 255 or p.find_child("Sprite2D").modulate.b8 == 255:
 			animation_up = false
 	else:
-		p.find_node("Sprite").modulate.r8 -= p.patterns[p.p_index].indication[0]
-		p.find_node("Sprite").modulate.g8 -= p.patterns[p.p_index].indication[1]
-		p.find_node("Sprite").modulate.b8 -= p.patterns[p.p_index].indication[2]
-		if p.find_node("Sprite").modulate.r8 == 0 and p.find_node("Sprite").modulate.g8 == 0 and p.find_node("Sprite").modulate.b8 == 0:
+		p.find_child("Sprite2D").modulate.r8 -= p.patterns[p.p_index].indication[0]
+		p.find_child("Sprite2D").modulate.g8 -= p.patterns[p.p_index].indication[1]
+		p.find_child("Sprite2D").modulate.b8 -= p.patterns[p.p_index].indication[2]
+		if p.find_child("Sprite2D").modulate.r8 == 0 and p.find_child("Sprite2D").modulate.g8 == 0 and p.find_child("Sprite2D").modulate.b8 == 0:
 			animation_up = true
 			p._change_state(0,"attacking")
 			

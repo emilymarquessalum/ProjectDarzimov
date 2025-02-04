@@ -1,8 +1,8 @@
 extends Camera2D
-onready var player = get_tree().get_current_scene().find_node("Player")
+@onready var player = get_tree().get_current_scene().find_child("Player")
 var on = true
-onready var scene = get_tree().get_current_scene()
-export(bool) var setting = true
+@onready var scene = get_tree().get_current_scene()
+@export var setting: bool = true
 func _process(delta):
 	if not on:
 		return

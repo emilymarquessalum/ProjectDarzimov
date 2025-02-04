@@ -5,8 +5,8 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-export(int) var x_plus = 0
-export(int) var y_plus = 0
+@export var x_plus: int = 0
+@export var y_plus: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

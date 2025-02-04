@@ -8,7 +8,7 @@ var entity_groups = ["Player", "Enemy", "Follower"]
 var floors = []
 var enemies = []
 var chests = []
-var chest_index = 0 setget ,get_c_index
+var chest_index = 0: get = get_c_index
 
 func get_c_index():
 	chest_index += 1
@@ -18,17 +18,17 @@ func _ready():
 	_game_on()
 	
 func _game_on():
-	Global.connect("leaving_area", self, "_leave_area")
-	Global.connect("changed_area", self, "_enter_area")
+	Global.connect("leaving_area", Callable(self, "_leave_area"))
+	Global.connect("changed_area", Callable(self, "_enter_area"))
 	
 	
 func game_off():
-	Global.disconnect("leaving_area", self, "_leave_area")
-	Global.disconnect("changed_area", self, "_enter_area")
+	Global.disconnect("leaving_area", Callable(self, "_leave_area"))
+	Global.disconnect("changed_area", Callable(self, "_enter_area"))
 	floors = []
 	enemies = []
 	chests = []
-	get_tree().get_current_scene().find_node("Camera2D").on = false
+	get_tree().get_current_scene().find_child("Camera2D").on = false
 	
 func _get_random_floor(floors=floors):
 	if floors.size() == 0:
@@ -60,7 +60,9 @@ func _enter_area(t):
 	if err:
 		return
 	
-	var data = parse_json(load_file.get_as_text())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(load_file.get_as_text())
+	var data = test_json_conv.get_data()
 	if not data:
 		return
 	if not data.has("visited_in_run") or not data.visited_in_run:
@@ -81,7 +83,7 @@ func _enter_area(t):
 			en._die()
 		enemies = []
 		for en_d in data.enemies:
-			var en = load(en_d.enemy_type).instance()
+			var en = load(en_d.enemy_type).instantiate()
 			get_tree().get_current_scene().get_node("Enemies").add_child(en)
 			en.position.x = en_d.x
 			en.position.y = en_d.y
@@ -120,7 +122,7 @@ func _leave_area():
 	
 	
 	if err == OK:
-		save_file.store_string(to_json(data))
+		save_file.store_string(JSON.new().stringify(data))
 	else:
 		print("error")
 	

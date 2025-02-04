@@ -24,35 +24,35 @@ func _redraw_current_speaker():
 		$first_character.modulate.r8 = 255
 		$first_character.modulate.g8 = 255
 		$first_character.modulate.b8 = 255
-		$first_character.rect_size = Vector2(25,45)
-		$first_character.rect_position.y = -46
+		$first_character.size = Vector2(25,45)
+		$first_character.position.y = -46
 		
 		$second_character.modulate.a8 = 200
 		$second_character.modulate.r8 = 100
 		$second_character.modulate.g8 = 100
 		$second_character.modulate.b8 = 100
-		$second_character.rect_size = Vector2(20,40)
-		$second_character.rect_position.y = -41
+		$second_character.size = Vector2(20,40)
+		$second_character.position.y = -41
 	else:
 		$first_character.modulate.a8 = 200
 		$first_character.modulate.r8 = 100
 		$first_character.modulate.g8 = 100
 		$first_character.modulate.b8 = 100
-		$first_character.rect_size = Vector2(20,40)
-		$first_character.rect_position.y = -41
+		$first_character.size = Vector2(20,40)
+		$first_character.position.y = -41
 		
 		$second_character.modulate.a8 = 255
 		$second_character.modulate.r8 = 255
 		$second_character.modulate.g8 = 255
 		$second_character.modulate.b8 = 255
 	
-		$second_character.rect_size = Vector2(25,45)
-		$second_character.rect_position.y = -46
+		$second_character.size = Vector2(25,45)
+		$second_character.position.y = -46
 # Clique enquanto em diálogo
 func _gui_input(event):
 	if not event is InputEventMouseButton:
 		return
-	if not (event.button_index == BUTTON_LEFT and event.pressed):
+	if not (event.button_index == MOUSE_BUTTON_LEFT and event.pressed):
 		return
 	if $text.percent_visible != 1:
 		$text.percent_visible = 1

@@ -1,21 +1,21 @@
-tool
+@tool
 extends "res://addons/dialogic/Editor/Events/Parts/EventPart.gd"
 
 # has an event_data variable that stores the current data!!!
 var default_icon_color = Color("#65989898")
 
 ## node references
-onready var positions_container = $HBox/PositionsContainer
+@onready var positions_container = $HBox/PositionsContainer
 
 # used to connect the signals
 func _ready():
 	for p in positions_container.get_children():
-		p.connect('pressed', self, "position_button_pressed", [p.name])
+		p.connect('pressed', Callable(self, "position_button_pressed").bind(p.name))
 
 # called by the event block
 func load_data(data:Dictionary):
 	# First set the event_data
-	.load_data(data)
+	super.load_data(data)
 	
 	# Now update the ui nodes to display the data. 
 	check_active_position()
@@ -35,7 +35,7 @@ func position_button_pressed(name):
 	var selected_index = name.split('-')[1]
 	var button = positions_container.get_node('position-' + selected_index)
 	button.set('self_modulate', get_character_color())
-	button.pressed = true
+	button.button_pressed = true
 	
 	event_data['position'][selected_index] = true
 	
@@ -46,14 +46,14 @@ func clear_all_positions():
 		event_data['position'][str(i)] = false
 	for p in positions_container.get_children():
 		p.set('self_modulate', default_icon_color)
-		p.pressed = false
+		p.button_pressed = false
 
 
 func check_active_position(active_color = Color("#ffffff")):
 	var index = 0
 	for p in positions_container.get_children():
 		if event_data['position'][str(index)]:
-			p.pressed = true
+			p.button_pressed = true
 			p.set('self_modulate', get_character_color())
 		index += 1
 

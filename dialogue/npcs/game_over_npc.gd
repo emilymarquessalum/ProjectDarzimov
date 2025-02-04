@@ -12,7 +12,7 @@ func _ready():
 
 
 func _inic_behaviour():
-	$Area2D.connect("interacted_object", self, "_open_options")
+	$Area2D.connect("interacted_object", Callable(self, "_open_options"))
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

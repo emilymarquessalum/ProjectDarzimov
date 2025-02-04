@@ -5,7 +5,7 @@ extends behaviour
 # var a = 2
 # var b = "text"
 
-export(int) var acceptable_distance = 10
+@export var acceptable_distance: int = 10
 func _start_behaviour():
 	pass
 	

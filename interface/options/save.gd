@@ -15,7 +15,7 @@ func _save():
 	var err = save_file.open("user//:save.txt", File.WRITE)
 	var data = []
 	if err == OK:
-		save_file.store_string(to_json(data))
+		save_file.store_string(JSON.new().stringify(data))
 	else:
 		print("error")
 # Called every frame. 'delta' is the elapsed time since the previous frame.

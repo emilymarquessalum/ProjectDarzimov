@@ -1,4 +1,4 @@
-tool
+@tool
 extends HSplitContainer
 
 var editor_reference
@@ -6,9 +6,9 @@ var timeline_name: String = ''
 var timeline_file: String = ''
 var current_timeline: Dictionary = {}
 
-onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
-onready var timeline = $TimelineArea/TimeLine
-onready var events_warning = $ScrollContainer/EventContainer/EventsWarning
+@onready var master_tree = get_node('../MasterTreeContainer/MasterTree')
+@onready var timeline = $TimelineArea/TimeLine
+@onready var events_warning = $ScrollContainer/EventContainer/EventsWarning
 
 var hovered_item = null
 var selected_style : StyleBoxFlat = load("res://addons/dialogic/Editor/Events/styles/selected_styleboxflat.tres")
@@ -29,38 +29,38 @@ func _ready():
 	var modifier = ''
 	var _scale = get_constant("inspector_margin", "Editor")
 	_scale = _scale * 0.125
-	$ScrollContainer.rect_min_size.x = 180
+	$ScrollContainer.custom_minimum_size.x = 180
 	if _scale == 1.25:
 		modifier = '-1.25'
-		$ScrollContainer.rect_min_size.x = 200
+		$ScrollContainer.custom_minimum_size.x = 200
 	if _scale == 1.5:
 		modifier = '-1.25'
-		$ScrollContainer.rect_min_size.x = 200
+		$ScrollContainer.custom_minimum_size.x = 200
 	if _scale == 1.75:
 		modifier = '-1.25'
-		$ScrollContainer.rect_min_size.x = 390
+		$ScrollContainer.custom_minimum_size.x = 390
 	if _scale == 2:
 		modifier = '-2'
-		$ScrollContainer.rect_min_size.x = 390
+		$ScrollContainer.custom_minimum_size.x = 390
 	
 	# We connect all the event buttons to the event creation functions
 	for b in $ScrollContainer/EventContainer.get_children():
 		if b is Button:
 			if b.name == 'Question':
-				b.connect('pressed', self, "_on_ButtonQuestion_pressed", [])
+				b.connect('pressed', Callable(self, "_on_ButtonQuestion_pressed").bind())
 			elif b.name == 'Condition':
-				b.connect('pressed', self, "_on_ButtonCondition_pressed", [])
+				b.connect('pressed', Callable(self, "_on_ButtonCondition_pressed").bind())
 			else:
-				b.connect('pressed', self, "_create_event_button_pressed", [b.name])
+				b.connect('pressed', Callable(self, "_create_event_button_pressed").bind(b.name))
 	
-	var style = $TimelineArea.get('custom_styles/bg')
+	var style = $TimelineArea.get('theme_override_styles/bg')
 	style.set('bg_color', get_color("dark_color_1", "Editor"))
 
 # handles dragging/moving of events
 func _process(delta):
 	if moving_piece != null:
 		var current_position = get_global_mouse_position()
-		var node_position = moving_piece.rect_global_position.y
+		var node_position = moving_piece.global_position.y
 		var height = get_block_height(moving_piece)
 		var up_offset = get_block_height(get_block_above(moving_piece))
 		var down_offset = get_block_height(get_block_below(moving_piece))
@@ -105,7 +105,7 @@ func _input(event):
 	# because certain godot controls swallow events (like textedit)
 	# we protect this with is_visible_in_tree to not 
 	# invoke a shortcut by accident
-	if get_focus_owner() is TextEdit:
+	if get_viewport().gui_get_focus_owner() is TextEdit:
 		return
 		
 	if (event is InputEventKey and event is InputEventWithModifiers and is_visible_in_tree()):
@@ -114,7 +114,7 @@ func _input(event):
 			and event.alt == false
 			and event.shift == false
 			and event.control == false
-			and event.scancode == KEY_UP
+			and event.keycode == KEY_UP
 			and event.echo == false
 		):
 			# select previous
@@ -124,7 +124,7 @@ func _input(event):
 				if (prev_node != selected_items[0]):
 					selected_items = []
 					select_item(prev_node)
-				get_tree().set_input_as_handled()
+				get_viewport().set_input_as_handled()
 
 			
 		# CTRL DOWN
@@ -132,7 +132,7 @@ func _input(event):
 			and event.alt == false
 			and event.shift == false
 			and event.control == false
-			and event.scancode == KEY_DOWN
+			and event.keycode == KEY_DOWN
 			and event.echo == false
 		):
 			# select next
@@ -142,96 +142,96 @@ func _input(event):
 				if (next_node != selected_items[0]):
 					selected_items = []
 					select_item(next_node)
-				get_tree().set_input_as_handled()
+				get_viewport().set_input_as_handled()
 			
 		# CTRL DELETE
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == false
-			and event.scancode == KEY_DELETE
+			and event.keycode == KEY_DELETE
 			and event.echo == false
 		):
 			if (len(selected_items) != 0):
 				delete_selected_events()
-				get_tree().set_input_as_handled()
+				get_viewport().set_input_as_handled()
 			
 		# CTRL T
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == true
-			and event.scancode == KEY_T
+			and event.keycode == KEY_T
 			and event.echo == false
 		):
 			var new_text = create_event("TextEvent")
 			select_item(new_text, false)
 			indent_events()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 			
 		# CTRL A
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == true
-			and event.scancode == KEY_A
+			and event.keycode == KEY_A
 			and event.echo == false
 		):
 			if (len(selected_items) != 0):
 				select_all_items()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 		
 		# CTRL SHIFT A
 		if (event.pressed
 			and event.alt == false
 			and event.shift == true
 			and event.control == true
-			and event.scancode == KEY_A
+			and event.keycode == KEY_A
 			and event.echo == false
 		):
 			if (len(selected_items) != 0):
 				deselect_all_items()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 		
 		# CTRL C
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == true
-			and event.scancode == KEY_C
+			and event.keycode == KEY_C
 			and event.echo == false
 		):
 			copy_selected_events()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 		
 		# CTRL V
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == true
-			and event.scancode == KEY_V
+			and event.keycode == KEY_V
 			and event.echo == false
 		):
 			paste_events()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 		
 		# CTRL X
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == true
-			and event.scancode == KEY_X
+			and event.keycode == KEY_X
 			and event.echo == false
 		):
 			cut_selected_events()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 		# CTRL D
 		if (event.pressed
 			and event.alt == false
 			and event.shift == false
 			and event.control == true
-			and event.scancode == KEY_D
+			and event.keycode == KEY_D
 			and event.echo == false
 		):
 			
@@ -239,7 +239,7 @@ func _input(event):
 				copy_selected_events()
 				selected_items = [selected_items[-1]]
 				paste_events()
-			get_tree().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 
 func _unhandled_key_input(event):
 	if (event is InputEventWithModifiers):
@@ -248,28 +248,28 @@ func _unhandled_key_input(event):
 			and event.alt == true 
 			and event.shift == false 
 			and event.control == false 
-			and event.scancode == KEY_UP
+			and event.keycode == KEY_UP
 			and event.echo == false
 		):
 			# move selected up
 			if (len(selected_items) == 1):
 				move_block(selected_items[0], "up")
 				indent_events()
-				get_tree().set_input_as_handled()
+				get_viewport().set_input_as_handled()
 			
 		# ALT DOWN
 		if (event.pressed
 			and event.alt == true 
 			and event.shift == false 
 			and event.control == false 
-			and event.scancode == KEY_DOWN
+			and event.keycode == KEY_DOWN
 			and event.echo == false
 		):
 			# move selected down
 			if (len(selected_items) == 1):
 				move_block(selected_items[0], "down")
 				indent_events()
-				get_tree().set_input_as_handled()
+				get_viewport().set_input_as_handled()
 
 ## *****************************************************************************
 ##					 	DELETING, COPY, PASTE
@@ -314,7 +314,7 @@ func copy_selected_events():
 	for item in selected_items:
 		event_copy_array.append(item.event_data)
 	
-	OS.clipboard = JSON.print(
+	OS.clipboard = JSON.stringify(
 		{
 			"events":event_copy_array,
 			"dialogic_version": editor_reference.version_string,
@@ -322,7 +322,9 @@ func copy_selected_events():
 		})
 
 func paste_events():
-	var clipboard_parse = JSON.parse(OS.clipboard).result
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(OS.clipboard).result
+	var clipboard_parse = test_json_conv.get_data()
 	
 	if typeof(clipboard_parse) == TYPE_DICTIONARY:
 		if clipboard_parse.has("dialogic_version"):
@@ -357,7 +359,7 @@ func select_item(item: Node, multi_possible:bool = true):
 	if item == null:
 		return
 
-	if Input.is_key_pressed(KEY_CONTROL) and multi_possible:
+	if Input.is_key_pressed(KEY_CTRL) and multi_possible:
 		# deselect the item if it is selected
 		if _is_item_selected(item):
 			selected_items.erase(item)
@@ -400,7 +402,7 @@ func visual_update_selection():
 
 ## Sorts the selection using 'custom_sort_selection'
 func sort_selection():
-	selected_items.sort_custom(self, 'custom_sort_selection')
+	selected_items.sort_custom(Callable(self, 'custom_sort_selection'))
 
 ## Compares two event blocks based on their position in the timeline
 func custom_sort_selection(item1, item2):
@@ -507,20 +509,20 @@ func cancel_drop_event():
 
 # Adding an event to the timeline
 func create_event(scene: String, data: Dictionary = {'no-data': true} , indent: bool = false):
-	var piece = load("res://addons/dialogic/Editor/Events/" + scene + ".tscn").instance()
+	var piece = load("res://addons/dialogic/Editor/Events/" + scene + ".tscn").instantiate()
 	piece.editor_reference = editor_reference
 	
 	if data.has('no-data') == false:
 		piece.event_data = data
 	
 	if len(selected_items) != 0:
-		timeline.add_child_below_node(selected_items[0], piece)
+		timeline.add_sibling(selected_items[0], piece)
 	else:
 		timeline.add_child(piece)
 	
 
-	piece.connect("option_action", self, '_on_event_options_action', [piece])
-	piece.connect("gui_input", self, '_on_event_block_gui_input', [piece])
+	piece.connect("option_action", Callable(self, '_on_event_options_action').bind(piece))
+	piece.connect("gui_input", Callable(self, '_on_event_block_gui_input').bind(piece))
 	events_warning.visible = false
 	# Indent on create
 	if indent:
@@ -643,7 +645,7 @@ func get_block_below(block):
 
 func get_block_height(block):
 	if block != null:
-		return block.rect_size.y
+		return block.size.y
 	else:
 		return null
 
@@ -652,7 +654,7 @@ func get_index_under_cursor():
 	var top_pos = 0
 	for i in range(timeline.get_child_count()):
 		var c = timeline.get_child(i)
-		if c.rect_global_position.y < current_position.y:
+		if c.global_position.y < current_position.y:
 			top_pos = i
 	return top_pos
 
@@ -676,7 +678,7 @@ func move_block(block, direction):
 
 
 func create_timeline():
-	timeline_file = 'timeline-' + str(OS.get_unix_time()) + '.json'
+	timeline_file = 'timeline-' + str(Time.get_unix_time_from_system()) + '.json'
 	var timeline = {
 		"events": [],
 		"metadata":{

@@ -5,22 +5,22 @@
 
 [node name="INTERFACE" type="Control"]
 light_mask = 0
-margin_left = 0.529732
-margin_right = 0.529732
+offset_left = 0.529732
+offset_right = 0.529732
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HealthBar" parent="." instance=ExtResource( 2 )]
-margin_right = 165.001
-margin_bottom = 28.0001
+offset_right = 165.001
+offset_bottom = 28.0001
 
 [node name="GridContainer" type="GridContainer" parent="."]
 light_mask = 0
 anchor_right = 0.564
-margin_right = 157.0
-margin_bottom = 30.0
-custom_constants/hseparation = 40
+offset_right = 157.0
+offset_bottom = 30.0
+theme_override_constants/h_separation = 40
 columns = 3
 script = ExtResource( 1 )
 __meta__ = {

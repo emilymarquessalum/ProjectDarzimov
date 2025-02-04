@@ -1,8 +1,8 @@
 extends Node
 
 
-export(int) var max_health = 3
-export(bool) var ignore_damage = false
+@export var max_health: int = 3
+@export var ignore_damage: bool = false
 var health = max_health
 signal life_altered(health)
 signal life_damaged(health_control)

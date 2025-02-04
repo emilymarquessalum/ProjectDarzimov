@@ -1,12 +1,12 @@
-tool
+@tool
 extends MenuButton
 
 var default_text = '[ Select a definition ]'
 
 func _ready():
-	get_popup().connect("index_pressed", self, '_on_entry_selected')
+	get_popup().connect("index_pressed", Callable(self, '_on_entry_selected'))
 	get_popup().clear()
-	connect("about_to_show", self, "_on_MenuButton_about_to_show")
+	connect("about_to_popup", Callable(self, "_on_MenuButton_about_to_show"))
 
 
 func _on_MenuButton_about_to_show():

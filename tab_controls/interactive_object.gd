@@ -1,6 +1,6 @@
 extends Area2D
 class_name interactive_object
-onready var player = get_tree().get_current_scene().find_node("Player")
+@onready var player = get_tree().get_current_scene().find_child("Player")
 	
 signal interacted_object()
 func _interacting():

@@ -1,4 +1,4 @@
-extends Particles2D
+extends GPUParticles2D
 
 
 # Declare member variables here. Examples:
@@ -28,7 +28,7 @@ func _update(en):
 		return
 	var tilemap = collision.collider
 	
-	var pos = tilemap.world_to_map(tilemap.to_local(en.global_position))
+	var pos = tilemap.local_to_map(tilemap.to_local(en.global_position))
 	pos -= collision.normal
 	
 	var id = tilemap.get_cellv(pos)

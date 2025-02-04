@@ -21,7 +21,7 @@ func _make_slots(items, controller):
 	slot_control = controller
 	if slot_control:
 		add_child(slot_control)
-	var inventory =  get_tree().get_current_scene().find_node("Inventory")
+	var inventory =  get_tree().get_current_scene().find_child("Inventory")
 	for i in range(9):
 		var slot = inventory._make_slot($container)
 		slots.append(slot)
@@ -30,8 +30,8 @@ func _make_slots(items, controller):
 			if controller.inventory_linked:
 				slot._connect_to_inventory()	
 			slot_control.get_tab(self)
-			slot.connect("gui_input",controller, "_click_call",[slot])
-			slot.connect("attempt_to_move_item",controller, "_add_call")
+			slot.connect("gui_input", Callable(controller, "_click_call").bind(slot))
+			slot.connect("attempt_to_move_item", Callable(controller, "_add_call"))
 		else:
 			slot._connect_to_inventory()
 		

@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Map/Tiles/Scripts/tile.gd" type="Script" id=1]
-[ext_resource path="res://Map/tiles4.jpg" type="Texture" id=2]
+[ext_resource path="res://Map/tiles4.jpg" type="Texture2D" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7.97249, 8.65981 )
+size = Vector2( 7.97249, 8.65981 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8.25, 7.5 )
+size = Vector2( 8.25, 7.5 )
 
 [node name="StaticBody2D" type="StaticBody2D" groups=[
 "Ground",
@@ -16,7 +16,7 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource( 1 )
 
-[node name="sprite" type="Sprite" parent="."]
+[node name="sprite" type="Sprite2D" parent="."]
 light_mask = -2147483644
 position = Vector2( 0.0447178, -0.00749016 )
 rotation = 2.18663e-06

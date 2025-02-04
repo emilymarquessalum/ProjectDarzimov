@@ -1,20 +1,20 @@
+@tool
 extends Node2D
-tool
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-export(bool) var has_path_parent = true
+@export var has_path_parent: bool = true
 
-export(Color) var point = Color.white
+@export var point: Color = Color.WHITE
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_parent().waypoint_child = self
 	
 	pass # Replace with function body.
 func _process(delta):
-	$Sprite.modulate = point
-	$Sprite.visible = Engine.editor_hint or get_tree().get_current_scene().keep_hints
+	$Sprite2D.modulate = point
+	$Sprite2D.visible = Engine.is_editor_hint() or get_tree().get_current_scene().keep_hints
 	
 
 func _fix_player_position(player):

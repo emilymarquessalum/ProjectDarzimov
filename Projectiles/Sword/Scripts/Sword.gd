@@ -1,8 +1,8 @@
 extends Area2D
 
-onready var particles = $Particles2D
-onready var sprite = $Sprite
-onready var timer = $Timer
+@onready var particles = $GPUParticles2D
+@onready var sprite = $Sprite2D
+@onready var timer = $Timer
 
 var move = Vector2.ZERO
 var look_vec = Vector2.ZERO
@@ -40,7 +40,7 @@ func sword_entered_something(thing):
 	elif thing.is_in_group("Parry"):
 			queue_free()
 	elif thing.is_in_group("Player"):
-		player.find_node("Health")._take_damage(1)
+		player.find_child("Health")._take_damage(1)
 		queue_free()
 		
 

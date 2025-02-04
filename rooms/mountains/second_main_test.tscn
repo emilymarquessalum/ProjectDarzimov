@@ -6,7 +6,7 @@
 [ext_resource path="res://rooms/room.gd" type="Script" id=4]
 [ext_resource path="res://torcch.gd" type="Script" id=5]
 [ext_resource path="res://rooms/waypoints/waypoint.tscn" type="PackedScene" id=6]
-[ext_resource path="res://res/Mountain_Night.png" type="Texture" id=7]
+[ext_resource path="res://res/Mountain_Night.png" type="Texture2D" id=7]
 [ext_resource path="res://editor/bundle.gd" type="Script" id=8]
 [ext_resource path="res://torcch.tscn" type="PackedScene" id=9]
 [ext_resource path="res://rooms/mountains/bounds.gd" type="Script" id=10]
@@ -21,7 +21,7 @@ room_y = 87.1478
 spawn = 1
 area_name = "going_down"
 
-[node name="Mountain_Night" type="Sprite" parent="."]
+[node name="Mountain_Night" type="Sprite2D" parent="."]
 position = Vector2( 39.3774, 38.2019 )
 texture = ExtResource( 7 )
 
@@ -89,7 +89,7 @@ position = Vector2( -45.6917, 32.9631 )
 scene = "main_test"
 
 [node name="waypoint1" parent="path1" instance=ExtResource( 6 )]
-position = Vector2( 22.9981, 1.93435 )
+position = Vector2( 29.6917, 1.0369 )
 point = Color( 0, 1, 0, 1 )
 
 [node name="path2" parent="." instance=ExtResource( 1 )]
@@ -97,7 +97,7 @@ position = Vector2( 329.31, 125.066 )
 scene = "Main"
 
 [node name="wayppoint2" parent="path2" instance=ExtResource( 6 )]
-position = Vector2( -23.3596, 0 )
+position = Vector2( -27.31, -1.066 )
 point = Color( 1, 0, 0, 1 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
